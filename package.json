@@ -1,0 +1,17 @@
+{
+  "name": "@preignition/home-banner",
+  "version": "1.0.0",
+  "private": true, 
+  "license": "SEE LICENCE IN LICENCE.md",
+  "description": "lit-element based home-banner for preignition",
+  "main": "index.js",
+  "module": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "christophe geiser",
+  "dependencies": {
+    "lit-element": "2",
+    "d3-selection": "1"
+  }
+}

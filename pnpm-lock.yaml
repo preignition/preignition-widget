@@ -1,0 +1,22 @@
+dependencies:
+  d3-selection: 1.4.0
+  lit-element: 2.2.1
+lockfileVersion: 5.1
+packages:
+  /d3-selection/1.4.0:
+    dev: false
+    resolution:
+      integrity: sha512-EYVwBxQGEjLCKF2pJ4+yrErskDnz5v403qvAid96cNdCMr8rmCYfY5RGzWz24mdIbxmDf6/4EAH+K9xperD5jg==
+  /lit-element/2.2.1:
+    dependencies:
+      lit-html: 1.1.2
+    dev: false
+    resolution:
+      integrity: sha512-ipDcgQ1EpW6Va2Z6dWm79jYdimVepO5GL0eYkZrFvdr0OD/1N260Q9DH+K5HXHFrRoC7dOg+ZpED2XE0TgGdXw==
+  /lit-html/1.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-FFlUMKHKi+qG1x1iHNZ1hrtc/zHmfYTyrSvs3/wBTvaNtpZjOZGWzU7efGYVpgp6KvWeKF6ql9/KsCq6Z/mEDA==
+specifiers:
+  d3-selection: '1'
+  lit-element: '2'
