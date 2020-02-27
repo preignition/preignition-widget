@@ -1,21 +1,25 @@
 {
   "name": "@preignition/preignition-widget",
   "version": "0.1.0",
-  "private": true,
   "license": "SEE LICENCE IN LICENCE.md",
   "description": "lit-element based widget for preignition",
   "type": "module",
   "main": "index.js",
   "module": "index.js",
   "scripts": {
+    "start": "es-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-docs-md": "wca analyze src/**/*.js --outFiles docs/{tagname}.md ",
     "generate-docs-json": "wca analyze src/**/*.js --outFiles docs/{tagname}.json ",
     "generate-docs": "npm run generate-docs-md && npm run generate-docs-json",
-    "prepublishOnly": "npm generate-docs"
+    "prepublishOnly": "npm run generate-docs"
   },
   "author": "christophe.geiser <christophe.geiser@e-smile.org>",
   "dependencies": {
+    "@duetds/tokens": "^2.0.23",
+    "@material/mwc-tab": "file:../material-components-web-components/packages/tab",
+    "@material/mwc-tab-bar": "^0.13.0",
+    "@material/mwc-textarea": "^0.13.0",
     "@preignition/preignition-mixin": "file:../preignition-mixin",
     "d3-format": "*",
     "d3-scale": "*",
@@ -23,6 +27,51 @@
     "dompurify": "^2.0.8",
     "lit-element": "2",
     "lit-html": "1",
-    "marked": "^0.8.0"
+    "marked": "^0.8.0",
+    "pwa-helpers": "^0.9.1"
+  },
+  "devDependencies": {
+    "@open-wc/testing": "^2.0.0",
+    "@open-wc/testing-karma": "^3.0.0",
+    "@preignition/preignition-demo": "file:../preignition-demo",
+    "@vaadin/router": "^1.7.0",
+    "es-dev-server": "^1.23.0",
+    "highlight-ts": "^9.12.1-2",
+    "snowpack": "^1.4.0"
+  },
+  "snowpack": {
+    "webDependencies": [
+      "@material/mwc-textarea",
+      "@material/mwc-tab-bar",
+      "@material/mwc-tab",
+      "@preignition/preignition-mixin",
+      "@preignition/preignition-demo",
+      "@vaadin/router",
+      "pwa-helpers/media-query.js",
+      "marked/lib/marked.esm.js",
+      "marked",
+      "dompurify",
+      "d3-format",
+      "d3-scale",
+      "d3-selection",
+      "lit-element",
+      "lit-html",
+      "lit-html/directives/cache.js",
+      "lit-html/directives/unsafe-html.js",
+      "lit-html/directives/style-map.js"
+    ],
+    "dedupe": [
+      "lit-html",
+      "lit-element",
+      "dompurify",
+      "d3-format",
+      "d3-scale",
+      "d3-selection",
+      "@vaadin/router",
+      "@material/mwc-texarea",
+      "@material/mwc-tab-bar",
+      "@material/mwc-tab",
+      "@preignition/preignition-mixin"
+    ]
   }
 }

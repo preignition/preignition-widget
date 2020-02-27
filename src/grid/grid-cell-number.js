@@ -1,6 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
 import { DefaultValueMixin, DoNotSetUndefinedValue } from '@preignition/preignition-mixin';
-import { scaleLinear } from 'd3-scale';
 import { format } from 'd3-format';
 
 class GridCellNumber extends
@@ -20,14 +19,14 @@ DefaultValueMixin(
       color: var(--primary-background-color);
     }
 
-    `
+    `;
   }
   render() {
-    if(this.backgroundScaleColor) {
-      this.style['background-color'] = this.backgroundScaleColor(this.value * 1)
+    if (this.backgroundScaleColor) {
+      this.style['background-color'] = this.backgroundScaleColor(this.value * 1);
     }
-    if(this.scaleColor) {
-      this.style['color'] = this.scaleColor(this.value * 1)
+    if (this.scaleColor) {
+      this.style['color'] = this.scaleColor(this.value * 1);
     }
     return html ` 
       <span>${this.formatValue(this.value, this.format)}<span>
