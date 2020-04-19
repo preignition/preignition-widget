@@ -21,6 +21,7 @@ DefaultValueMixin(
 
     `;
   }
+  
   render() {
     if (this.backgroundScaleColor) {
       this.style['background-color'] = this.backgroundScaleColor(this.value * 1);
@@ -43,7 +44,7 @@ DefaultValueMixin(
       },
 
 
-      /* 
+      /*
        * `scale` d3.scale
        */
       scale: {
@@ -66,13 +67,13 @@ DefaultValueMixin(
         type: Function
       },
 
-      /* 
-       * `format` value to be sent to d3.format 
+      /*
+       * `format` value to be sent to d3.format
        */
       format: {
         type: String
       }
-    }
+    };
   }
 
   formatValue(value, stringFormat = '.0f') {

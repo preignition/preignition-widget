@@ -2,11 +2,15 @@ import { LitElement, html, css } from 'lit-element';
 
 import '@material/mwc-tab-bar';
 import '@material/mwc-tab';
+import '@material/mwc-button';
+import '@material/mwc-linear-progress';
 // import 'api-viewer-element';
 import { Router } from '@vaadin/router';
 
 
 import './form-demo.js';
+import './dom-demo.js';
+import './widget-demo.js';
 
 import { github, preignition, DemoRoot } from '@preignition/preignition-demo';
 
@@ -29,6 +33,8 @@ class WidgetDemo extends DemoRoot {
       { path: '/', component: 'demo-readme' },
       { path: '/intro', component: 'demo-readme' },
       { path: '/form', component: 'form-demo' },
+      { path: '/dom', component: 'dom-demo' },
+      { path: '/widget', component: 'widget-demo' },
       {
         path: '(.*)',
         redirect: '/',
@@ -50,6 +56,8 @@ class WidgetDemo extends DemoRoot {
       <mwc-tab-bar class="tab-bar">
         <mwc-tab @click=${() => this.switchRoute('intro')} label="Intro"></mwc-tab>
         <mwc-tab @click=${() => this.switchRoute('form')} label="Form"></mwc-tab>
+        <mwc-tab @click=${() => this.switchRoute('dom')} label="Dom"></mwc-tab>
+        <mwc-tab @click=${() => this.switchRoute('widget')} label="Widget"></mwc-tab>
       </mwc-tab-bar>
 
       <div id="outlet">

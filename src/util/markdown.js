@@ -15,3 +15,15 @@ export const parse = (markdown) => {
     ${unsafeHTML(DOMPurify.sanitize(marked(markdown)))}
   `;
 };
+
+export const inner = (content) => {
+  if (!content) {
+    return html`
+      ${nothing}
+    `;
+  }
+
+  return html`
+    ${unsafeHTML(DOMPurify.sanitize(content))}
+  `;
+};

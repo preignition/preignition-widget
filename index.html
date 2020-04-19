@@ -17,13 +17,19 @@
         "@morbidick/lit-element-notify": "/web_modules/@morbidick/lit-element-notify.js",
         "@preignition/preignition-mixin": "/web_modules/@preignition/preignition-mixin.js",
         "@preignition/preignition-demo": "/web_modules/@preignition/preignition-demo.js",
+        "@preignition/lit-firebase": "/web_modules/@preignition/lit-firebase.js",
         "@polymer/": "/web_modules/@polymer/",
+        "@morbidick/lit-element-notify": "/web_modules/@morbidick/lit-element-notify.js",
         "@vaadin/router": "/web_modules/@vaadin/router.js",
         "@material/mwc-tab": "/web_modules/@material/mwc-tab.js",
+        "@material/mwc-button": "/web_modules/@material/mwc-button.js",
         "@material/mwc-tab-bar": "/web_modules/@material/mwc-tab-bar.js",
         "@material/mwc-textarea": "/web_modules/@material/mwc-textarea.js",
+        "@material/mwc-textfield": "/web_modules/@material/mwc-textfield.js",
+        "@material/mwc-linear-progress": "/web_modules/@material/mwc-linear-progress.js",
         "pwa-helpers/media-query.js": "/web_modules/pwa-helpers/media-query.js",
         "marked": "/web_modules/marked.js",
+        "cronstrue": "/web_modules/cronstrue.js",
         "dompurify": "/web_modules/dompurify.js",
         "marked/": "/web_modules/marked/",
         "lit-element": "/web_modules/lit-element.js",
@@ -37,6 +43,17 @@
   }
   </script>
 <link rel="stylesheet" href="src/style/tokens.custom-properties.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block">
+<script src="/node_modules/firebase/firebase-app.js"></script>
+<script src="/node_modules/firebase/firebase-auth.js"></script>
+<script src="/node_modules/firebase/firebase-database.js"></script>
+<script src="/node_modules/firebase/firebase-storage.js"></script>
+<script src="/initializeFirebase.js"></script>
+
+<!-- <script src="/bower_components/webcomponentsjs/webcomponents-loader.js"></script> -->
+<script src="./bower_components/webcomponentsjs/webcomponents-loader.js"></script>
+<link rel="import" href="./bower_components/vaadin-button/theme/material/vaadin-button.html">
+<link rel="import" href="./bower_components/firebase-upload/firebase-document-upload.html">
 <style>
   body {
       background: #fafafa;
@@ -47,7 +64,7 @@
    font-family: 'Roboto', 'Noto', sans-serif;
   }
   
-  html {
+  :root {
     --primary-color: #0277bd;
     --light-primary-color: #58a5f0;
     --dark-primary-color: #004c8c;
@@ -67,6 +84,7 @@
 
     --mdc-theme-primary: var(--primary-color);
     --mdc-theme-secondary: var(--secondary-color);
+    --color-danger: #b00020;
   }
 </style>
 

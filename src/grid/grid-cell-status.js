@@ -20,7 +20,7 @@ class GridCellStatus extends LitElement {
   }
   render() {
     return html ` 
-      <span class='${this.value}'>${this.computeValue(this.value)}<span>
+      <span class="${this.value}">${this.computeValue(this.value)}<span>
     `;
   }
 
