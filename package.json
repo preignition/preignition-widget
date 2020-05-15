@@ -1,6 +1,6 @@
 {
   "name": "@preignition/preignition-widget",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "SEE LICENCE IN LICENCE.md",
   "description": "lit-element based widget for preignition",
   "type": "module",
