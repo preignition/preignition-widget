@@ -1,9 +1,9 @@
-import { a as __extends, b as __assign, M as MDCFoundation, _ as __decorate } from '../common/foundation-11913d41.js';
-import { h as html } from '../common/lit-html-6f3ccd58.js';
+import { a as __extends, b as __assign, M as MDCFoundation, _ as __decorate } from '../common/foundation-afa2264e.js';
+import { h as html } from '../common/lit-html-75774733.js';
 import { query, property, css, customElement } from '../lit-element.js';
 import '../common/directive-5915da03.js';
-import { B as BaseElement, a as addHasRemoveClass } from '../common/base-element-ff6a90f7.js';
-import { o as observer } from '../common/observer-8ac22f62.js';
+import { B as BaseElement, a as addHasRemoveClass } from '../common/base-element-95b71ef1.js';
+import { o as observer } from '../common/observer-1afdc6e8.js';
 
 /**
  * @license
@@ -113,7 +113,7 @@ var strings = {
 var MDCLinearProgressFoundation = /** @class */ (function (_super) {
     __extends(MDCLinearProgressFoundation, _super);
     function MDCLinearProgressFoundation(adapter) {
-        return _super.call(this, __assign({}, MDCLinearProgressFoundation.defaultAdapter, adapter)) || this;
+        return _super.call(this, __assign(__assign({}, MDCLinearProgressFoundation.defaultAdapter), adapter)) || this;
     }
     Object.defineProperty(MDCLinearProgressFoundation, "cssClasses", {
         get: function () {
@@ -220,7 +220,10 @@ var MDCLinearProgressFoundation = /** @class */ (function (_super) {
     };
     MDCLinearProgressFoundation.prototype.setPrimaryBarProgress_ = function (progressValue) {
         var value = "scaleX(" + progressValue + ")";
-        this.adapter_.setPrimaryBarStyle(getCorrectPropertyName(window, 'transform'), value);
+        // Accessing `window` without a `typeof` check will throw on Node environments.
+        var transformProp = typeof window !== 'undefined' ?
+            getCorrectPropertyName(window, 'transform') : 'transform';
+        this.adapter_.setPrimaryBarStyle(transformProp, value);
     };
     MDCLinearProgressFoundation.prototype.setBufferBarProgress_ = function (progressValue) {
         var value = progressValue * 100 + "%";

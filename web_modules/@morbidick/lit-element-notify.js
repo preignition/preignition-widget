@@ -32,7 +32,7 @@ const LitNotify = (baseElement) => class NotifyingElement extends baseElement {
 
         for (const prop of changedProps.keys()) {
             const declaration = this.constructor._classProperties.get(prop);
-            if (!declaration || !declaration.notify) return;
+            if (!declaration || !declaration.notify) continue;
             const type = eventNameForProperty(prop, declaration);
             const value = this[prop];
             this.dispatchEvent(new CustomEvent(type, { detail: { value } }));

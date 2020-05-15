@@ -1,12 +1,12 @@
-import { g as isPrimitive, h as html, c as nothing, N as NodePart } from '../common/lit-html-6f3ccd58.js';
+import { o as isPrimitive, h as html, j as nothing, N as NodePart } from '../common/lit-html-75774733.js';
 import { css, LitElement, property, query, customElement } from '../lit-element.js';
 import { d as directive } from '../common/directive-5915da03.js';
-import { unsafeHTML } from '../lit-html/directives/unsafe-html.js';
-import DOMPurify from '../dompurify.js';
-import '../d3-selection.js';
-import { DefaultValueMixin, DoNotSetUndefinedValue } from './preignition-mixin.js';
-import { Router } from '../@vaadin/router.js';
 import { styleMap } from '../lit-html/directives/style-map.js';
+import { unsafeHTML } from '../lit-html/directives/unsafe-html.js';
+import purify from '../dompurify.js';
+import '../common/index-b9380d54.js';
+import { d as defaultValue, a as doNotSetUndefinedValue } from '../common/defaultValueMixin-78ffeba1.js';
+import { Router } from '../@vaadin/router.js';
 import { cache } from '../lit-html/directives/cache.js';
 
 var demoStyle = [
@@ -106,7 +106,7 @@ h5, h6 {
 // import { BaseMixin } from './src/demo-base-mixin.js';
 
 
-class BaseDemo extends DefaultValueMixin(DoNotSetUndefinedValue(LitElement)) {
+class BaseDemo extends defaultValue(doNotSetUndefinedValue(LitElement)) {
   static get styles() {
     return [
         demoStyle,
@@ -2341,7 +2341,7 @@ const parse = (markdown) => {
   }
 
   return html`
-    ${unsafeHTML(DOMPurify.sanitize(marked_1(markdown)))}
+    ${unsafeHTML(purify.sanitize(marked_1(markdown)))}
   `;
 };
 
@@ -2358,7 +2358,7 @@ function text(input, init) {
  * # demo-readme
  * @element demo-readme
  */
-class DemoReadme extends DefaultValueMixin(DoNotSetUndefinedValue(LitElement)) {
+class DemoReadme extends defaultValue(doNotSetUndefinedValue(LitElement)) {
 
   static get styles() {
     return [
@@ -3133,7 +3133,7 @@ const parse$1 = (markdown) => {
     `;
     }
     return html `
-    ${unsafeHTML(DOMPurify.sanitize(marked_1(markdown)))}
+    ${unsafeHTML(purify.sanitize(marked_1(markdown)))}
   `;
 };
 

@@ -1,11 +1,12 @@
-import { a as __extends, c as __read, b as __assign, M as MDCFoundation, _ as __decorate, m as matches } from '../common/foundation-11913d41.js';
-import { h as html } from '../common/lit-html-6f3ccd58.js';
+import { a as __extends, c as __read, b as __assign, M as MDCFoundation, _ as __decorate, m as matches } from '../common/foundation-afa2264e.js';
+import { h as html } from '../common/lit-html-75774733.js';
 import { query, eventOptions, css, customElement, property } from '../lit-element.js';
 import '../common/directive-5915da03.js';
-import '../common/ripple-directive-9f702031.js';
-import '../common/class-map-478f8cf1.js';
-import { B as BaseElement, a as addHasRemoveClass } from '../common/base-element-ff6a90f7.js';
-import { o as observer } from '../common/observer-8ac22f62.js';
+import { B as BaseElement, a as addHasRemoveClass } from '../common/base-element-95b71ef1.js';
+import '../common/foundation-46c942be.js';
+import '../common/class-map-2d40c3ae.js';
+import { o as observer } from '../common/observer-1afdc6e8.js';
+import '../common/ripple-directive-96cbb805.js';
 import { Tab } from './mwc-tab.js';
 
 /**
@@ -293,7 +294,7 @@ var MDCTabScrollerRTLReverse = /** @class */ (function (_super) {
 var MDCTabScrollerFoundation = /** @class */ (function (_super) {
     __extends(MDCTabScrollerFoundation, _super);
     function MDCTabScrollerFoundation(adapter) {
-        var _this = _super.call(this, __assign({}, MDCTabScrollerFoundation.defaultAdapter, adapter)) || this;
+        var _this = _super.call(this, __assign(__assign({}, MDCTabScrollerFoundation.defaultAdapter), adapter)) || this;
         /**
          * Controls whether we should handle the transitionend and interaction events during the animation.
          */
@@ -794,7 +795,7 @@ KEYCODE_MAP.set(numbers.SPACE_KEYCODE, strings$1.SPACE_KEY);
 var MDCTabBarFoundation = /** @class */ (function (_super) {
     __extends(MDCTabBarFoundation, _super);
     function MDCTabBarFoundation(adapter) {
-        var _this = _super.call(this, __assign({}, MDCTabBarFoundation.defaultAdapter, adapter)) || this;
+        var _this = _super.call(this, __assign(__assign({}, MDCTabBarFoundation.defaultAdapter), adapter)) || this;
         _this.useAutomaticActivation_ = false;
         return _this;
     }
@@ -1246,12 +1247,14 @@ __decorate([
     query('slot')
 ], TabBarBase.prototype, "tabsSlot", void 0);
 __decorate([
-    observer(async function (value) {
+    observer(async function () {
         await this.updateComplete;
         // only provoke the foundation if we are out of sync with it, i.e.
         // ignore an foundation generated set.
-        if (value !== this._previousActiveIndex) {
-            this.mdcFoundation.activateTab(value);
+        // use `activeIndex` directly to avoid staleness if it was set before the
+        // first render.
+        if (this.activeIndex !== this._previousActiveIndex) {
+            this.mdcFoundation.activateTab(this.activeIndex);
         }
     }),
     property({ type: Number })

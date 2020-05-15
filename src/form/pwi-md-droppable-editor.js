@@ -142,6 +142,7 @@ class PwiMdDroppableEditor extends PwiMdEditor {
 
   constructor() {
     super();
+    this.path = 'pathNeedToBeSet';
     this.addEventListener('paste', this.onPaste);
     this.accept = 'image/*, video/*';
   }
@@ -201,8 +202,12 @@ class PwiMdDroppableEditor extends PwiMdEditor {
     this.md = this.textarea.value;
   }
 
+  formatURL(url) {
+    return url;
+  }
+
   uploadingFinished(status) {
-    this.md = this.md.replace(imageLoading, `![${status.file.name.split('.')[0]}](${status.file.url})`);
+    this.md = this.md.replace(imageLoading, `![${status.file.name.split('.')[0]}](${this.formatURL(status.file.url)})`);
   }
 
   onclickUpload() {

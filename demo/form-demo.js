@@ -68,10 +68,36 @@ class FormDemo extends DemoBase {
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
+              <!--pwi-md .md="${'# coucou'}" ></pwi-md-->
               <pwi-textfield label="text"></pwi-textfield>
               
               <h2>API</h2>
               <demo-api-viewer selected="pwi-textfield"  src="/docs/pwi-cron-builder.json">` : ''}
+          </expansion-panel>
+
+           <expansion-panel >
+              <div slot="header">pwi-radio-group</div>
+              <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'api'} label="api"></mwc-tab>
+            </mwc-tab-bar >
+            ${this.activeTab === 'intro' ? html `
+              <h2>Example</h2>
+              <pwi-radio-group label="text">
+                <mwc-formfield label="first">
+                  <mwc-radio name="test" value="first"></mwc-radio>
+                </mwc-formfield>
+                <mwc-formfield label="second">
+                  <mwc-radio name="test" value="second"></mwc-radio>
+                </mwc-formfield>
+                <mwc-formfield label="third">
+                  <mwc-radio name="test" value="third"></mwc-radio>
+                </mwc-formfield>
+                
+              </pwi-radio-group>
+              
+              <h2>API</h2>
+              <demo-api-viewer selected="pwi-radio-group"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
           <expansion-panel >
@@ -97,10 +123,11 @@ class FormDemo extends DemoBase {
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
-              
+
               <pwi-md-droppable-editor 
                 id="editor" 
-                md="## test"  
+                md="## test" 
+                helper="i should appear" 
                 max-file-size="50000"
                 path="/blogData/PAC1cc5j9EN99ZG5A33mZS4Pf5i1/image/upload" 
                 write-label="Write your own terms" class="example">

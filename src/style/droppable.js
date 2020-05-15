@@ -4,7 +4,7 @@ export default css`
 
        :host(:not([nodrop])) [droppable] {
         overflow: hidden;
-        border: 1px dashed var(--color-divider);
+        border: 1px dashed var(--color-droppable-border, var(--color-divider));
         border-radius: 4px;
         transition: border-color 0.6s;
         position: relative;

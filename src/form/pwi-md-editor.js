@@ -13,8 +13,8 @@ import '@material/mwc-textarea';
  *
  * `<pwi-md-editor>` is a markdown text editor with a priview tab, similar to gitlab edit
  * 
- * @fires md-changes - evend fired when `md` changes
- * @fires md-paste - evend fired when user paste on textarea. User to listed for image copy.
+ * @fires md-changes - eventfired when `md` changes
+ * @fires md-paste - event fired when user paste on textarea. User to listed for image copy.
  */
 class PwiMdEditor extends LitElement {
 
@@ -51,6 +51,19 @@ class PwiMdEditor extends LitElement {
     .toolbar {
       color: var(--pwi-md-editor-toolbar-color, var(--secondary-text-color));
       display: flex;
+      opacity: 0;
+      will-change: opacity;
+      transition: opacity 150ms cubic-bezier(0.4, 0, 0.2, 1) 0s;
+      padding-right: 16px;
+      padding-left: 16px;
+    }
+
+    :host([hasfocus]) .toolbar {
+      opacity: 1;
+    }
+
+    :host([helper-persistent]) .toolbar {
+      opacity: 1;
     }
 
     .flex {
@@ -81,6 +94,11 @@ class PwiMdEditor extends LitElement {
     return {
 
       ...super.properties,
+
+      hasFocus: {
+        reflect: true,
+        type: Boolean
+      },
 
       /**
        * mardown text
@@ -116,7 +134,6 @@ class PwiMdEditor extends LitElement {
        */
       writeLabel: {
         type: String,
-        attribute: 'write-label'
       },
 
       /*
@@ -125,7 +142,6 @@ class PwiMdEditor extends LitElement {
        */
       previewLabel: {
         type: String,
-        attribute: 'preview-label'
       },
 
       /**
@@ -152,11 +168,19 @@ class PwiMdEditor extends LitElement {
         type: String
       },
 
+      /*
+       * `helperPersistent` true to make helper persistant
+       */
+      helperPersistent: {
+        type: Boolean,
+        reflect: true
+      },
+
       /**
        * true to make texarea readonly
        * @type {Boolean}
        */
-      readonly: {
+      readOnly: {
         type: Boolean
       }
 
@@ -181,10 +205,11 @@ class PwiMdEditor extends LitElement {
                 .ripple=${this.dragoverValid}
                 .cols=${this.cols}
                 .rows=${this.rows}
-                .helper=${this.helper}
-                .readonly=${this.readlonly}
+                .readOnly=${this.readOnly}
                 .value=${this.md} 
-                @input=${this.onValueChanged} 
+                @input=${this.onValueChanged}
+                @focus=${this.onFocus} 
+                @blur=${this.onBlur} 
                 placeholder=${this.placeholder}></pwi-textarea>
                 ${this.renderToolbar()}
              </div>
@@ -197,11 +222,20 @@ class PwiMdEditor extends LitElement {
 
   renderToolbar() {
     return html `
-     <small class="toolbar"><span class="flex"><a tabindex="-1" rel="noopener" href="https://en.wikipedia.org/wiki/Markdown" target="blank">Markdown</a> is supported.</span><slot name="bottomToolbar">${this.renderSlotToolbar()}</slot></small>
+     <small class="toolbar"><span class="flex">${this.helper}. <a tabindex="-1" rel="noopener" href="https://en.wikipedia.org/wiki/Markdown" target="blank">Markdown</a> is supported. </span class="helper"></span></span><slot name="bottomToolbar">${this.renderSlotToolbar()}</slot></small>
     `;
   }
+
+  onFocus(e) {
+    this.hasFocus = true;
+  }
+
+  onBlur(e) {
+    this.hasFocus = false;
+  }
+
   renderSlotToolbar() {
-    return  '';
+    return '';
   }
 
   constructor() {
