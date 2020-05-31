@@ -9,6 +9,15 @@ export const TwoWayBinding = (baseElement) => class extends baseElement {
     this.dispatchEvent(new CustomEvent('value-changed', { detail: { value: this.value }, bubbles: true, composed: true }));
   }
 
+
+  // update(changedProperties) {
+  //   if (changedProperties.has('value') && this.value === undefined) {
+  //     this.value = '';
+  //   }
+  //   super.update(changedProperties);
+  // }
+   
+
   updated(changedProperties) {
     const maxLength = changedProperties.get('maxLength');
     const maxLengthBecameDefined = maxLength === -1 && this.maxLength !== -1;
