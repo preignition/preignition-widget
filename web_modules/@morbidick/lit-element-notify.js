@@ -1,4 +1,4 @@
-import { d as directive } from '../common/directive-5915da03.js';
+import { d as directive } from '../common/directive-6dfed3e1.js';
 
 /**
  * Returns the event name for the given property.

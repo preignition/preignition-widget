@@ -1,9 +1,9 @@
-import { _ as __decorate } from '../common/foundation-afa2264e.js';
-import { h as html } from '../common/lit-html-75774733.js';
+import { _ as __decorate } from '../common/foundation-b6f846c7.js';
+import { h as html } from '../common/lit-html-14638caa.js';
 import { property, LitElement, css, customElement } from '../lit-element.js';
-import '../common/directive-5915da03.js';
-import '../common/foundation-46c942be.js';
-import { r as ripple } from '../common/ripple-directive-96cbb805.js';
+import '../common/directive-6dfed3e1.js';
+import '../common/foundation-3ecd1fa2.js';
+import { r as ripple } from '../common/ripple-directive-895b3844.js';
 
 /** @soyCompatible */
 class IconButtonBase extends LitElement {

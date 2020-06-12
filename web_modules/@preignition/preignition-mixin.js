@@ -1,9 +1,9 @@
-import '../common/lit-html-75774733.js';
+import '../common/lit-html-14638caa.js';
 import { unsafeCSS } from '../lit-element.js';
-import '../common/directive-5915da03.js';
-import '../common/index-b9380d54.js';
-import { s as select } from '../common/select-373efd49.js';
-export { d as DefaultValueMixin, a as DoNotSetUndefinedValue } from '../common/defaultValueMixin-78ffeba1.js';
+import '../common/directive-6dfed3e1.js';
+import '../common/index-dc5ca308.js';
+import { s as select } from '../common/select-ac6bf397.js';
+export { d as DefaultValueMixin, a as DoNotSetUndefinedValue } from '../common/defaultValueMixin-e85989c0.js';
 
 const selectShadow = (selector, el) => {
   return select(el.renderRoot.querySelector(selector));
@@ -85,12 +85,12 @@ const CacheId = superClass => {
 
     // Note(cg): stores all ids under this.$
     firstUpdated(props) {
-      super.firstUpdated(props);
       [...this.renderRoot.querySelectorAll('[id]')].forEach(node => {
         this.$[node.id] = node;
       });
+      super.firstUpdated(props);
     }
-  }
+  };
 };
 
 export { CacheId, RelayTo, selectMixin as SelectMixin, cssTheme, selectShadow };

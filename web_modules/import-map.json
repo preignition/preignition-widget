@@ -1,6 +1,5 @@
 {
   "imports": {
-    "@github/clipboard-copy-element": "./@github/clipboard-copy-element.js",
     "@material/mwc-button": "./@material/mwc-button.js",
     "@material/mwc-formfield": "./@material/mwc-formfield.js",
     "@material/mwc-icon-button": "./@material/mwc-icon-button.js",

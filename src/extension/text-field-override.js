@@ -5,17 +5,23 @@ import { html } from 'lit-element';
  * 
  */
 
-
 export const TextFieldOverride = (baseElement) => class extends baseElement {
  
-   // Note(cg): override because of  https://github.com/material-components/material-components-web-components/issues/1377.
-  renderCharCounter() {
-    if (!this.charCounterVisible) {
-        return undefined;
-    }
-    const length = Math.min(this.value && this.value.length || 0, this.maxLength);
-    return html `<span class="mdc-text-field-character-counter">${length} / ${this.maxLength}</span>`;
+  update(changedProperties) {
+      if (changedProperties.has('value') && this.value === undefined) {
+          this.value = '';
+      }
+      super.update(changedProperties);
   }
+  
+   // Note(cg): override because of  https://github.com/material-components/material-components-web-components/issues/1377.
+  // renderCharCounter() {
+  //   if (!this.charCounterVisible) {
+  //       return undefined;
+  //   }
+  //   const length = Math.min(this.value && this.value.length || 0, this.maxLength);
+  //   return html `<span class="mdc-text-field-character-counter">${length} / ${this.maxLength}</span>`;
+  // }
 };
 
 export default TextFieldOverride;

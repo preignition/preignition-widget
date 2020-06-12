@@ -182,6 +182,37 @@ class PwiMdEditor extends LitElement {
        */
       readOnly: {
         type: Boolean
+      },
+
+      /*
+       * `maxLength` 
+       */
+      maxLength: {
+        type: Number,
+      },
+
+      /*
+       * `maxLength` 
+       */
+      minLength: {
+        type: Number,
+      },
+
+      /*
+       * `charCounter` 
+       */
+      charCounter: {
+        type: Boolean,
+        // attribute: 'char-counter'
+      },
+
+      /*
+       * `resize` {'vertival' | 'horizontal' | 'auto'}
+       * apply resize css to text area
+       * Should be removed when https://github.com/material-components/material-components-web-components/issues/1305 lands
+       */
+      resize: {
+        type: String,
       }
 
 
@@ -207,6 +238,10 @@ class PwiMdEditor extends LitElement {
                 .rows=${this.rows}
                 .readOnly=${this.readOnly}
                 .value=${this.md} 
+                .resize=${this.resize}
+                .maxLength=${this.maxLength}
+                .minLength=${this.minLength}
+                .charCounter=${this.charCounter ? 'internal' : false}
                 @input=${this.onValueChanged}
                 @focus=${this.onFocus} 
                 @blur=${this.onBlur} 
@@ -222,7 +257,7 @@ class PwiMdEditor extends LitElement {
 
   renderToolbar() {
     return html `
-     <small class="toolbar"><span class="flex">${this.helper}. <a tabindex="-1" rel="noopener" href="https://en.wikipedia.org/wiki/Markdown" target="blank">Markdown</a> is supported. </span class="helper"></span></span><slot name="bottomToolbar">${this.renderSlotToolbar()}</slot></small>
+     <small class="toolbar"><span class="flex">${this.helper} <a tabindex="-1" rel="noopener" href="https://en.wikipedia.org/wiki/Markdown" target="blank">Markdown</a> is supported. </span class="helper"></span></span><slot name="bottomToolbar">${this.renderSlotToolbar()}</slot></small>
     `;
   }
 
@@ -243,6 +278,8 @@ class PwiMdEditor extends LitElement {
     this.placeholder = '';
     this.md = '';
     this.helper = '';
+    this.minLength = -1;
+    this.maxLength = -1;
     this.rows = 5;
     this._selected = 0;
     this.writeLabel = 'Write';

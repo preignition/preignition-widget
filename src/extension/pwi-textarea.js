@@ -28,8 +28,33 @@ class PwiTextArea extends TwoWayBinding(TextFieldOverride(TextArea)) {
       ripple: {
         type: Boolean,
         reflect: true
+      },
+
+      /*
+       * `resize` {'vertival' | 'horizontal' | 'auto'}
+       * apply resize css to text area
+       * Should be removed when https://github.com/material-components/material-components-web-components/issues/1305 lands
+       */
+      resize: {
+        type: String,
       }
     };
+  }
+
+  updated(props) {
+    if (props.has('resize')) {
+      this.setResize(this.resize);
+    }
+    super.updated(props);
+  }
+
+  setResize(resize) {
+    const style = this.renderRoot.querySelector('textarea').style;
+    if (resize) {
+      style.resize = resize;
+    } else {
+      style.resize = null;
+    }
   }
 }
 
