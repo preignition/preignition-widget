@@ -1,6 +1,6 @@
 import { html } from 'lit-element';
 import { LifSpan } from '@preignition/lit-firebase';
-import { parse } from '../util/markdown.js';
+import { parse } from '@preignition/preignition-util';
 
 /**
  * am element rendering marksown straight from firebase

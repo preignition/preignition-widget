@@ -1,12 +1,12 @@
-import { a as __extends, b as __assign, M as MDCFoundation, _ as __decorate } from '../common/foundation-b6f846c7.js';
+import { a as __extends, b as __assign, M as MDCFoundation, _ as __decorate } from '../common/foundation-3950d4be.js';
 import { h as html } from '../common/lit-html-14638caa.js';
 import { property, query, css, customElement } from '../lit-element.js';
 import '../common/directive-6dfed3e1.js';
-import { a as addHasRemoveClass } from '../common/base-element-55c11099.js';
-import '../common/foundation-3ecd1fa2.js';
-import { F as FormElement } from '../common/form-element-01a18f58.js';
-import { o as observer } from '../common/observer-f70e8ccc.js';
-import { r as ripple } from '../common/ripple-directive-895b3844.js';
+import { a as addHasRemoveClass } from '../common/base-element-ac737950.js';
+import '../common/foundation-20967c01.js';
+import { F as FormElement } from '../common/form-element-408f8838.js';
+import { o as observer } from '../common/observer-579e419c.js';
+import { r as ripple } from '../common/ripple-directive-8a3eafc7.js';
 
 /**
  * @license
@@ -106,18 +106,18 @@ var MDCSwitchFoundation = /** @class */ (function (_super) {
     });
     /** Sets the checked state of the switch. */
     MDCSwitchFoundation.prototype.setChecked = function (checked) {
-        this.adapter_.setNativeControlChecked(checked);
+        this.adapter.setNativeControlChecked(checked);
         this.updateAriaChecked_(checked);
         this.updateCheckedStyling_(checked);
     };
     /** Sets the disabled state of the switch. */
     MDCSwitchFoundation.prototype.setDisabled = function (disabled) {
-        this.adapter_.setNativeControlDisabled(disabled);
+        this.adapter.setNativeControlDisabled(disabled);
         if (disabled) {
-            this.adapter_.addClass(cssClasses.DISABLED);
+            this.adapter.addClass(cssClasses.DISABLED);
         }
         else {
-            this.adapter_.removeClass(cssClasses.DISABLED);
+            this.adapter.removeClass(cssClasses.DISABLED);
         }
     };
     /** Handles the change event for the switch native control. */
@@ -129,14 +129,14 @@ var MDCSwitchFoundation = /** @class */ (function (_super) {
     /** Updates the styling of the switch based on its checked state. */
     MDCSwitchFoundation.prototype.updateCheckedStyling_ = function (checked) {
         if (checked) {
-            this.adapter_.addClass(cssClasses.CHECKED);
+            this.adapter.addClass(cssClasses.CHECKED);
         }
         else {
-            this.adapter_.removeClass(cssClasses.CHECKED);
+            this.adapter.removeClass(cssClasses.CHECKED);
         }
     };
     MDCSwitchFoundation.prototype.updateAriaChecked_ = function (checked) {
-        this.adapter_.setNativeControlAttr(strings.ARIA_CHECKED_ATTR, "" + !!checked);
+        this.adapter.setNativeControlAttr(strings.ARIA_CHECKED_ATTR, "" + !!checked);
     };
     return MDCSwitchFoundation;
 }(MDCFoundation));

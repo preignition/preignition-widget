@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
-import { parse } from '../util/markdown.js';
+import { parse } from '@preignition/preignition-util';
 
 class PwiMd extends LitElement {
 

@@ -1,16 +1,7 @@
 import '../common/lit-html-14638caa.js';
 import { unsafeCSS } from '../lit-element.js';
 import '../common/directive-6dfed3e1.js';
-import '../common/index-dc5ca308.js';
-import { s as select } from '../common/select-ac6bf397.js';
-export { d as DefaultValueMixin, a as DoNotSetUndefinedValue } from '../common/defaultValueMixin-e85989c0.js';
-
-const selectShadow = (selector, el) => {
-  return select(el.renderRoot.querySelector(selector));
-};
-const queryShadow = (selector, el) => {
-  return el.renderRoot.querySelector(selector);
-};
+export { d as DefaultValueMixin, a as DoNotSetUndefinedValue } from '../common/defaultValueMixin-08d4cab8.js';
 
 /**
  * applies style to a already registered custom element
@@ -25,11 +16,19 @@ const cssTheme = (css, element) => {
   cls._styles.push(unsafeCSS(css));
 };
 
+// import { select } from 'd3-selection';
+// import { transition } from 'd3-transition';
+
+// export const selectShadow = (selector, el) => {
+//   return select(el.renderRoot.querySelector(selector));
+// }
+const queryShadow = (selector, el) => {
+  return el.renderRoot.querySelector(selector);
+};
+
+// export default selectShadow;
+
 const selectMixin = (superclass) => class extends superclass {
-  
-  selectShadow(selector) {
-    return selectShadow(selector, this);
-  }
   
   queryShadow(selector) {
     return queryShadow(selector, this);
@@ -93,4 +92,4 @@ const CacheId = superClass => {
   };
 };
 
-export { CacheId, RelayTo, selectMixin as SelectMixin, cssTheme, selectShadow };
+export { CacheId, RelayTo, selectMixin as SelectMixin, cssTheme };

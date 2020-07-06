@@ -1,9 +1,11 @@
-import { a as __extends, b as __assign, M as MDCFoundation, _ as __decorate } from './foundation-11913d41.js';
-import { h as html } from './lit-html-6f3ccd58.js';
+import { a as __extends, b as __assign, M as MDCFoundation, _ as __decorate } from './foundation-3950d4be.js';
+import { h as html, E as EventPart, N as NodePart, B as BooleanAttributePart, q as PropertyPart, k as AttributePart } from './lit-html-14638caa.js';
 import { query, property, css, customElement, eventOptions } from '../lit-element.js';
-import { d as directive } from './directive-5915da03.js';
-import { c as classMap } from './class-map-478f8cf1.js';
-import { B as BaseElement, a as addHasRemoveClass } from './base-element-ff6a90f7.js';
+import { d as directive } from './directive-6dfed3e1.js';
+import { B as BaseElement, a as addHasRemoveClass } from './base-element-ac737950.js';
+import { c as classMap } from './class-map-218836d4.js';
+import { F as FormElement } from './form-element-408f8838.js';
+import { o as observer } from './observer-579e419c.js';
 import { ifDefined } from '../lit-html/directives/if-defined.js';
 
 /**
@@ -66,7 +68,7 @@ var cssClasses = {
 var MDCNotchedOutlineFoundation = /** @class */ (function (_super) {
     __extends(MDCNotchedOutlineFoundation, _super);
     function MDCNotchedOutlineFoundation(adapter) {
-        return _super.call(this, __assign({}, MDCNotchedOutlineFoundation.defaultAdapter, adapter)) || this;
+        return _super.call(this, __assign(__assign({}, MDCNotchedOutlineFoundation.defaultAdapter), adapter)) || this;
     }
     Object.defineProperty(MDCNotchedOutlineFoundation, "strings", {
         get: function () {
@@ -114,16 +116,16 @@ var MDCNotchedOutlineFoundation = /** @class */ (function (_super) {
         if (notchWidth > 0) {
             notchWidth += numbers.NOTCH_ELEMENT_PADDING; // Add padding from left/right.
         }
-        this.adapter_.setNotchWidthProperty(notchWidth);
-        this.adapter_.addClass(OUTLINE_NOTCHED);
+        this.adapter.setNotchWidthProperty(notchWidth);
+        this.adapter.addClass(OUTLINE_NOTCHED);
     };
     /**
      * Removes notched outline selector to close the notch in the outline.
      */
     MDCNotchedOutlineFoundation.prototype.closeNotch = function () {
         var OUTLINE_NOTCHED = MDCNotchedOutlineFoundation.cssClasses.OUTLINE_NOTCHED;
-        this.adapter_.removeClass(OUTLINE_NOTCHED);
-        this.adapter_.removeNotchWidthProperty();
+        this.adapter.removeClass(OUTLINE_NOTCHED);
+        this.adapter.removeNotchWidthProperty();
     };
     return MDCNotchedOutlineFoundation;
 }(MDCFoundation));
@@ -157,8 +159,11 @@ class NotchedOutlineBase extends BaseElement {
     }
     render() {
         this.openOrClose(this.open, this.width);
+        const classes = classMap({
+            'mdc-notched-outline--notched': this.open,
+        });
         return html `
-      <span class="mdc-notched-outline">
+      <span class="mdc-notched-outline ${classes}">
         <span class="mdc-notched-outline__leading"></span>
         <span class="mdc-notched-outline__notch">
           <slot></slot>
@@ -196,7 +201,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-const style = css `.mdc-notched-outline{display:flex;position:absolute;top:0;right:0;left:0;box-sizing:border-box;width:100%;max-width:100%;height:100%;text-align:left;pointer-events:none}[dir=rtl] .mdc-notched-outline,.mdc-notched-outline[dir=rtl]{text-align:right}.mdc-notched-outline__leading,.mdc-notched-outline__notch,.mdc-notched-outline__trailing{box-sizing:border-box;height:100%;border-top:1px solid;border-bottom:1px solid;pointer-events:none}.mdc-notched-outline__leading{border-left:1px solid;border-right:none;width:12px}[dir=rtl] .mdc-notched-outline__leading,.mdc-notched-outline__leading[dir=rtl]{border-left:none;border-right:1px solid}.mdc-notched-outline__trailing{border-left:none;border-right:1px solid;flex-grow:1}[dir=rtl] .mdc-notched-outline__trailing,.mdc-notched-outline__trailing[dir=rtl]{border-left:1px solid;border-right:none}.mdc-notched-outline__notch{flex:0 0 auto;width:auto;max-width:calc(100% - 12px * 2)}.mdc-notched-outline .mdc-floating-label{display:inline-block;position:relative;max-width:100%}.mdc-notched-outline .mdc-floating-label--float-above{text-overflow:clip}.mdc-notched-outline--upgraded .mdc-floating-label--float-above{max-width:calc(100% / .75)}.mdc-notched-outline--notched .mdc-notched-outline__notch{padding-left:0;padding-right:8px;border-top:none}[dir=rtl] .mdc-notched-outline--notched .mdc-notched-outline__notch,.mdc-notched-outline--notched .mdc-notched-outline__notch[dir=rtl]{padding-left:8px;padding-right:0}.mdc-notched-outline--no-label .mdc-notched-outline__notch{padding:0}:host{display:block;position:absolute;right:0;left:0;box-sizing:border-box;width:100%;max-width:100%;height:100%;text-align:left;pointer-events:none}[dir=rtl] :host,:host[dir=rtl]{text-align:right}::slotted(.mdc-floating-label){display:inline-block;position:relative;top:17px;bottom:auto;max-width:100%}::slotted(.mdc-floating-label--float-above){text-overflow:clip}.mdc-notched-outline--upgraded ::slotted(.mdc-floating-label--float-above){max-width:calc(100% / .75)}.mdc-notched-outline__leading{width:12px;width:var(--mdc-notched-outline-leading-width, 12px);border-radius:4px 0 0 4px;border-radius:var(--mdc-notched-outline-leading-border-radius, 4px 0 0 4px)}.mdc-notched-outline__trailing{border-radius:0 4px 4px 0;border-radius:var(--mdc-notched-outline-trailing-border-radius, 0 4px 4px 0)}.mdc-notched-outline__leading,.mdc-notched-outline__notch,.mdc-notched-outline__trailing{border-color:var(--mdc-notched-outline-border-color, var(--mdc-theme-primary, #6200ee));border-width:1px;border-width:var(--mdc-notched-outline-stroke-width, 1px)}`;
+const style = css `.mdc-notched-outline{display:flex;position:absolute;top:0;right:0;left:0;box-sizing:border-box;width:100%;max-width:100%;height:100%;text-align:left;pointer-events:none}[dir=rtl] .mdc-notched-outline,.mdc-notched-outline[dir=rtl]{text-align:right}.mdc-notched-outline__leading,.mdc-notched-outline__notch,.mdc-notched-outline__trailing{box-sizing:border-box;height:100%;border-top:1px solid;border-bottom:1px solid;pointer-events:none}.mdc-notched-outline__leading{border-left:1px solid;border-right:none;width:12px}[dir=rtl] .mdc-notched-outline__leading,.mdc-notched-outline__leading[dir=rtl]{border-left:none;border-right:1px solid}.mdc-notched-outline__trailing{border-left:none;border-right:1px solid;flex-grow:1}[dir=rtl] .mdc-notched-outline__trailing,.mdc-notched-outline__trailing[dir=rtl]{border-left:1px solid;border-right:none}.mdc-notched-outline__notch{flex:0 0 auto;width:auto;max-width:calc(100% - 12px * 2)}.mdc-notched-outline .mdc-floating-label{display:inline-block;position:relative;max-width:100%}.mdc-notched-outline .mdc-floating-label--float-above{text-overflow:clip}.mdc-notched-outline--upgraded .mdc-floating-label--float-above{max-width:calc(100% / 0.75)}.mdc-notched-outline--notched .mdc-notched-outline__notch{padding-left:0;padding-right:8px;border-top:none}[dir=rtl] .mdc-notched-outline--notched .mdc-notched-outline__notch,.mdc-notched-outline--notched .mdc-notched-outline__notch[dir=rtl]{padding-left:8px;padding-right:0}.mdc-notched-outline--no-label .mdc-notched-outline__notch{padding:0}:host{display:block;position:absolute;right:0;left:0;box-sizing:border-box;width:100%;max-width:100%;height:100%;text-align:left;pointer-events:none}[dir=rtl] :host,:host[dir=rtl]{text-align:right}::slotted(.mdc-floating-label){display:inline-block;position:relative;top:17px;bottom:auto;max-width:100%}::slotted(.mdc-floating-label--float-above){text-overflow:clip}.mdc-notched-outline--upgraded ::slotted(.mdc-floating-label--float-above){max-width:calc(100% / .75)}.mdc-notched-outline .mdc-notched-outline__leading{border-top-left-radius:4px;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:4px}[dir=rtl] .mdc-notched-outline .mdc-notched-outline__leading,.mdc-notched-outline .mdc-notched-outline__leading[dir=rtl]{border-top-left-radius:0;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:0}.mdc-notched-outline .mdc-notched-outline__trailing{border-top-left-radius:0;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:0}[dir=rtl] .mdc-notched-outline .mdc-notched-outline__trailing,.mdc-notched-outline .mdc-notched-outline__trailing[dir=rtl]{border-top-left-radius:4px;border-top-right-radius:0;border-bottom-right-radius:0;border-bottom-left-radius:4px}.mdc-notched-outline__leading,.mdc-notched-outline__notch,.mdc-notched-outline__trailing{border-color:var(--mdc-notched-outline-border-color, var(--mdc-theme-primary, #6200ee));border-width:1px;border-width:var(--mdc-notched-outline-stroke-width, 1px)}.mdc-notched-outline--notched .mdc-notched-outline__notch{padding-top:0;padding-top:var(--mdc-notched-outline-notch-offset, 0)}`;
 
 let NotchedOutline = class NotchedOutline extends NotchedOutlineBase {
 };
@@ -204,45 +209,6 @@ NotchedOutline.styles = style;
 NotchedOutline = __decorate([
     customElement('mwc-notched-outline')
 ], NotchedOutline);
-
-/**
-@license
-Copyright 2018 Google Inc. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-*/
-class FormElement extends BaseElement {
-    createRenderRoot() {
-        return this.attachShadow({ mode: 'open', delegatesFocus: true });
-    }
-    click() {
-        if (this.formElement) {
-            this.formElement.focus();
-            this.formElement.click();
-        }
-    }
-    setAriaLabel(label) {
-        if (this.formElement) {
-            this.formElement.setAttribute('aria-label', label);
-        }
-    }
-    firstUpdated() {
-        super.firstUpdated();
-        this.mdcRoot.addEventListener('change', (e) => {
-            this.dispatchEvent(new Event('change', e));
-        });
-    }
-}
 
 /**
  * @license
@@ -268,6 +234,7 @@ class FormElement extends BaseElement {
  */
 var cssClasses$1 = {
     LABEL_FLOAT_ABOVE: 'mdc-floating-label--float-above',
+    LABEL_REQUIRED: 'mdc-floating-label--required',
     LABEL_SHAKE: 'mdc-floating-label--shake',
     ROOT: 'mdc-floating-label',
 };
@@ -297,7 +264,7 @@ var cssClasses$1 = {
 var MDCFloatingLabelFoundation = /** @class */ (function (_super) {
     __extends(MDCFloatingLabelFoundation, _super);
     function MDCFloatingLabelFoundation(adapter) {
-        var _this = _super.call(this, __assign({}, MDCFloatingLabelFoundation.defaultAdapter, adapter)) || this;
+        var _this = _super.call(this, __assign(__assign({}, MDCFloatingLabelFoundation.defaultAdapter), adapter)) || this;
         _this.shakeAnimationEndHandler_ = function () { return _this.handleShakeAnimationEnd_(); };
         return _this;
     }
@@ -327,16 +294,16 @@ var MDCFloatingLabelFoundation = /** @class */ (function (_super) {
         configurable: true
     });
     MDCFloatingLabelFoundation.prototype.init = function () {
-        this.adapter_.registerInteractionHandler('animationend', this.shakeAnimationEndHandler_);
+        this.adapter.registerInteractionHandler('animationend', this.shakeAnimationEndHandler_);
     };
     MDCFloatingLabelFoundation.prototype.destroy = function () {
-        this.adapter_.deregisterInteractionHandler('animationend', this.shakeAnimationEndHandler_);
+        this.adapter.deregisterInteractionHandler('animationend', this.shakeAnimationEndHandler_);
     };
     /**
      * Returns the width of the label element.
      */
     MDCFloatingLabelFoundation.prototype.getWidth = function () {
-        return this.adapter_.getWidth();
+        return this.adapter.getWidth();
     };
     /**
      * Styles the label to produce a shake animation to indicate an error.
@@ -345,10 +312,10 @@ var MDCFloatingLabelFoundation = /** @class */ (function (_super) {
     MDCFloatingLabelFoundation.prototype.shake = function (shouldShake) {
         var LABEL_SHAKE = MDCFloatingLabelFoundation.cssClasses.LABEL_SHAKE;
         if (shouldShake) {
-            this.adapter_.addClass(LABEL_SHAKE);
+            this.adapter.addClass(LABEL_SHAKE);
         }
         else {
-            this.adapter_.removeClass(LABEL_SHAKE);
+            this.adapter.removeClass(LABEL_SHAKE);
         }
     };
     /**
@@ -358,16 +325,29 @@ var MDCFloatingLabelFoundation = /** @class */ (function (_super) {
     MDCFloatingLabelFoundation.prototype.float = function (shouldFloat) {
         var _a = MDCFloatingLabelFoundation.cssClasses, LABEL_FLOAT_ABOVE = _a.LABEL_FLOAT_ABOVE, LABEL_SHAKE = _a.LABEL_SHAKE;
         if (shouldFloat) {
-            this.adapter_.addClass(LABEL_FLOAT_ABOVE);
+            this.adapter.addClass(LABEL_FLOAT_ABOVE);
         }
         else {
-            this.adapter_.removeClass(LABEL_FLOAT_ABOVE);
-            this.adapter_.removeClass(LABEL_SHAKE);
+            this.adapter.removeClass(LABEL_FLOAT_ABOVE);
+            this.adapter.removeClass(LABEL_SHAKE);
+        }
+    };
+    /**
+     * Styles the label as required.
+     * @param isRequired If true, adds an asterisk to the label, indicating that it is required.
+     */
+    MDCFloatingLabelFoundation.prototype.setRequired = function (isRequired) {
+        var LABEL_REQUIRED = MDCFloatingLabelFoundation.cssClasses.LABEL_REQUIRED;
+        if (isRequired) {
+            this.adapter.addClass(LABEL_REQUIRED);
+        }
+        else {
+            this.adapter.removeClass(LABEL_REQUIRED);
         }
     };
     MDCFloatingLabelFoundation.prototype.handleShakeAnimationEnd_ = function () {
         var LABEL_SHAKE = MDCFloatingLabelFoundation.cssClasses.LABEL_SHAKE;
-        this.adapter_.removeClass(LABEL_SHAKE);
+        this.adapter.removeClass(LABEL_SHAKE);
     };
     return MDCFloatingLabelFoundation;
 }(MDCFoundation));
@@ -396,11 +376,6 @@ const floatingLabel = directive((label) => (part) => {
         foundation.init();
         part.setValue(foundation);
         partToFoundationMap.set(part, { label, foundation });
-    }
-    else if (lastFoundation.label !== label) {
-        const labelElement = part.committer.element;
-        const labelChangeEvent = new Event('labelchange');
-        labelElement.dispatchEvent(labelChangeEvent);
     }
 });
 
@@ -456,7 +431,7 @@ var cssClasses$2 = {
 var MDCLineRippleFoundation = /** @class */ (function (_super) {
     __extends(MDCLineRippleFoundation, _super);
     function MDCLineRippleFoundation(adapter) {
-        var _this = _super.call(this, __assign({}, MDCLineRippleFoundation.defaultAdapter, adapter)) || this;
+        var _this = _super.call(this, __assign(__assign({}, MDCLineRippleFoundation.defaultAdapter), adapter)) || this;
         _this.transitionEndHandler_ = function (evt) { return _this.handleTransitionEnd(evt); };
         return _this;
     }
@@ -487,29 +462,29 @@ var MDCLineRippleFoundation = /** @class */ (function (_super) {
         configurable: true
     });
     MDCLineRippleFoundation.prototype.init = function () {
-        this.adapter_.registerEventHandler('transitionend', this.transitionEndHandler_);
+        this.adapter.registerEventHandler('transitionend', this.transitionEndHandler_);
     };
     MDCLineRippleFoundation.prototype.destroy = function () {
-        this.adapter_.deregisterEventHandler('transitionend', this.transitionEndHandler_);
+        this.adapter.deregisterEventHandler('transitionend', this.transitionEndHandler_);
     };
     MDCLineRippleFoundation.prototype.activate = function () {
-        this.adapter_.removeClass(cssClasses$2.LINE_RIPPLE_DEACTIVATING);
-        this.adapter_.addClass(cssClasses$2.LINE_RIPPLE_ACTIVE);
+        this.adapter.removeClass(cssClasses$2.LINE_RIPPLE_DEACTIVATING);
+        this.adapter.addClass(cssClasses$2.LINE_RIPPLE_ACTIVE);
     };
     MDCLineRippleFoundation.prototype.setRippleCenter = function (xCoordinate) {
-        this.adapter_.setStyle('transform-origin', xCoordinate + "px center");
+        this.adapter.setStyle('transform-origin', xCoordinate + "px center");
     };
     MDCLineRippleFoundation.prototype.deactivate = function () {
-        this.adapter_.addClass(cssClasses$2.LINE_RIPPLE_DEACTIVATING);
+        this.adapter.addClass(cssClasses$2.LINE_RIPPLE_DEACTIVATING);
     };
     MDCLineRippleFoundation.prototype.handleTransitionEnd = function (evt) {
         // Wait for the line ripple to be either transparent or opaque
         // before emitting the animation end event
-        var isDeactivating = this.adapter_.hasClass(cssClasses$2.LINE_RIPPLE_DEACTIVATING);
+        var isDeactivating = this.adapter.hasClass(cssClasses$2.LINE_RIPPLE_DEACTIVATING);
         if (evt.propertyName === 'opacity') {
             if (isDeactivating) {
-                this.adapter_.removeClass(cssClasses$2.LINE_RIPPLE_ACTIVE);
-                this.adapter_.removeClass(cssClasses$2.LINE_RIPPLE_DEACTIVATING);
+                this.adapter.removeClass(cssClasses$2.LINE_RIPPLE_ACTIVE);
+                this.adapter.removeClass(cssClasses$2.LINE_RIPPLE_DEACTIVATING);
             }
         }
     };
@@ -573,12 +548,13 @@ var strings$1 = {
     LEADING_ICON_SELECTOR: '.mdc-text-field__icon--leading',
     LINE_RIPPLE_SELECTOR: '.mdc-line-ripple',
     OUTLINE_SELECTOR: '.mdc-notched-outline',
+    PREFIX_SELECTOR: '.mdc-text-field__affix--prefix',
+    SUFFIX_SELECTOR: '.mdc-text-field__affix--suffix',
     TRAILING_ICON_SELECTOR: '.mdc-text-field__icon--trailing'
 };
 var cssClasses$3 = {
     DISABLED: 'mdc-text-field--disabled',
     FOCUSED: 'mdc-text-field--focused',
-    FULLWIDTH: 'mdc-text-field--fullwidth',
     HELPER_LINE: 'mdc-text-field-helper-line',
     INVALID: 'mdc-text-field--invalid',
     LABEL_FLOATING: 'mdc-text-field--label-floating',
@@ -638,7 +614,7 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
      */
     function MDCTextFieldFoundation(adapter, foundationMap) {
         if (foundationMap === void 0) { foundationMap = {}; }
-        var _this = _super.call(this, __assign({}, MDCTextFieldFoundation.defaultAdapter, adapter)) || this;
+        var _this = _super.call(this, __assign(__assign({}, MDCTextFieldFoundation.defaultAdapter), adapter)) || this;
         _this.isFocused_ = false;
         _this.receivedUserInput_ = false;
         _this.isValid_ = true;
@@ -721,6 +697,7 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
                 setLineRippleTransformOrigin: function () { return undefined; },
                 shakeLabel: function () { return undefined; },
                 floatLabel: function () { return undefined; },
+                setLabelRequired: function () { return undefined; },
                 hasLabel: function () { return false; },
                 getLabelWidth: function () { return 0; },
                 hasOutline: function () { return false; },
@@ -734,45 +711,48 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
     });
     MDCTextFieldFoundation.prototype.init = function () {
         var _this = this;
-        if (this.adapter_.isFocused()) {
+        if (this.adapter.hasLabel() && this.getNativeInput_().required) {
+            this.adapter.setLabelRequired(true);
+        }
+        if (this.adapter.isFocused()) {
             this.inputFocusHandler_();
         }
-        else if (this.adapter_.hasLabel() && this.shouldFloat) {
+        else if (this.adapter.hasLabel() && this.shouldFloat) {
             this.notchOutline(true);
-            this.adapter_.floatLabel(true);
+            this.adapter.floatLabel(true);
             this.styleFloating_(true);
         }
-        this.adapter_.registerInputInteractionHandler('focus', this.inputFocusHandler_);
-        this.adapter_.registerInputInteractionHandler('blur', this.inputBlurHandler_);
-        this.adapter_.registerInputInteractionHandler('input', this.inputInputHandler_);
+        this.adapter.registerInputInteractionHandler('focus', this.inputFocusHandler_);
+        this.adapter.registerInputInteractionHandler('blur', this.inputBlurHandler_);
+        this.adapter.registerInputInteractionHandler('input', this.inputInputHandler_);
         POINTERDOWN_EVENTS.forEach(function (evtType) {
-            _this.adapter_.registerInputInteractionHandler(evtType, _this.setPointerXOffset_);
+            _this.adapter.registerInputInteractionHandler(evtType, _this.setPointerXOffset_);
         });
         INTERACTION_EVENTS.forEach(function (evtType) {
-            _this.adapter_.registerTextFieldInteractionHandler(evtType, _this.textFieldInteractionHandler_);
+            _this.adapter.registerTextFieldInteractionHandler(evtType, _this.textFieldInteractionHandler_);
         });
         this.validationObserver_ =
-            this.adapter_.registerValidationAttributeChangeHandler(this.validationAttributeChangeHandler_);
+            this.adapter.registerValidationAttributeChangeHandler(this.validationAttributeChangeHandler_);
         this.setCharacterCounter_(this.getValue().length);
     };
     MDCTextFieldFoundation.prototype.destroy = function () {
         var _this = this;
-        this.adapter_.deregisterInputInteractionHandler('focus', this.inputFocusHandler_);
-        this.adapter_.deregisterInputInteractionHandler('blur', this.inputBlurHandler_);
-        this.adapter_.deregisterInputInteractionHandler('input', this.inputInputHandler_);
+        this.adapter.deregisterInputInteractionHandler('focus', this.inputFocusHandler_);
+        this.adapter.deregisterInputInteractionHandler('blur', this.inputBlurHandler_);
+        this.adapter.deregisterInputInteractionHandler('input', this.inputInputHandler_);
         POINTERDOWN_EVENTS.forEach(function (evtType) {
-            _this.adapter_.deregisterInputInteractionHandler(evtType, _this.setPointerXOffset_);
+            _this.adapter.deregisterInputInteractionHandler(evtType, _this.setPointerXOffset_);
         });
         INTERACTION_EVENTS.forEach(function (evtType) {
-            _this.adapter_.deregisterTextFieldInteractionHandler(evtType, _this.textFieldInteractionHandler_);
+            _this.adapter.deregisterTextFieldInteractionHandler(evtType, _this.textFieldInteractionHandler_);
         });
-        this.adapter_.deregisterValidationAttributeChangeHandler(this.validationObserver_);
+        this.adapter.deregisterValidationAttributeChangeHandler(this.validationObserver_);
     };
     /**
      * Handles user interactions with the Text Field.
      */
     MDCTextFieldFoundation.prototype.handleTextFieldInteraction = function () {
-        var nativeInput = this.adapter_.getNativeInput();
+        var nativeInput = this.adapter.getNativeInput();
         if (nativeInput && nativeInput.disabled) {
             return;
         }
@@ -786,6 +766,7 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
         attributesList.some(function (attributeName) {
             if (VALIDATION_ATTR_WHITELIST.indexOf(attributeName) > -1) {
                 _this.styleValidity_(true);
+                _this.adapter.setLabelRequired(_this.getNativeInput_().required);
                 return true;
             }
             return false;
@@ -798,15 +779,15 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
      * Opens/closes the notched outline.
      */
     MDCTextFieldFoundation.prototype.notchOutline = function (openNotch) {
-        if (!this.adapter_.hasOutline()) {
+        if (!this.adapter.hasOutline()) {
             return;
         }
         if (openNotch) {
-            var labelWidth = this.adapter_.getLabelWidth() * numbers$1.LABEL_SCALE;
-            this.adapter_.notchOutline(labelWidth);
+            var labelWidth = this.adapter.getLabelWidth() * numbers$1.LABEL_SCALE;
+            this.adapter.notchOutline(labelWidth);
         }
         else {
-            this.adapter_.closeOutline();
+            this.adapter.closeOutline();
         }
     };
     /**
@@ -815,12 +796,12 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
     MDCTextFieldFoundation.prototype.activateFocus = function () {
         this.isFocused_ = true;
         this.styleFocused_(this.isFocused_);
-        this.adapter_.activateLineRipple();
-        if (this.adapter_.hasLabel()) {
+        this.adapter.activateLineRipple();
+        if (this.adapter.hasLabel()) {
             this.notchOutline(this.shouldFloat);
-            this.adapter_.floatLabel(this.shouldFloat);
+            this.adapter.floatLabel(this.shouldFloat);
             this.styleFloating_(this.shouldFloat);
-            this.adapter_.shakeLabel(this.shouldShake);
+            this.adapter.shakeLabel(this.shouldShake);
         }
         if (this.helperText_) {
             this.helperText_.showToScreenReader();
@@ -831,11 +812,14 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
      * animation will animate out from the user's click location.
      */
     MDCTextFieldFoundation.prototype.setTransformOrigin = function (evt) {
+        if (this.isDisabled() || this.adapter.hasOutline()) {
+            return;
+        }
         var touches = evt.touches;
         var targetEvent = touches ? touches[0] : evt;
         var targetClientRect = targetEvent.target.getBoundingClientRect();
         var normalizedX = targetEvent.clientX - targetClientRect.left;
-        this.adapter_.setLineRippleTransformOrigin(normalizedX);
+        this.adapter.setLineRippleTransformOrigin(normalizedX);
     };
     /**
      * Handles input change of text input and text area.
@@ -858,15 +842,15 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
      */
     MDCTextFieldFoundation.prototype.deactivateFocus = function () {
         this.isFocused_ = false;
-        this.adapter_.deactivateLineRipple();
+        this.adapter.deactivateLineRipple();
         var isValid = this.isValid();
         this.styleValidity_(isValid);
         this.styleFocused_(this.isFocused_);
-        if (this.adapter_.hasLabel()) {
+        if (this.adapter.hasLabel()) {
             this.notchOutline(this.shouldFloat);
-            this.adapter_.floatLabel(this.shouldFloat);
+            this.adapter.floatLabel(this.shouldFloat);
             this.styleFloating_(this.shouldFloat);
-            this.adapter_.shakeLabel(this.shouldShake);
+            this.adapter.shakeLabel(this.shouldShake);
         }
         if (!this.shouldFloat) {
             this.receivedUserInput_ = false;
@@ -886,11 +870,11 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
         this.setCharacterCounter_(value.length);
         var isValid = this.isValid();
         this.styleValidity_(isValid);
-        if (this.adapter_.hasLabel()) {
+        if (this.adapter.hasLabel()) {
             this.notchOutline(this.shouldFloat);
-            this.adapter_.floatLabel(this.shouldFloat);
+            this.adapter.floatLabel(this.shouldFloat);
             this.styleFloating_(this.shouldFloat);
-            this.adapter_.shakeLabel(this.shouldShake);
+            this.adapter.shakeLabel(this.shouldShake);
         }
     };
     /**
@@ -907,8 +891,8 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
         this.isValid_ = isValid;
         this.styleValidity_(isValid);
         var shouldShake = !isValid && !this.isFocused_ && !!this.getValue();
-        if (this.adapter_.hasLabel()) {
-            this.adapter_.shakeLabel(shouldShake);
+        if (this.adapter.hasLabel()) {
+            this.adapter.shakeLabel(shouldShake);
         }
     };
     /**
@@ -1000,10 +984,10 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
     MDCTextFieldFoundation.prototype.styleValidity_ = function (isValid) {
         var INVALID = MDCTextFieldFoundation.cssClasses.INVALID;
         if (isValid) {
-            this.adapter_.removeClass(INVALID);
+            this.adapter.removeClass(INVALID);
         }
         else {
-            this.adapter_.addClass(INVALID);
+            this.adapter.addClass(INVALID);
         }
         if (this.helperText_) {
             this.helperText_.setValidity(isValid);
@@ -1015,10 +999,10 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
     MDCTextFieldFoundation.prototype.styleFocused_ = function (isFocused) {
         var FOCUSED = MDCTextFieldFoundation.cssClasses.FOCUSED;
         if (isFocused) {
-            this.adapter_.addClass(FOCUSED);
+            this.adapter.addClass(FOCUSED);
         }
         else {
-            this.adapter_.removeClass(FOCUSED);
+            this.adapter.removeClass(FOCUSED);
         }
     };
     /**
@@ -1027,11 +1011,11 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
     MDCTextFieldFoundation.prototype.styleDisabled_ = function (isDisabled) {
         var _a = MDCTextFieldFoundation.cssClasses, DISABLED = _a.DISABLED, INVALID = _a.INVALID;
         if (isDisabled) {
-            this.adapter_.addClass(DISABLED);
-            this.adapter_.removeClass(INVALID);
+            this.adapter.addClass(DISABLED);
+            this.adapter.removeClass(INVALID);
         }
         else {
-            this.adapter_.removeClass(DISABLED);
+            this.adapter.removeClass(DISABLED);
         }
         if (this.leadingIcon_) {
             this.leadingIcon_.setDisabled(isDisabled);
@@ -1046,23 +1030,24 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
     MDCTextFieldFoundation.prototype.styleFloating_ = function (isFloating) {
         var LABEL_FLOATING = MDCTextFieldFoundation.cssClasses.LABEL_FLOATING;
         if (isFloating) {
-            this.adapter_.addClass(LABEL_FLOATING);
+            this.adapter.addClass(LABEL_FLOATING);
         }
         else {
-            this.adapter_.removeClass(LABEL_FLOATING);
+            this.adapter.removeClass(LABEL_FLOATING);
         }
     };
     /**
      * @return The native text input element from the host environment, or an object with the same shape for unit tests.
      */
     MDCTextFieldFoundation.prototype.getNativeInput_ = function () {
-        // this.adapter_ may be undefined in foundation unit tests. This happens when testdouble is creating a mock object
+        // this.adapter may be undefined in foundation unit tests. This happens when testdouble is creating a mock object
         // and invokes the shouldShake/shouldFloat getters (which in turn call getValue(), which calls this method) before
         // init() has been called from the MDCTextField constructor. To work around that issue, we return a dummy object.
-        var nativeInput = this.adapter_ ? this.adapter_.getNativeInput() : null;
+        var nativeInput = this.adapter ? this.adapter.getNativeInput() : null;
         return nativeInput || {
             disabled: false,
             maxLength: -1,
+            required: false,
             type: 'input',
             validity: {
                 badInput: false,
@@ -1076,109 +1061,75 @@ var MDCTextFieldFoundation = /** @class */ (function (_super) {
 
 /**
  * @license
- * Copyright 2019 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * Copyright (c) 2020 The Polymer Project Authors. All rights reserved.
+ * This code may only be used under the BSD style license found at
+ * http://polymer.github.io/LICENSE.txt
+ * The complete set of authors may be found at
+ * http://polymer.github.io/AUTHORS.txt
+ * The complete set of contributors may be found at
+ * http://polymer.github.io/CONTRIBUTORS.txt
+ * Code distributed by Google as part of the polymer project is also
+ * subject to an additional IP rights grant found at
+ * http://polymer.github.io/PATENTS.txt
  */
-var cssClasses$4 = {
-    ROOT: 'mdc-text-field-character-counter',
-};
-var strings$2 = {
-    ROOT_SELECTOR: "." + cssClasses$4.ROOT,
-};
-
 /**
- * @license
- * Copyright 2019 Google Inc.
+ * Checks binding values against live DOM values, instead of previously bound
+ * values, when determining whether to update the value.
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
+ * This is useful for cases where the DOM value may change from outside of
+ * lit-html, such as with a binding to an `<input>` element's `value` property,
+ * a content editable elements text, or to a custom element that changes it's
+ * own properties or attributes.
  *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
+ * In these cases if the DOM value changes, but the value set through lit-html
+ * bindings hasn't, lit-html won't know to update the DOM value and will leave
+ * it alone. If this is not what you want—if you want to overwrite the DOM
+ * value with the bound value no matter what—use the `live()` directive:
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ *     html`<input .value=${live(x)}>`
+ *
+ * `live()` performs a strict equality check agains the live DOM value, and if
+ * the new value is equal to the live value, does nothing. This means that
+ * `live()` should not be used when the binding will cause a type conversion. If
+ * you use `live()` with an attribute binding, make sure that only strings are
+ * passed in, or the binding will update every render.
  */
-var MDCTextFieldCharacterCounterFoundation = /** @class */ (function (_super) {
-    __extends(MDCTextFieldCharacterCounterFoundation, _super);
-    function MDCTextFieldCharacterCounterFoundation(adapter) {
-        return _super.call(this, __assign({}, MDCTextFieldCharacterCounterFoundation.defaultAdapter, adapter)) || this;
+const live = directive((value) => (part) => {
+    let previousValue;
+    if (part instanceof EventPart || part instanceof NodePart) {
+        throw new Error('The `live` directive is not allowed on text or event bindings');
     }
-    Object.defineProperty(MDCTextFieldCharacterCounterFoundation, "cssClasses", {
-        get: function () {
-            return cssClasses$4;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextFieldCharacterCounterFoundation, "strings", {
-        get: function () {
-            return strings$2;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCTextFieldCharacterCounterFoundation, "defaultAdapter", {
-        /**
-         * See {@link MDCTextFieldCharacterCounterAdapter} for typing information on parameters and return types.
-         */
-        get: function () {
-            return {
-                setContent: function () { return undefined; },
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCTextFieldCharacterCounterFoundation.prototype.setCounterValue = function (currentLength, maxLength) {
-        currentLength = Math.min(currentLength, maxLength);
-        this.adapter_.setContent(currentLength + " / " + maxLength);
-    };
-    return MDCTextFieldCharacterCounterFoundation;
-}(MDCFoundation));
-
-const createAdapter$2 = (hostElement) => {
-    return { setContent: (content) => hostElement.textContent = content };
-};
-const partToFoundationMap$2 = new WeakMap();
-const characterCounter = directive(() => (part) => {
-    const lastFoundation = partToFoundationMap$2.get(part);
-    if (!lastFoundation) {
-        const hostElement = part.committer.element;
-        hostElement.classList.add('mdc-text-field-character-counter');
-        const adapter = createAdapter$2(hostElement);
-        const foundation = new MDCTextFieldCharacterCounterFoundation(adapter);
-        foundation.init();
-        part.setValue(foundation);
-        partToFoundationMap$2.set(part, foundation);
+    if (part instanceof BooleanAttributePart) {
+        checkStrings(part.strings);
+        previousValue = part.element.hasAttribute(part.name);
+        // This is a hack needed because BooleanAttributePart doesn't have a
+        // committer and does its own dirty checking after directives
+        part.value = previousValue;
     }
+    else {
+        const { element, name, strings } = part.committer;
+        checkStrings(strings);
+        if (part instanceof PropertyPart) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            previousValue = element[name];
+            if (previousValue === value) {
+                return;
+            }
+        }
+        else if (part instanceof AttributePart) {
+            previousValue = element.getAttribute(name);
+        }
+        if (previousValue === String(value)) {
+            return;
+        }
+    }
+    part.setValue(value);
 });
+const checkStrings = (strings) => {
+    if (strings.length !== 2 || strings[0] !== '' || strings[1] !== '') {
+        throw new Error('`live` bindings can only contain a single expression');
+    }
+};
 
 const passiveEvents = ['touchstart', 'touchmove', 'scroll', 'mousewheel'];
 const createValidityObj = (customValidity = {}) => {
@@ -1216,9 +1167,9 @@ class TextFieldBase extends FormElement {
         this.iconTrailing = '';
         this.disabled = false;
         this.required = false;
+        this.minLength = -1;
         this.maxLength = -1;
         this.outlined = false;
-        this.fullWidth = false;
         this.helper = '';
         this.validateOnInitialRender = false;
         this.validationMessage = '';
@@ -1227,16 +1178,20 @@ class TextFieldBase extends FormElement {
         this.min = '';
         this.max = '';
         this.step = null;
+        this.size = null;
         this.helperPersistent = false;
         this.charCounter = false;
         this.endAligned = false;
+        this.prefix = '';
+        this.suffix = '';
+        this.name = '';
         this.readOnly = false;
+        this.autocapitalize = '';
         this.outlineOpen = false;
         this.outlineWidth = 0;
         this.isUiValid = true;
         this._validity = createValidityObj();
         this._outlineUpdateComplete = null;
-        this._valueSetOnInputEvent = false;
         this.validityTransform = null;
     }
     get validity() {
@@ -1274,12 +1229,18 @@ class TextFieldBase extends FormElement {
     setSelectionRange(selectionStart, selectionEnd, selectionDirection) {
         this.formElement.setSelectionRange(selectionStart, selectionEnd, selectionDirection);
     }
+    update(changedProperties) {
+        if (changedProperties.has('value') && typeof this.value !== 'string') {
+            this.value = `${this.value}`;
+        }
+        super.update(changedProperties);
+    }
     render() {
         const classes = {
             'mdc-text-field--disabled': this.disabled,
             'mdc-text-field--no-label': !this.label,
+            'mdc-text-field--filled': !this.outlined,
             'mdc-text-field--outlined': this.outlined,
-            'mdc-text-field--fullwidth': this.fullWidth,
             'mdc-text-field--with-leading-icon': this.icon,
             'mdc-text-field--with-trailing-icon': this.iconTrailing,
             'mdc-text-field--end-aligned': this.endAligned,
@@ -1289,7 +1250,9 @@ class TextFieldBase extends FormElement {
       <label class="mdc-text-field ${classMap(classes)}">
         ${ripple}
         ${this.icon ? this.renderIcon(this.icon) : ''}
+        ${this.prefix ? this.renderAffix(this.prefix) : ''}
         ${this.renderInput()}
+        ${this.suffix ? this.renderAffix(this.suffix, true) : ''}
         ${this.iconTrailing ? this.renderIcon(this.iconTrailing, true) : ''}
         ${this.outlined ? this.renderOutlined() : this.renderLabelText()}
       </label>
@@ -1297,44 +1260,47 @@ class TextFieldBase extends FormElement {
     `;
     }
     updated(changedProperties) {
-        const maxLength = changedProperties.get('maxLength');
-        const maxLengthBecameDefined = maxLength === -1 && this.maxLength !== -1;
-        const maxLengthBecameUndefined = maxLength !== undefined && maxLength !== -1 && this.maxLength === -1;
-        /* We want to recreate the foundation if maxLength changes to defined or
-         * undefined, because the textfield foundation needs to be instantiated with
-         * the char counter's foundation, and the char counter's foundation needs
-         * to have maxLength defined to be instantiated. Additionally, there is no
-         * exposed API on the MdcTextFieldFoundation to dynamically add a char
-         * counter foundation, so we must recreate it.
-         */
-        if (maxLengthBecameDefined || maxLengthBecameUndefined) {
-            this.createFoundation();
-        }
         if (changedProperties.has('value') &&
             changedProperties.get('value') !== undefined) {
             this.mdcFoundation.setValue(this.value);
         }
     }
     renderInput() {
+        const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
         const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
+        const autocapitalizeOrUndef = this.autocapitalize ? this.autocapitalize : undefined;
+        // TODO: live() directive needs casting for lit-analyzer
+        // https://github.com/runem/lit-analyzer/pull/91/files
         return html `
       <input
           aria-labelledby="label"
           class="mdc-text-field__input"
           type="${this.type}"
-          .value="${this.value}"
+          .value="${live(this.value)}"
           ?disabled="${this.disabled}"
           placeholder="${this.placeholder}"
           ?required="${this.required}"
           ?readonly="${this.readOnly}"
+          minlength="${ifDefined(minOrUndef)}"
           maxlength="${ifDefined(maxOrUndef)}"
           pattern="${ifDefined(this.pattern ? this.pattern : undefined)}"
           min="${ifDefined(this.min === '' ? undefined : this.min)}"
           max="${ifDefined(this.max === '' ? undefined : this.max)}"
           step="${ifDefined(this.step === null ? undefined : this.step)}"
+          size="${ifDefined(this.size === null ? undefined : this.size)}"
+          name="${ifDefined(this.name === '' ? undefined : this.name)}"
           inputmode="${ifDefined(this.inputMode)}"
+          autocapitalize="${ifDefined(autocapitalizeOrUndef)}"
           @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
+    }
+    renderAffix(content, isSuffix = false) {
+        const classes = {
+            'mdc-text-field__affix--prefix': !isSuffix,
+            'mdc-text-field__affix--suffix': isSuffix
+        };
+        return html `<span class="mdc-text-field__affix ${classMap(classes)}">
+        ${content}</span>`;
     }
     renderIcon(icon, isTrailingIcon = false) {
         const classes = {
@@ -1349,7 +1315,6 @@ class TextFieldBase extends FormElement {
             labelTemplate = html `
         <span
             .floatingLabelFoundation=${floatingLabel(this.label)}
-            @labelchange=${this.onLabelChange}
             id="label">
           ${this.label}
         </span>
@@ -1365,7 +1330,7 @@ class TextFieldBase extends FormElement {
     }
     renderLabelText() {
         let labelTemplate = '';
-        if (this.label && !this.fullWidth) {
+        if (this.label) {
             labelTemplate = html `
       <span
           .floatingLabelFoundation=${floatingLabel(this.label)}
@@ -1379,32 +1344,27 @@ class TextFieldBase extends FormElement {
     `;
     }
     renderHelperText(charCounterTemplate) {
+        if (!this.shouldRenderHelperText) {
+            return undefined;
+        }
         const showValidationMessage = this.validationMessage && !this.isUiValid;
         const classes = {
             'mdc-text-field-helper-text--persistent': this.helperPersistent,
             'mdc-text-field-helper-text--validation-msg': showValidationMessage,
         };
-        const rootClasses = {
-            hidden: !this.shouldRenderHelperText,
-        };
         return html `
-      <div class="mdc-text-field-helper-line ${classMap(rootClasses)}">
-        <div class="mdc-text-field-helper-text ${classMap(classes)}">
-          ${showValidationMessage ? this.validationMessage : this.helper}
-        </div>
+      <div class="mdc-text-field-helper-line">
+        <div class="mdc-text-field-helper-text ${classMap(classes)}">${showValidationMessage ? this.validationMessage : this.helper}</div>
         ${charCounterTemplate}
       </div>
     `;
     }
     renderCharCounter() {
-        const counterClasses = {
-            hidden: !this.charCounterVisible,
-        };
-        return html `
-      <div
-          class="${classMap(counterClasses)}"
-          .charCounterFoundation=${characterCounter()}>
-      </div>`;
+        if (!this.charCounterVisible) {
+            return undefined;
+        }
+        const length = Math.min(this.value.length, this.maxLength);
+        return html `<span class="mdc-text-field-character-counter">${length} / ${this.maxLength}</span>`;
     }
     onInputBlur() {
         this.reportValidity();
@@ -1442,45 +1402,29 @@ class TextFieldBase extends FormElement {
         this.formElement.setCustomValidity(message);
     }
     handleInputChange() {
-        this._valueSetOnInputEvent = true;
         this.value = this.formElement.value;
         if (this.autoValidate) {
             this.reportValidity();
         }
     }
-    shouldUpdate(changedProperties) {
-        // cannot set value on safari on input event as this causes caret to jump
-        if (changedProperties.has('value') && this._valueSetOnInputEvent) {
-            this._valueSetOnInputEvent = false;
-            return false;
-        }
-        return super.shouldUpdate(changedProperties);
-    }
     createFoundation() {
         if (this.mdcFoundation !== undefined) {
             this.mdcFoundation.destroy();
         }
-        this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter(), {
-            characterCounter: this.maxLength !== -1 ?
-                this.charCounterElement.charCounterFoundation :
-                undefined
-        });
+        this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter());
         this.mdcFoundation.init();
     }
     createAdapter() {
         return Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, this.getRootAdapterMethods()), this.getInputAdapterMethods()), this.getLabelAdapterMethods()), this.getLineRippleAdapterMethods()), this.getOutlineAdapterMethods());
     }
     getRootAdapterMethods() {
-        return Object.assign({ registerTextFieldInteractionHandler: (evtType, handler) => this.addEventListener(evtType, handler), deregisterTextFieldInteractionHandler: (evtType, handler) => this.removeEventListener(evtType, handler), registerValidationAttributeChangeHandler: () => {
+        return Object.assign({ registerTextFieldInteractionHandler: (evtType, handler) => this.addEventListener(evtType, handler), deregisterTextFieldInteractionHandler: (evtType, handler) => this.removeEventListener(evtType, handler), registerValidationAttributeChangeHandler: (handler) => {
                 const getAttributesList = (mutationsList) => {
                     return mutationsList.map((mutation) => mutation.attributeName)
                         .filter((attributeName) => attributeName);
                 };
                 const observer = new MutationObserver((mutationsList) => {
-                    const attributes = getAttributesList(mutationsList);
-                    if (attributes.indexOf('maxlength') !== -1 && this.maxLength !== -1) {
-                        this.charCounterElement.charCounterFoundation.setCounterValue(this.value.length, this.maxLength);
-                    }
+                    handler(getAttributesList(mutationsList));
                 });
                 const config = { attributes: true };
                 observer.observe(this.formElement, config);
@@ -1509,6 +1453,11 @@ class TextFieldBase extends FormElement {
             hasLabel: () => Boolean(this.labelElement),
             shakeLabel: (shouldShake) => this.labelElement &&
                 this.labelElement.floatingLabelFoundation.shake(shouldShake),
+            setLabelRequired: (isRequired) => {
+                if (this.labelElement) {
+                    this.labelElement.floatingLabelFoundation.setRequired(isRequired);
+                }
+            },
         };
     }
     getLineRippleAdapterMethods() {
@@ -1558,24 +1507,29 @@ class TextFieldBase extends FormElement {
             }
         };
     }
-    async onLabelChange() {
-        if (this.label) {
-            await this.layout();
-        }
-    }
     async layout() {
         await this.updateComplete;
-        if (this.labelElement && this.outlineElement) {
-            /* When the textfield automatically notches due to a value and label
-             * being defined, the textfield may be set to `display: none` by the user.
-             * this means that the notch is of size 0px. We provide this function so
-             * that the user may manually resize the notch to the floated label's
-             * width.
-             */
-            const labelWidth = this.labelElement.floatingLabelFoundation.getWidth();
-            if (this.outlineOpen) {
-                this.outlineWidth = labelWidth;
-            }
+        const labelElement = this.labelElement;
+        if (!labelElement) {
+            this.outlineOpen = false;
+            return;
+        }
+        const shouldFloat = !!this.label && !!this.value;
+        labelElement.floatingLabelFoundation.float(shouldFloat);
+        if (!this.outlined) {
+            return;
+        }
+        this.outlineOpen = shouldFloat;
+        await this.updateComplete;
+        /* When the textfield automatically notches due to a value and label
+         * being defined, the textfield may be set to `display: none` by the user.
+         * this means that the notch is of size 0px. We provide this function so
+         * that the user may manually resize the notch to the floated label's
+         * width.
+         */
+        const labelWidth = labelElement.floatingLabelFoundation.getWidth();
+        if (this.outlineOpen) {
+            this.outlineWidth = labelWidth;
         }
     }
 }
@@ -1598,9 +1552,6 @@ __decorate([
     query('.mdc-notched-outline__notch')
 ], TextFieldBase.prototype, "notchElement", void 0);
 __decorate([
-    query('.mdc-text-field-character-counter')
-], TextFieldBase.prototype, "charCounterElement", void 0);
-__decorate([
     property({ type: String })
 ], TextFieldBase.prototype, "value", void 0);
 __decorate([
@@ -1610,7 +1561,12 @@ __decorate([
     property({ type: String })
 ], TextFieldBase.prototype, "placeholder", void 0);
 __decorate([
-    property({ type: String })
+    property({ type: String }),
+    observer(function (_newVal, oldVal) {
+        if (oldVal !== undefined && this.label !== oldVal) {
+            this.layout();
+        }
+    })
 ], TextFieldBase.prototype, "label", void 0);
 __decorate([
     property({ type: String })
@@ -1626,13 +1582,18 @@ __decorate([
 ], TextFieldBase.prototype, "required", void 0);
 __decorate([
     property({ type: Number })
+], TextFieldBase.prototype, "minLength", void 0);
+__decorate([
+    property({ type: Number })
 ], TextFieldBase.prototype, "maxLength", void 0);
 __decorate([
-    property({ type: Boolean, reflect: true })
+    property({ type: Boolean, reflect: true }),
+    observer(function (_newVal, oldVal) {
+        if (oldVal !== undefined && this.outlined !== oldVal) {
+            this.layout();
+        }
+    })
 ], TextFieldBase.prototype, "outlined", void 0);
-__decorate([
-    property({ type: Boolean, reflect: true })
-], TextFieldBase.prototype, "fullWidth", void 0);
 __decorate([
     property({ type: String })
 ], TextFieldBase.prototype, "helper", void 0);
@@ -1658,6 +1619,9 @@ __decorate([
     property({ type: Number })
 ], TextFieldBase.prototype, "step", void 0);
 __decorate([
+    property({ type: Number })
+], TextFieldBase.prototype, "size", void 0);
+__decorate([
     property({ type: Boolean })
 ], TextFieldBase.prototype, "helperPersistent", void 0);
 __decorate([
@@ -1668,10 +1632,22 @@ __decorate([
 ], TextFieldBase.prototype, "endAligned", void 0);
 __decorate([
     property({ type: String })
+], TextFieldBase.prototype, "prefix", void 0);
+__decorate([
+    property({ type: String })
+], TextFieldBase.prototype, "suffix", void 0);
+__decorate([
+    property({ type: String })
+], TextFieldBase.prototype, "name", void 0);
+__decorate([
+    property({ type: String })
 ], TextFieldBase.prototype, "inputMode", void 0);
 __decorate([
     property({ type: Boolean })
 ], TextFieldBase.prototype, "readOnly", void 0);
+__decorate([
+    property({ type: String })
+], TextFieldBase.prototype, "autocapitalize", void 0);
 __decorate([
     property({ type: Boolean })
 ], TextFieldBase.prototype, "outlineOpen", void 0);

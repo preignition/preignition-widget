@@ -1,4 +1,4 @@
-import { B as BaseElement } from './base-element-e8becabc.js';
+import { B as BaseElement } from './base-element-ac737950.js';
 
 /**
 @license
@@ -16,6 +16,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+/** @soyCompatible */
 class FormElement extends BaseElement {
     createRenderRoot() {
         return this.attachShadow({ mode: 'open', delegatesFocus: true });

@@ -1,12 +1,12 @@
-import { a as __extends, b as __assign, M as MDCFoundation, _ as __decorate } from '../common/foundation-b6f846c7.js';
+import { a as __extends, b as __assign, M as MDCFoundation, _ as __decorate } from '../common/foundation-3950d4be.js';
 import { h as html } from '../common/lit-html-14638caa.js';
 import { query, property, css, customElement } from '../lit-element.js';
 import '../common/directive-6dfed3e1.js';
-import { a as addHasRemoveClass } from '../common/base-element-55c11099.js';
-import '../common/foundation-3ecd1fa2.js';
-import { F as FormElement } from '../common/form-element-01a18f58.js';
-import { o as observer } from '../common/observer-f70e8ccc.js';
-import { r as ripple } from '../common/ripple-directive-895b3844.js';
+import { a as addHasRemoveClass } from '../common/base-element-ac737950.js';
+import '../common/foundation-20967c01.js';
+import { F as FormElement } from '../common/form-element-408f8838.js';
+import { o as observer } from '../common/observer-579e419c.js';
+import { r as ripple } from '../common/ripple-directive-8a3eafc7.js';
 
 /**
  * @license
@@ -92,16 +92,292 @@ var MDCRadioFoundation = /** @class */ (function (_super) {
     });
     MDCRadioFoundation.prototype.setDisabled = function (disabled) {
         var DISABLED = MDCRadioFoundation.cssClasses.DISABLED;
-        this.adapter_.setNativeControlDisabled(disabled);
+        this.adapter.setNativeControlDisabled(disabled);
         if (disabled) {
-            this.adapter_.addClass(DISABLED);
+            this.adapter.addClass(DISABLED);
         }
         else {
-            this.adapter_.removeClass(DISABLED);
+            this.adapter.removeClass(DISABLED);
         }
     };
     return MDCRadioFoundation;
 }(MDCFoundation));
+
+/**
+ * @license
+ *  Copyright 2020 Google Inc. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *
+ *     Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/**
+ * Unique symbol for marking roots
+ */
+const selectionController = Symbol('selection controller');
+/**
+ * Set of checkable elements with added metadata
+ */
+class SingleSelectionSet {
+    constructor() {
+        this.selected = null;
+        this.ordered = null;
+        this.set = new Set();
+    }
+}
+/**
+ * Controller that provides behavior similar to a native `<input type="radio">`
+ * group.
+ *
+ * Behaviors:
+ *
+ * - Selection via key navigation (currently LTR is supported)
+ * - Deselection of other grouped, checkable controls upon selection
+ * - Grouping of checkable elements by name
+ *   - Defaults grouping scope to host shadow root
+ *   - Document-wide scoping enabled
+ *
+ * Intended Usage:
+ *
+ * ```ts
+ * class MyElement extends HTMLElement {
+ *   private selectionController: SingleSelectionController | null = null;
+ *   name = "";
+ *   global = false;
+ *
+ *   private _checked = false;
+ *   set checked(checked: boolean) {
+ *     const oldVal = this._checked;
+ *     if (checked === oldVal) return;
+ *
+ *     this._checked = checked;
+ *
+ *     if (this.selectionController) {
+ *       this.selectionController.update(this)
+ *     }
+ *   }
+ *
+ *   get checked() {
+ *     return this._checked;
+ *   }
+ *
+ *   connectedCallback() {
+ *     this.selectionController = SelectionController.getController(this);
+ *     this.selectionController.register(this);
+ *     this.selectionController.update(this);
+ *   }
+ *
+ *   disconnectedCallback() {
+ *     this.selectionController!.unregister(this);
+ *     this.selectionController = null;
+ *   }
+ *
+ *   focus() {
+ *     // focus native radio element
+ *   }
+ * }
+ * ```
+ */
+class SingleSelectionController {
+    constructor(element) {
+        this.sets = {};
+        this.focusedSet = null;
+        this.mouseIsDown = false;
+        this.updating = false;
+        element.addEventListener('keydown', (e) => {
+            this.keyDownHandler(e);
+        });
+        element.addEventListener('mousedown', () => {
+            this.mousedownHandler();
+        });
+        element.addEventListener('mouseup', () => {
+            this.mouseupHandler();
+        });
+    }
+    /**
+     * Get a controller for the given element. If no controller exists, one will
+     * be created. Defaults to getting the controller scoped to the element's root
+     * node shadow root unless `element.global` is true. Then, it will get a
+     * `window.document`-scoped controller.
+     *
+     * @param element Element from which to get / create a SelectionController. If
+     *     `element.global` is true, it gets a selection controller scoped to
+     *     `window.document`.
+     */
+    static getController(element) {
+        const useGlobal = !('global' in element) || ('global' in element && element.global);
+        const root = useGlobal ? document :
+            element.getRootNode();
+        let controller = root[selectionController];
+        if (controller === undefined) {
+            controller = new SingleSelectionController(root);
+            root[selectionController] = controller;
+        }
+        return controller;
+    }
+    keyDownHandler(e) {
+        const element = e.target;
+        if (!('checked' in element)) {
+            return;
+        }
+        if (!this.has(element)) {
+            return;
+        }
+        if (e.key == 'ArrowRight' || e.key == 'ArrowDown') {
+            this.selectNext(element);
+        }
+        else if (e.key == 'ArrowLeft' || e.key == 'ArrowUp') {
+            this.selectPrevious(element);
+        }
+    }
+    mousedownHandler() {
+        this.mouseIsDown = true;
+    }
+    mouseupHandler() {
+        this.mouseIsDown = false;
+    }
+    /**
+     * Whether or not the controller controls  the given element.
+     *
+     * @param element element to check
+     */
+    has(element) {
+        const set = this.getSet(element.name);
+        return set.set.has(element);
+    }
+    /**
+     * Selects and returns the controlled element previous to the given element in
+     * document position order. See
+     * [Node.compareDocumentPosition](https://developer.mozilla.org/en-US/docs/Web/API/Node/compareDocumentPosition).
+     *
+     * @param element element relative from which preceding element is fetched
+     */
+    selectPrevious(element) {
+        const order = this.getOrdered(element);
+        const i = order.indexOf(element);
+        const previous = order[i - 1] || order[order.length - 1];
+        this.select(previous);
+        return previous;
+    }
+    /**
+     * Selects and returns the controlled element next to the given element in
+     * document position order. See
+     * [Node.compareDocumentPosition](https://developer.mozilla.org/en-US/docs/Web/API/Node/compareDocumentPosition).
+     *
+     * @param element element relative from which following element is fetched
+     */
+    selectNext(element) {
+        const order = this.getOrdered(element);
+        const i = order.indexOf(element);
+        const next = order[i + 1] || order[0];
+        this.select(next);
+        return next;
+    }
+    select(element) {
+        element.click();
+    }
+    /**
+     * Focuses the selected element in the given element's selection set. User's
+     * mouse selection will override this focus.
+     *
+     * @param element Element from which selection set is derived and subsequently
+     *     focused.
+     */
+    focus(element) {
+        // Only manage focus state when using keyboard
+        if (this.mouseIsDown) {
+            return;
+        }
+        const set = this.getSet(element.name);
+        const currentFocusedSet = this.focusedSet;
+        this.focusedSet = set;
+        if (currentFocusedSet != set && set.selected && set.selected != element) {
+            set.selected.focus();
+        }
+    }
+    /**
+     * Returns the elements in the given element's selection set in document
+     * position order.
+     * [Node.compareDocumentPosition](https://developer.mozilla.org/en-US/docs/Web/API/Node/compareDocumentPosition).
+     *
+     * @param element Element from which selection set is derived and subsequently
+     *     ordered.
+     */
+    getOrdered(element) {
+        const set = this.getSet(element.name);
+        if (!set.ordered) {
+            set.ordered = Array.from(set.set);
+            set.ordered.sort((a, b) => a.compareDocumentPosition(b) == Node.DOCUMENT_POSITION_PRECEDING ?
+                1 :
+                0);
+        }
+        return set.ordered;
+    }
+    /**
+     * Gets the selection set of the given name and creates one if it does not yet
+     * exist.
+     *
+     * @param name Name of set
+     */
+    getSet(name) {
+        if (!this.sets[name]) {
+            this.sets[name] = new SingleSelectionSet();
+        }
+        return this.sets[name];
+    }
+    /**
+     * Register the element in the selection controller.
+     *
+     * @param element Element to register. Registers in set of `element.name`.
+     */
+    register(element) {
+        const set = this.getSet(element.name);
+        set.set.add(element);
+        set.ordered = null;
+    }
+    /**
+     * Unregister the element from selection controller.
+     *
+     * @param element Element to register. Registers in set of `element.name`.
+     */
+    unregister(element) {
+        const set = this.getSet(element.name);
+        set.set.delete(element);
+        set.ordered = null;
+        if (set.selected == element) {
+            set.selected = null;
+        }
+    }
+    /**
+     * Unselects other elements in element's set if element is checked. Noop
+     * otherwise.
+     *
+     * @param element Element from which to calculate selection controller update.
+     */
+    update(element) {
+        if (this.updating) {
+            return;
+        }
+        this.updating = true;
+        if (element.checked) {
+            const set = this.getSet(element.name);
+            for (const e of set.set) {
+                e.checked = (e == element);
+            }
+            set.selected = element;
+        }
+        this.updating = false;
+    }
+}
 
 /**
  * @fires checked
@@ -174,7 +450,7 @@ class RadioBase extends FormElement {
         // manage groups before the first update stamps the native input.
         //
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
-        this._selectionController = SelectionController.getController(this);
+        this._selectionController = SingleSelectionController.getController(this);
         this._selectionController.register(this);
         // With native <input type="radio">, when a checked radio is added to the
         // root, then it wins. Immediately update to emulate this behavior.
@@ -186,6 +462,9 @@ class RadioBase extends FormElement {
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         this._selectionController.unregister(this);
         this._selectionController = undefined;
+    }
+    focus() {
+        this.focusNative();
     }
     focusNative() {
         this.formElement.focus();
@@ -269,145 +548,6 @@ __decorate([
 __decorate([
     property({ type: String })
 ], RadioBase.prototype, "name", void 0);
-/**
- * Unique symbol for marking roots
- */
-const selectionController = Symbol('selection controller');
-class SelectionSet {
-    constructor() {
-        this.selected = null;
-        this.ordered = null;
-        this.set = new Set();
-    }
-}
-/**
- * Only one <input type="radio" name="group"> per group name can be checked at
- * once. However, the scope of "name" is the document/shadow root, so built-in
- * de-selection does not occur when two radio buttons are in different shadow
- * roots. This class bridges the checked state of radio buttons with the same
- * group name across different shadow roots.
- */
-class SelectionController {
-    constructor(element) {
-        this.sets = {};
-        this.focusedSet = null;
-        this.mouseIsDown = false;
-        this.updating = false;
-        element.addEventListener('keydown', (e) => this.keyDownHandler(e));
-        element.addEventListener('mousedown', () => this.mousedownHandler());
-        element.addEventListener('mouseup', () => this.mouseupHandler());
-    }
-    static getController(element) {
-        const useGlobal = !('global' in element) || ('global' in element && element.global);
-        const root = useGlobal ?
-            document :
-            element.getRootNode();
-        let controller = root[selectionController];
-        if (controller === undefined) {
-            controller = new SelectionController(root);
-            root[selectionController] = controller;
-        }
-        return controller;
-    }
-    keyDownHandler(e) {
-        if (!(e.target instanceof RadioBase)) {
-            return;
-        }
-        const element = e.target;
-        if (!this.has(element)) {
-            return;
-        }
-        if (e.key == 'ArrowRight' || e.key == 'ArrowDown') {
-            this.next(element);
-        }
-        else if (e.key == 'ArrowLeft' || e.key == 'ArrowUp') {
-            this.previous(element);
-        }
-    }
-    mousedownHandler() {
-        this.mouseIsDown = true;
-    }
-    mouseupHandler() {
-        this.mouseIsDown = false;
-    }
-    has(element) {
-        const set = this.getSet(element.name);
-        return set.set.has(element);
-    }
-    previous(element) {
-        const order = this.getOrdered(element);
-        const i = order.indexOf(element);
-        this.select(order[i - 1] || order[order.length - 1]);
-    }
-    next(element) {
-        const order = this.getOrdered(element);
-        const i = order.indexOf(element);
-        this.select(order[i + 1] || order[0]);
-    }
-    select(element) {
-        element.click();
-    }
-    /**
-     * Helps to track the focused selection group and if it changes, focuses
-     * the selected item in the group. This matches native radio button behavior.
-     */
-    focus(element) {
-        // Only manage focus state when using keyboard
-        if (this.mouseIsDown) {
-            return;
-        }
-        const set = this.getSet(element.name);
-        const currentFocusedSet = this.focusedSet;
-        this.focusedSet = set;
-        if (currentFocusedSet != set && set.selected && set.selected != element) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            set.selected.focusNative();
-        }
-    }
-    getOrdered(element) {
-        const set = this.getSet(element.name);
-        if (!set.ordered) {
-            set.ordered = Array.from(set.set);
-            set.ordered.sort((a, b) => a.compareDocumentPosition(b) == Node.DOCUMENT_POSITION_PRECEDING ?
-                1 :
-                0);
-        }
-        return set.ordered;
-    }
-    getSet(name) {
-        if (!this.sets[name]) {
-            this.sets[name] = new SelectionSet();
-        }
-        return this.sets[name];
-    }
-    register(element) {
-        const set = this.getSet(element.name);
-        set.set.add(element);
-        set.ordered = null;
-    }
-    unregister(element) {
-        const set = this.getSet(element.name);
-        set.set.delete(element);
-        set.ordered = null;
-        if (set.selected == element) {
-            set.selected = null;
-        }
-    }
-    update(element) {
-        if (this.updating) {
-            return;
-        }
-        this.updating = true;
-        if (element.checked) {
-            const set = this.getSet(element.name);
-            for (const e of set.set) {
-                e.checked = (e == element);
-            }
-            set.selected = element;
-        }
-        this.updating = false;
-    }
-}
 
 /**
 @license
@@ -434,4 +574,4 @@ Radio = __decorate([
     customElement('mwc-radio')
 ], Radio);
 
-export { Radio };
+export { Radio, SingleSelectionController };

@@ -1,9 +1,11 @@
-import { a as __extends, b as __assign, M as MDCFoundation, _ as __decorate } from '../common/foundation-b6f846c7.js';
+import { a as __extends, b as __assign, M as MDCFoundation, _ as __decorate } from '../common/foundation-3950d4be.js';
 import { h as html } from '../common/lit-html-14638caa.js';
-import { query, property, css, customElement } from '../lit-element.js';
+import { query, property, internalProperty, css, customElement } from '../lit-element.js';
 import '../common/directive-6dfed3e1.js';
-import { B as BaseElement, a as addHasRemoveClass } from '../common/base-element-55c11099.js';
-import { o as observer } from '../common/observer-f70e8ccc.js';
+import { B as BaseElement } from '../common/base-element-ac737950.js';
+import { c as classMap } from '../common/class-map-218836d4.js';
+import { styleMap } from '../lit-html/directives/style-map.js';
+import { o as observer } from '../common/observer-579e419c.js';
 
 /**
  * @license
@@ -146,92 +148,93 @@ var MDCLinearProgressFoundation = /** @class */ (function (_super) {
         configurable: true
     });
     MDCLinearProgressFoundation.prototype.init = function () {
-        this.isDeterminate_ = !this.adapter_.hasClass(cssClasses.INDETERMINATE_CLASS);
-        this.isReversed_ = this.adapter_.hasClass(cssClasses.REVERSED_CLASS);
-        this.progress_ = 0;
-        this.buffer_ = 1;
+        this.isDeterminate = !this.adapter.hasClass(cssClasses.INDETERMINATE_CLASS);
+        this.isReversed = this.adapter.hasClass(cssClasses.REVERSED_CLASS);
+        this.progress = 0;
+        this.buffer = 1;
     };
     MDCLinearProgressFoundation.prototype.setDeterminate = function (isDeterminate) {
-        this.isDeterminate_ = isDeterminate;
-        if (this.isDeterminate_) {
-            this.adapter_.removeClass(cssClasses.INDETERMINATE_CLASS);
-            this.adapter_.setAttribute(strings.ARIA_VALUENOW, this.progress_.toString());
-            this.setPrimaryBarProgress_(this.progress_);
-            this.setBufferBarProgress_(this.buffer_);
+        this.isDeterminate = isDeterminate;
+        if (this.isDeterminate) {
+            this.adapter.removeClass(cssClasses.INDETERMINATE_CLASS);
+            this.adapter.setAttribute(strings.ARIA_VALUENOW, this.progress.toString());
+            this.setPrimaryBarProgress(this.progress);
+            this.setBufferBarProgress(this.buffer);
             return;
         }
-        if (this.isReversed_) {
+        if (this.isReversed) {
             // Adding/removing REVERSED_CLASS starts a translate animation, while
             // adding INDETERMINATE_CLASS starts a scale animation. Here, we reset
             // the translate animation in order to keep it in sync with the new
             // scale animation that will start from adding INDETERMINATE_CLASS
             // below.
-            this.adapter_.removeClass(cssClasses.REVERSED_CLASS);
-            this.adapter_.forceLayout();
-            this.adapter_.addClass(cssClasses.REVERSED_CLASS);
+            this.adapter.removeClass(cssClasses.REVERSED_CLASS);
+            this.adapter.forceLayout();
+            this.adapter.addClass(cssClasses.REVERSED_CLASS);
         }
-        this.adapter_.addClass(cssClasses.INDETERMINATE_CLASS);
-        this.adapter_.removeAttribute(strings.ARIA_VALUENOW);
-        this.setPrimaryBarProgress_(1);
-        this.setBufferBarProgress_(1);
+        this.adapter.addClass(cssClasses.INDETERMINATE_CLASS);
+        this.adapter.removeAttribute(strings.ARIA_VALUENOW);
+        this.setPrimaryBarProgress(1);
+        this.setBufferBarProgress(1);
     };
-    MDCLinearProgressFoundation.prototype.isDeterminate = function () {
-        return this.isDeterminate_;
+    MDCLinearProgressFoundation.prototype.getDeterminate = function () {
+        return this.isDeterminate;
     };
     MDCLinearProgressFoundation.prototype.setProgress = function (value) {
-        this.progress_ = value;
-        if (this.isDeterminate_) {
-            this.setPrimaryBarProgress_(value);
-            this.adapter_.setAttribute(strings.ARIA_VALUENOW, value.toString());
+        this.progress = value;
+        if (this.isDeterminate) {
+            this.setPrimaryBarProgress(value);
+            this.adapter.setAttribute(strings.ARIA_VALUENOW, value.toString());
         }
     };
     MDCLinearProgressFoundation.prototype.getProgress = function () {
-        return this.progress_;
+        return this.progress;
     };
     MDCLinearProgressFoundation.prototype.setBuffer = function (value) {
-        this.buffer_ = value;
-        if (this.isDeterminate_) {
-            this.setBufferBarProgress_(value);
+        this.buffer = value;
+        if (this.isDeterminate) {
+            this.setBufferBarProgress(value);
         }
     };
     MDCLinearProgressFoundation.prototype.setReverse = function (isReversed) {
-        this.isReversed_ = isReversed;
-        if (!this.isDeterminate_) {
+        this.isReversed = isReversed;
+        if (!this.isDeterminate) {
             // Adding INDETERMINATE_CLASS starts a scale animation, while
             // adding/removing REVERSED_CLASS starts a translate animation. Here, we
             // reset the scale animation in order to keep it in sync with the new
             // translate animation that will start from adding/removing REVERSED_CLASS
             // below.
-            this.adapter_.removeClass(cssClasses.INDETERMINATE_CLASS);
-            this.adapter_.forceLayout();
-            this.adapter_.addClass(cssClasses.INDETERMINATE_CLASS);
+            this.adapter.removeClass(cssClasses.INDETERMINATE_CLASS);
+            this.adapter.forceLayout();
+            this.adapter.addClass(cssClasses.INDETERMINATE_CLASS);
         }
-        if (this.isReversed_) {
-            this.adapter_.addClass(cssClasses.REVERSED_CLASS);
+        if (this.isReversed) {
+            this.adapter.addClass(cssClasses.REVERSED_CLASS);
             return;
         }
-        this.adapter_.removeClass(cssClasses.REVERSED_CLASS);
+        this.adapter.removeClass(cssClasses.REVERSED_CLASS);
     };
     MDCLinearProgressFoundation.prototype.open = function () {
-        this.adapter_.removeClass(cssClasses.CLOSED_CLASS);
+        this.adapter.removeClass(cssClasses.CLOSED_CLASS);
     };
     MDCLinearProgressFoundation.prototype.close = function () {
-        this.adapter_.addClass(cssClasses.CLOSED_CLASS);
+        this.adapter.addClass(cssClasses.CLOSED_CLASS);
     };
-    MDCLinearProgressFoundation.prototype.setPrimaryBarProgress_ = function (progressValue) {
+    MDCLinearProgressFoundation.prototype.setPrimaryBarProgress = function (progressValue) {
         var value = "scaleX(" + progressValue + ")";
         // Accessing `window` without a `typeof` check will throw on Node environments.
         var transformProp = typeof window !== 'undefined' ?
             getCorrectPropertyName(window, 'transform') : 'transform';
-        this.adapter_.setPrimaryBarStyle(transformProp, value);
+        this.adapter.setPrimaryBarStyle(transformProp, value);
     };
-    MDCLinearProgressFoundation.prototype.setBufferBarProgress_ = function (progressValue) {
+    MDCLinearProgressFoundation.prototype.setBufferBarProgress = function (progressValue) {
         var value = progressValue * 100 + "%";
-        this.adapter_.setBufferBarStyle(strings.FLEX_BASIS, value);
+        this.adapter.setBufferBarStyle(strings.FLEX_BASIS, value);
     };
     return MDCLinearProgressFoundation;
 }(MDCFoundation));
 
+/** @soyCompatible */
 class LinearProgressBase extends BaseElement {
     constructor() {
         super(...arguments);
@@ -242,20 +245,43 @@ class LinearProgressBase extends BaseElement {
         this.reverse = false;
         this.closed = false;
         this.ariaLabel = '';
+        this.bufferFlexBasisValue = '';
+        this.primaryTransformValue = '';
     }
+    /**
+     * @soyCompatible
+     */
     render() {
+        /** @classMap */
+        const classes = {
+            'mdc-linear-progress--closed': this.closed,
+            'mdc-linear-progress--indeterminate': this.indeterminate,
+            'mdc-linear-progress--reversed': this.reverse,
+        };
+        const bufferBarStyles = {
+            'flex-basis': this.bufferFlexBasisValue,
+        };
+        const primaryBarStyles = {
+            transform: this.primaryTransformValue,
+        };
         return html `
-      <div role="progressbar"
-        class="mdc-linear-progress"
-        aria-label="${this.ariaLabel}"
-        aria-valuemin="0"
-        aria-valuemax="1"
-        aria-valuenow="0">
+      <div
+          role="progressbar"
+          class="mdc-linear-progress ${classMap(classes)}"
+          aria-label="${this.ariaLabel}"
+          aria-valuemin="0"
+          aria-valuemax="1"
+          aria-valuenow="0">
         <div class="mdc-linear-progress__buffer">
-          <div class="mdc-linear-progress__buffer-bar"></div>
+          <div
+            class="mdc-linear-progress__buffer-bar"
+            style=${styleMap(bufferBarStyles)}>
+          </div>
           <div class="mdc-linear-progress__buffer-dots"></div>
         </div>
-        <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+        <div
+            class="mdc-linear-progress__bar mdc-linear-progress__primary-bar"
+            style=${styleMap(primaryBarStyles)}>
           <span class="mdc-linear-progress__bar-inner"></span>
         </div>
         <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
@@ -264,29 +290,26 @@ class LinearProgressBase extends BaseElement {
       </div>`;
     }
     createAdapter() {
-        return Object.assign(Object.assign({}, addHasRemoveClass(this.mdcRoot)), { forceLayout: () => this.mdcRoot.offsetWidth, removeAttribute: (name) => {
+        return {
+            addClass: () => undefined,
+            removeClass: () => undefined,
+            hasClass: (name) => {
+                return this.mdcRoot.classList.contains(name);
+            },
+            forceLayout: () => this.mdcRoot.offsetWidth,
+            removeAttribute: (name) => {
                 this.mdcRoot.removeAttribute(name);
-            }, setAttribute: (name, value) => {
+            },
+            setAttribute: (name, value) => {
                 this.mdcRoot.setAttribute(name, value);
-            }, setBufferBarStyle: (property, value) => {
-                // TODO(aomarks) Consider moving this type to the
-                // MDCLinearProgressAdapter parameter type, but note that the "-webkit"
-                // prefixed CSS properties are not declared in CSSStyleDeclaration.
-                //
-                // Exclude read-only properties.
-                this.bufferElement
-                    .style[property] =
-                    value;
-            }, setPrimaryBarStyle: (property, value) => {
-                // TODO(aomarks) Consider moving this type to the
-                // MDCLinearProgressAdapter parameter type, but note that the "-webkit"
-                // prefixed CSS properties are not declared in CSSStyleDeclaration.
-                //
-                // Exclude read-only properties.
-                this.primaryBar
-                    .style[property] =
-                    value;
-            } });
+            },
+            setBufferBarStyle: (_property, value) => {
+                this.bufferFlexBasisValue = value;
+            },
+            setPrimaryBarStyle: (_property, value) => {
+                this.primaryTransformValue = value;
+            },
+        };
     }
     open() {
         this.closed = false;
@@ -298,12 +321,6 @@ class LinearProgressBase extends BaseElement {
 __decorate([
     query('.mdc-linear-progress')
 ], LinearProgressBase.prototype, "mdcRoot", void 0);
-__decorate([
-    query('.mdc-linear-progress__primary-bar')
-], LinearProgressBase.prototype, "primaryBar", void 0);
-__decorate([
-    query('.mdc-linear-progress__buffer-bar')
-], LinearProgressBase.prototype, "bufferElement", void 0);
 __decorate([
     property({ type: Boolean, reflect: true }),
     observer(function (value) {
@@ -329,19 +346,17 @@ __decorate([
     })
 ], LinearProgressBase.prototype, "reverse", void 0);
 __decorate([
-    property({ type: Boolean, reflect: true }),
-    observer(function (value) {
-        if (value) {
-            this.mdcFoundation.close();
-        }
-        else {
-            this.mdcFoundation.open();
-        }
-    })
+    property({ type: Boolean, reflect: true })
 ], LinearProgressBase.prototype, "closed", void 0);
 __decorate([
     property()
 ], LinearProgressBase.prototype, "ariaLabel", void 0);
+__decorate([
+    internalProperty()
+], LinearProgressBase.prototype, "bufferFlexBasisValue", void 0);
+__decorate([
+    internalProperty()
+], LinearProgressBase.prototype, "primaryTransformValue", void 0);
 
 /**
 @license
@@ -361,6 +376,7 @@ limitations under the License.
 */
 const style = css `@keyframes mdc-linear-progress-primary-indeterminate-translate{0%{transform:translateX(0)}20%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(0)}59.15%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(83.67142%)}100%{transform:translateX(200.611057%)}}@keyframes mdc-linear-progress-primary-indeterminate-scale{0%{transform:scaleX(0.08)}36.65%{animation-timing-function:cubic-bezier(0.334731, 0.12482, 0.785844, 1);transform:scaleX(0.08)}69.15%{animation-timing-function:cubic-bezier(0.06, 0.11, 0.6, 1);transform:scaleX(0.661479)}100%{transform:scaleX(0.08)}}@keyframes mdc-linear-progress-secondary-indeterminate-translate{0%{animation-timing-function:cubic-bezier(0.15, 0, 0.515058, 0.409685);transform:translateX(0)}25%{animation-timing-function:cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);transform:translateX(37.651913%)}48.35%{animation-timing-function:cubic-bezier(0.4, 0.627035, 0.6, 0.902026);transform:translateX(84.386165%)}100%{transform:translateX(160.277782%)}}@keyframes mdc-linear-progress-secondary-indeterminate-scale{0%{animation-timing-function:cubic-bezier(0.205028, 0.057051, 0.57661, 0.453971);transform:scaleX(0.08)}19.15%{animation-timing-function:cubic-bezier(0.152313, 0.196432, 0.648374, 1.004315);transform:scaleX(0.457104)}44.15%{animation-timing-function:cubic-bezier(0.257759, -0.003163, 0.211762, 1.38179);transform:scaleX(0.72796)}100%{transform:scaleX(0.08)}}@keyframes mdc-linear-progress-buffering{from{transform:rotate(180deg) translateX(-10px)}}@keyframes mdc-linear-progress-primary-indeterminate-translate-reverse{0%{transform:translateX(0)}20%{animation-timing-function:cubic-bezier(0.5, 0, 0.701732, 0.495819);transform:translateX(0)}59.15%{animation-timing-function:cubic-bezier(0.302435, 0.381352, 0.55, 0.956352);transform:translateX(-83.67142%)}100%{transform:translateX(-200.611057%)}}@keyframes mdc-linear-progress-secondary-indeterminate-translate-reverse{0%{animation-timing-function:cubic-bezier(0.15, 0, 0.515058, 0.409685);transform:translateX(0)}25%{animation-timing-function:cubic-bezier(0.31033, 0.284058, 0.8, 0.733712);transform:translateX(-37.651913%)}48.35%{animation-timing-function:cubic-bezier(0.4, 0.627035, 0.6, 0.902026);transform:translateX(-84.386165%)}100%{transform:translateX(-160.277782%)}}@keyframes mdc-linear-progress-buffering-reverse{from{transform:translateX(-10px)}}.mdc-linear-progress{position:relative;width:100%;height:4px;transform:translateZ(0);outline:1px solid transparent;overflow:hidden;transition:opacity 250ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-linear-progress__bar{position:absolute;width:100%;height:100%;animation:none;transform-origin:top left;transition:transform 250ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-linear-progress__bar-inner{display:inline-block;position:absolute;width:100%;animation:none;border-top:4px solid}.mdc-linear-progress__buffer{display:flex;position:absolute;width:100%;height:100%}.mdc-linear-progress__buffer-dots{background-repeat:repeat-x;background-size:10px 4px;flex:auto;transform:rotate(180deg);animation:mdc-linear-progress-buffering 250ms infinite linear}.mdc-linear-progress__buffer-bar{flex:0 1 100%;transition:flex-basis 250ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-linear-progress__primary-bar{transform:scaleX(0)}.mdc-linear-progress__secondary-bar{visibility:hidden}.mdc-linear-progress--indeterminate .mdc-linear-progress__bar{transition:none}.mdc-linear-progress--indeterminate .mdc-linear-progress__primary-bar{left:-145.166611%;animation:mdc-linear-progress-primary-indeterminate-translate 2s infinite linear}.mdc-linear-progress--indeterminate .mdc-linear-progress__primary-bar>.mdc-linear-progress__bar-inner{animation:mdc-linear-progress-primary-indeterminate-scale 2s infinite linear}.mdc-linear-progress--indeterminate .mdc-linear-progress__secondary-bar{left:-54.888891%;visibility:visible;animation:mdc-linear-progress-secondary-indeterminate-translate 2s infinite linear}.mdc-linear-progress--indeterminate .mdc-linear-progress__secondary-bar>.mdc-linear-progress__bar-inner{animation:mdc-linear-progress-secondary-indeterminate-scale 2s infinite linear}.mdc-linear-progress--reversed .mdc-linear-progress__bar{right:0;transform-origin:center right}.mdc-linear-progress--reversed .mdc-linear-progress__primary-bar{animation-name:mdc-linear-progress-primary-indeterminate-translate-reverse}.mdc-linear-progress--reversed .mdc-linear-progress__secondary-bar{animation-name:mdc-linear-progress-secondary-indeterminate-translate-reverse}.mdc-linear-progress--reversed .mdc-linear-progress__buffer-dots{animation:mdc-linear-progress-buffering-reverse 250ms infinite linear;order:0;transform:rotate(0)}.mdc-linear-progress--reversed .mdc-linear-progress__buffer-bar{order:1}.mdc-linear-progress--closed{opacity:0;animation:none}.mdc-linear-progress__bar-inner{border-color:#6200ee;border-color:var(--mdc-theme-primary, #6200ee)}.mdc-linear-progress__buffer-dots{background-image:url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' enable-background='new 0 0 5 2' xml:space='preserve' viewBox='0 0 5 2' preserveAspectRatio='none slice'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23e6e6e6'/%3E%3C/svg%3E")}.mdc-linear-progress__buffer-bar{background-color:#e6e6e6}.mdc-linear-progress--indeterminate.mdc-linear-progress--reversed .mdc-linear-progress__primary-bar{right:-145.166611%;left:auto}.mdc-linear-progress--indeterminate.mdc-linear-progress--reversed .mdc-linear-progress__secondary-bar{right:-54.888891%;left:auto}:host{display:block}.mdc-linear-progress__buffer-bar{background-color:#e6e6e6;background-color:var(--mdc-linear-progress-buffer-color, #e6e6e6)}.mdc-linear-progress__buffer-dots{background-image:url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' enable-background='new 0 0 5 2' xml:space='preserve' viewBox='0 0 5 2' preserveAspectRatio='none slice'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23e6e6e6'/%3E%3C/svg%3E");background-image:var(--mdc-linear-progress-buffering-dots-image, url("data:image/svg+xml,%3Csvg version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' x='0px' y='0px' enable-background='new 0 0 5 2' xml:space='preserve' viewBox='0 0 5 2' preserveAspectRatio='none slice'%3E%3Ccircle cx='1' cy='1' r='1' fill='%23e6e6e6'/%3E%3C/svg%3E"))}`;
 
+/** @soyCompatible */
 let LinearProgress = class LinearProgress extends LinearProgressBase {
 };
 LinearProgress.styles = style;

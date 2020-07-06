@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import { cache } from 'lit-html/directives/cache.js';
-import { parse } from '../util/markdown.js';
+import { parse } from '@preignition/preignition-util';
 import { default as styleTypography } from '../style/typography.js';
 
 import '@material/mwc-tab';
@@ -46,6 +46,10 @@ class PwiMdEditor extends LitElement {
       margin-right: auto;
       --mdc-typography-button-text-transform: none;
       --mdc-typography-button-letter-spacing: 0px;
+    }
+
+    pwi-textarea {
+      width: 100%;
     }
 
     .toolbar {
@@ -232,7 +236,6 @@ class PwiMdEditor extends LitElement {
           ? html`<div>
               <pwi-textarea
                 droppable 
-                fullwidth
                 .ripple=${this.dragoverValid}
                 .cols=${this.cols}
                 .rows=${this.rows}

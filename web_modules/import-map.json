@@ -14,20 +14,18 @@
     "@preignition/lit-firebase": "./@preignition/lit-firebase.js",
     "@preignition/preignition-demo": "./@preignition/preignition-demo.js",
     "@preignition/preignition-mixin": "./@preignition/preignition-mixin.js",
+    "@preignition/preignition-util": "./@preignition/preignition-util.js",
     "@vaadin/router": "./@vaadin/router.js",
     "cronstrue": "./cronstrue.js",
     "d3-format": "./d3-format.js",
     "d3-scale": "./d3-scale.js",
     "d3-selection": "./d3-selection.js",
-    "dompurify": "./dompurify.js",
     "lit-element": "./lit-element.js",
     "lit-html": "./lit-html.js",
     "lit-html/directives/cache.js": "./lit-html/directives/cache.js",
     "lit-html/directives/if-defined.js": "./lit-html/directives/if-defined.js",
     "lit-html/directives/style-map.js": "./lit-html/directives/style-map.js",
     "lit-html/directives/unsafe-html.js": "./lit-html/directives/unsafe-html.js",
-    "marked": "./marked.js",
-    "marked/lib/marked.esm.js": "./marked/lib/marked.esm.js",
     "pwa-helpers/media-query.js": "./pwa-helpers/media-query.js"
   }
 }

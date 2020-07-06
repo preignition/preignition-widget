@@ -1,4 +1,4 @@
-import './class-map-44b21844.js';
+import { m as matches } from './foundation-3950d4be.js';
 import { LitElement } from '../lit-element.js';
 
 /**
@@ -17,6 +17,25 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+/**
+ * Determines whether a node is an element.
+ *
+ * @param node Node to check
+ */
+const isNodeElement = (node) => {
+    return node.nodeType === Node.ELEMENT_NODE;
+};
+function findAssignedElement(slot, selector) {
+    for (const node of slot.assignedNodes({ flatten: true })) {
+        if (isNodeElement(node)) {
+            const el = node;
+            if (matches(el, selector)) {
+                return el;
+            }
+        }
+    }
+    return null;
+}
 function addHasRemoveClass(element) {
     return {
         addClass: (className) => {
@@ -53,6 +72,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+/** @soyCompatible */
 class BaseElement extends LitElement {
     /**
      * Create and attach the MDC Foundation to the instance
@@ -71,4 +91,4 @@ class BaseElement extends LitElement {
     }
 }
 
-export { BaseElement as B, addHasRemoveClass as a };
+export { BaseElement as B, addHasRemoveClass as a, findAssignedElement as f };
