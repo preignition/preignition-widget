@@ -39,7 +39,8 @@
     "firebase": "^7.14.3",
     "lit-element": "^2.3.1",
     "lit-html": "^1.2.1",
-    "pwa-helpers": "^0.9.1"
+    "pwa-helpers": "^0.9.1",
+    "tslib": "^2.0.0"
   },
   "devDependencies": {
     "@open-wc/testing": "^2.5.16",
@@ -48,6 +49,7 @@
     "@vaadin/router": "^1.7.2",
     "es-dev-server": "^1.48.1",
     "highlight-ts": "^9.12.1-2",
+    "marked": "^1.1.1",
     "snowpack": "^1.7.1"
   },
   "snowpack": {

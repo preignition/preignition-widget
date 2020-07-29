@@ -51,11 +51,14 @@ const RelayTo = superClass => {
       
     }
 
-    relayTo(props, name) {
+    async relayTo(props, name) {
       if (!this[`__${name}`]) {
         this[`__${name}`] = this.queryShadow(`#${name}`);
         if (!this[`__${name}`]) {
-          throw new Error(`Failed to get ${name} from shadowDom!`)
+          console.warn(`Failed to get ${name} from shadowDom!`);
+          await this.updateComplete;
+          return this.relayTo(props, name);
+          // throw new Error(`Failed to get ${name} from shadowDom!`)
         }
       }
       props.forEach((value, key) => {

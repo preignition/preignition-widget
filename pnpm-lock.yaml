@@ -18,12 +18,11 @@ dependencies:
   d3-format: 1.4.4
   d3-scale: 3.2.1
   d3-selection: 1.4.1
-  dompurify: 2.0.11
   firebase: 7.14.3
   lit-element: 2.3.1
   lit-html: 1.2.1
-  marked: 1.0.0
   pwa-helpers: 0.9.1
+  tslib: 2.0.0
 devDependencies:
   '@open-wc/testing': 2.5.16
   '@open-wc/testing-karma': 3.3.19
@@ -31,6 +30,7 @@ devDependencies:
   '@vaadin/router': 1.7.2
   es-dev-server: 1.48.1
   highlight-ts: 9.12.1-2
+  marked: 1.1.1
   snowpack: 1.7.1
 lockfileVersion: 5.1
 packages:
@@ -3141,10 +3141,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-g6RpyWXzl0RR6OTElHKBl7nwnK87GUyZMYC7JWsB/IA73vpqK2K6LT39x4VepLxlSsWBFrPVLnsSR5Jyty0+2Q==
-  /dompurify/2.0.11:
-    dev: false
-    resolution:
-      integrity: sha512-qVoGPjIW9IqxRij7klDQQ2j6nSe4UNWANBhZNLnsS7ScTtLb+3YdxkRY8brNTpkUiTtcXsCJO+jS0UCDfenLuA==
   /duplexer3/0.1.4:
     dev: true
     resolution:
@@ -4610,13 +4606,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-8z4efJYk43E0upd0NbVXwgSTQs6cT3T06etieCMEg7dRbzCbxUCK/GHlX8mhHRDcp+OLlHkPKsvqQTCvsRl2cg==
-  /marked/1.0.0:
-    dev: false
+  /marked/1.1.1:
+    dev: true
     engines:
       node: '>= 8.16.2'
     hasBin: true
     resolution:
-      integrity: sha512-Wo+L1pWTVibfrSr+TTtMuiMfNzmZWiOPeO7rZsQUY5bgsxpHesBEcIWJloWVTFnrMXnf/TL30eTFSGJddmQAng==
+      integrity: sha512-mJzT8D2yPxoPh7h0UXkB+dBj4FykPJ2OIfxAWeIHrvoHDkFxukV/29QxoFQoPM6RLEwhIFdJpmKBlqVM3s2ZIw==
   /media-typer/0.3.0:
     dev: true
     engines:
@@ -6136,6 +6132,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
+  /tslib/2.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-lTqkx847PI7xEDYJntxZH89L2/aXInsyF2luSafe/+0fHOMjlBNXdH6th7f70qxLDhul7KZK0zC8V5ZIyHl0/g==
   /tsscmp/1.0.6:
     dev: true
     engines:
@@ -6603,12 +6603,12 @@ specifiers:
   d3-format: '*'
   d3-scale: '*'
   d3-selection: ^1.4.1
-  dompurify: ^2.0.11
   es-dev-server: ^1.48.1
   firebase: ^7.14.3
   highlight-ts: ^9.12.1-2
   lit-element: ^2.3.1
   lit-html: ^1.2.1
-  marked: ^1.0.0
+  marked: ^1.1.1
   pwa-helpers: ^0.9.1
   snowpack: ^1.7.1
+  tslib: ^2.0.0

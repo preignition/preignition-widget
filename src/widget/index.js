@@ -5,3 +5,5 @@ import './pwi-program.js';
 import './pwi-md.js';
 import './pwi-lif-md.js';
 import './resource/index.js';
+import './pwi-expansion-panel/expansion-panel.js';
+import './pwi-accordion/fancy-accordion.js';

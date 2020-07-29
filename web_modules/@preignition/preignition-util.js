@@ -3596,4 +3596,28 @@ var resizeTextarea = textarea => {
   textarea.style.height = height + 'px';
 };
 
-export { parse, resizeTextarea };
+var getter = db => {
+  return async path => db.ref(path).once('value').then(snap => snap.val());
+};
+
+const generator = (name) => {
+  return class E extends Error {
+    constructor(message, context) {
+      // Pass remaining arguments (including vendor specific ones) to parent constructor
+      super(...arguments);
+
+      this.name = name;
+      if (context) {
+        this.context = context;
+      }
+    }
+  };
+};
+
+// Note(cg): to be used as generic errors.
+const E = generator('E');
+
+// Note(cg): to be used as missing stuff.
+const EMissing = generator('Missing');
+
+export { E, EMissing, getter, parse, resizeTextarea };
