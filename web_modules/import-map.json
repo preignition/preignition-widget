@@ -26,6 +26,7 @@
     "lit-html/directives/if-defined.js": "./lit-html/directives/if-defined.js",
     "lit-html/directives/style-map.js": "./lit-html/directives/style-map.js",
     "lit-html/directives/unsafe-html.js": "./lit-html/directives/unsafe-html.js",
-    "pwa-helpers/media-query.js": "./pwa-helpers/media-query.js"
+    "pwa-helpers/media-query.js": "./pwa-helpers/media-query.js",
+    "tslib": "./tslib.js"
   }
 }

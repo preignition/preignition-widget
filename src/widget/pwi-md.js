@@ -11,6 +11,10 @@ class PwiMd extends LitElement {
        */
       md: {
         type: String,
+      },
+
+      mdConfig: {
+        type: Object
       }
     };
 
@@ -18,7 +22,12 @@ class PwiMd extends LitElement {
   
 
   render() {
-    return html `<div class="markdown">${parse(this.md)}</div>`;
+    return html `<div class="markdown">${parse(this.md, this.mdConfig)}</div>`;
+  }
+
+  constructor() {
+    super()
+    this.mdConfig = {ADD_ATTR: ['target']};
   }
 
   // Note(cg): we want to render value in light dom so that 

@@ -1,6 +1,6 @@
-import { h as html$2, j as nothing } from '../common/lit-html-14638caa.js';
+import { h as html$2, j as nothing } from '../common/lit-html-f37bf389.js';
 import '../lit-element.js';
-import '../common/directive-6dfed3e1.js';
+import '../common/directive-651fd9cf.js';
 import { unsafeHTML } from '../lit-html/directives/unsafe-html.js';
 
 /**
@@ -311,6 +311,7 @@ const {
 function outputLink(cap, link, raw) {
   const href = link.href;
   const title = link.title ? escape$1(link.title) : null;
+  const text = cap[1].replace(/\\([\[\]])/g, '$1');
 
   if (cap[0].charAt(0) !== '!') {
     return {
@@ -318,15 +319,15 @@ function outputLink(cap, link, raw) {
       raw,
       href,
       title,
-      text: cap[1]
+      text
     };
   } else {
     return {
       type: 'image',
       raw,
-      text: escape$1(cap[1]),
       href,
-      title
+      title,
+      text: escape$1(text)
     };
   }
 }
@@ -496,12 +497,13 @@ var Tokenizer_1 = class Tokenizer {
       let raw = cap[0];
       const bull = cap[2];
       const isordered = bull.length > 1;
+      const isparen = bull[bull.length - 1] === ')';
 
       const list = {
         type: 'list',
         raw,
         ordered: isordered,
-        start: isordered ? +bull : '',
+        start: isordered ? +bull.slice(0, -1) : '',
         loose: false,
         items: []
       };
@@ -526,7 +528,7 @@ var Tokenizer_1 = class Tokenizer {
         // Remove the list item's bullet
         // so it is seen as the next token.
         space = item.length;
-        item = item.replace(/^ *([*+-]|\d+\.) */, '');
+        item = item.replace(/^ *([*+-]|\d+[.)]) */, '');
 
         // Outdent whatever the
         // list item contains. Hacky.
@@ -541,7 +543,7 @@ var Tokenizer_1 = class Tokenizer {
         // Backpedal if it does not belong in this list.
         if (i !== l - 1) {
           b = this.rules.block.bullet.exec(itemMatch[i + 1])[0];
-          if (bull.length > 1 ? b.length === 1
+          if (isordered ? b.length === 1 || (!isparen && b[b.length - 1] === ')')
             : (b.length > 1 || (this.options.smartLists && b !== bull))) {
             addBack = itemMatch.slice(i + 1).join('\n');
             list.raw = list.raw.substring(0, list.raw.length - addBack.length);
@@ -790,25 +792,49 @@ var Tokenizer_1 = class Tokenizer {
     }
   }
 
-  strong(src) {
-    const cap = this.rules.inline.strong.exec(src);
-    if (cap) {
-      return {
-        type: 'strong',
-        raw: cap[0],
-        text: cap[4] || cap[3] || cap[2] || cap[1]
-      };
+  strong(src, maskedSrc, prevChar = '') {
+    let match = this.rules.inline.strong.start.exec(src);
+
+    if (match && (!match[1] || (match[1] && (prevChar === '' || this.rules.inline.punctuation.exec(prevChar))))) {
+      maskedSrc = maskedSrc.slice(-1 * src.length);
+      const endReg = match[0] === '**' ? this.rules.inline.strong.endAst : this.rules.inline.strong.endUnd;
+
+      endReg.lastIndex = 0;
+
+      let cap;
+      while ((match = endReg.exec(maskedSrc)) != null) {
+        cap = this.rules.inline.strong.middle.exec(maskedSrc.slice(0, match.index + 3));
+        if (cap) {
+          return {
+            type: 'strong',
+            raw: src.slice(0, cap[0].length),
+            text: src.slice(2, cap[0].length - 2)
+          };
+        }
+      }
     }
   }
 
-  em(src) {
-    const cap = this.rules.inline.em.exec(src);
-    if (cap) {
-      return {
-        type: 'em',
-        raw: cap[0],
-        text: cap[6] || cap[5] || cap[4] || cap[3] || cap[2] || cap[1]
-      };
+  em(src, maskedSrc, prevChar = '') {
+    let match = this.rules.inline.em.start.exec(src);
+
+    if (match && (!match[1] || (match[1] && (prevChar === '' || this.rules.inline.punctuation.exec(prevChar))))) {
+      maskedSrc = maskedSrc.slice(-1 * src.length);
+      const endReg = match[0] === '*' ? this.rules.inline.em.endAst : this.rules.inline.em.endUnd;
+
+      endReg.lastIndex = 0;
+
+      let cap;
+      while ((match = endReg.exec(maskedSrc)) != null) {
+        cap = this.rules.inline.em.middle.exec(maskedSrc.slice(0, match.index + 2));
+        if (cap) {
+          return {
+            type: 'em',
+            raw: src.slice(0, cap[0].length),
+            text: src.slice(1, cap[0].length - 1)
+          };
+        }
+      }
     }
   }
 
@@ -978,7 +1004,7 @@ block.def = edit$1(block.def)
   .replace('title', block._title)
   .getRegex();
 
-block.bullet = /(?:[*+-]|\d{1,9}\.)/;
+block.bullet = /(?:[*+-]|\d{1,9}[.)])/;
 block.item = /^( *)(bull) ?[^\n]*(?:\n(?!\1bull ?)[^\n]*)*/;
 block.item = edit$1(block.item, 'gm')
   .replace(/bull/g, block.bullet)
@@ -1104,19 +1130,74 @@ const inline = {
   link: /^!?\[(label)\]\(\s*(href)(?:\s+(title))?\s*\)/,
   reflink: /^!?\[(label)\]\[(?!\s*\])((?:\\[\[\]]?|[^\[\]\\])+)\]/,
   nolink: /^!?\[(?!\s*\])((?:\[[^\[\]]*\]|\\[\[\]]|[^\[\]])*)\](?:\[\])?/,
-  strong: /^__([^\s_])__(?!_)|^\*\*([^\s*])\*\*(?!\*)|^__([^\s][\s\S]*?[^\s])__(?!_)|^\*\*([^\s][\s\S]*?[^\s])\*\*(?!\*)/,
-  em: /^_([^\s_])_(?!_)|^_([^\s_<][\s\S]*?[^\s_])_(?!_|[^\s,punctuation])|^_([^\s_<][\s\S]*?[^\s])_(?!_|[^\s,punctuation])|^\*([^\s*<\[])\*(?!\*)|^\*([^\s<"][\s\S]*?[^\s\[\*])\*(?![\]`punctuation])|^\*([^\s*"<\[][\s\S]*[^\s])\*(?!\*)/,
+  reflinkSearch: 'reflink|nolink(?!\\()',
+  strong: {
+    start: /^(?:(\*\*(?=[*punctuation]))|\*\*)(?![\s])|__/, // (1) returns if starts w/ punctuation
+    middle: /^\*\*(?:(?:(?!overlapSkip)(?:[^*]|\\\*)|overlapSkip)|\*(?:(?!overlapSkip)(?:[^*]|\\\*)|overlapSkip)*?\*)+?\*\*$|^__(?![\s])((?:(?:(?!overlapSkip)(?:[^_]|\\_)|overlapSkip)|_(?:(?!overlapSkip)(?:[^_]|\\_)|overlapSkip)*?_)+?)__$/,
+    endAst: /[^punctuation\s]\*\*(?!\*)|[punctuation]\*\*(?!\*)(?:(?=[punctuation\s]|$))/, // last char can't be punct, or final * must also be followed by punct (or endline)
+    endUnd: /[^\s]__(?!_)(?:(?=[punctuation\s])|$)/ // last char can't be a space, and final _ must preceed punct or \s (or endline)
+  },
+  em: {
+    start: /^(?:(\*(?=[punctuation]))|\*)(?![*\s])|_/, // (1) returns if starts w/ punctuation
+    middle: /^\*(?:(?:(?!overlapSkip)(?:[^*]|\\\*)|overlapSkip)|\*(?:(?!overlapSkip)(?:[^*]|\\\*)|overlapSkip)*?\*)+?\*$|^_(?![_\s])(?:(?:(?!overlapSkip)(?:[^_]|\\_)|overlapSkip)|_(?:(?!overlapSkip)(?:[^_]|\\_)|overlapSkip)*?_)+?_$/,
+    endAst: /[^punctuation\s]\*(?!\*)|[punctuation]\*(?!\*)(?:(?=[punctuation\s]|$))/, // last char can't be punct, or final * must also be followed by punct (or endline)
+    endUnd: /[^\s]_(?!_)(?:(?=[punctuation\s])|$)/ // last char can't be a space, and final _ must preceed punct or \s (or endline)
+  },
   code: /^(`+)([^`]|[^`][\s\S]*?[^`])\1(?!`)/,
   br: /^( {2,}|\\)\n(?!\s*$)/,
   del: noopTest$1,
-  text: /^(`+|[^`])(?:[\s\S]*?(?:(?=[\\<!\[`*]|\b_|$)|[^ ](?= {2,}\n))|(?= {2,}\n))/
+  text: /^(`+|[^`])(?:[\s\S]*?(?:(?=[\\<!\[`*]|\b_|$)|[^ ](?= {2,}\n))|(?= {2,}\n))/,
+  punctuation: /^([\s*punctuation])/
 };
 
 // list of punctuation marks from common mark spec
-// without ` and ] to workaround Rule 17 (inline code blocks/links)
-// without , to work around example 393
-inline._punctuation = '!"#$%&\'()*+\\-./:;<=>?@\\[^_{|}~';
-inline.em = edit$1(inline.em).replace(/punctuation/g, inline._punctuation).getRegex();
+// without * and _ to workaround cases with double emphasis
+inline._punctuation = '!"#$%&\'()+\\-.,/:;<=>?@\\[\\]`^{|}~';
+inline.punctuation = edit$1(inline.punctuation).replace(/punctuation/g, inline._punctuation).getRegex();
+
+// sequences em should skip over [title](link), `code`, <html>
+inline._blockSkip = '\\[[^\\]]*?\\]\\([^\\)]*?\\)|`[^`]*?`|<[^>]*?>';
+inline._overlapSkip = '__[^_]*?__|\\*\\*\\[^\\*\\]*?\\*\\*';
+
+inline.em.start = edit$1(inline.em.start)
+  .replace(/punctuation/g, inline._punctuation)
+  .getRegex();
+
+inline.em.middle = edit$1(inline.em.middle)
+  .replace(/punctuation/g, inline._punctuation)
+  .replace(/overlapSkip/g, inline._overlapSkip)
+  .getRegex();
+
+inline.em.endAst = edit$1(inline.em.endAst, 'g')
+  .replace(/punctuation/g, inline._punctuation)
+  .getRegex();
+
+inline.em.endUnd = edit$1(inline.em.endUnd, 'g')
+  .replace(/punctuation/g, inline._punctuation)
+  .getRegex();
+
+inline.strong.start = edit$1(inline.strong.start)
+  .replace(/punctuation/g, inline._punctuation)
+  .getRegex();
+
+inline.strong.middle = edit$1(inline.strong.middle)
+  .replace(/punctuation/g, inline._punctuation)
+  .replace(/blockSkip/g, inline._blockSkip)
+  .getRegex();
+
+inline.strong.endAst = edit$1(inline.strong.endAst, 'g')
+  .replace(/punctuation/g, inline._punctuation)
+  .getRegex();
+
+inline.strong.endUnd = edit$1(inline.strong.endUnd, 'g')
+  .replace(/punctuation/g, inline._punctuation)
+  .getRegex();
+
+inline.blockSkip = edit$1(inline._blockSkip, 'g')
+  .getRegex();
+
+inline.overlapSkip = edit$1(inline._overlapSkip, 'g')
+  .getRegex();
 
 inline._escapes = /\\([!"#$%&'()*+,\-./:;<=>?@\[\]\\^_`{|}~])/g;
 
@@ -1134,7 +1215,7 @@ inline.tag = edit$1(inline.tag)
   .replace('attribute', inline._attribute)
   .getRegex();
 
-inline._label = /(?:\[[^\[\]]*\]|\\.|`[^`]*`|[^\[\]\\`])*?/;
+inline._label = /(?:\[(?:\\.|[^\[\]\\])*\]|\\.|`[^`]*`|[^\[\]\\`])*?/;
 inline._href = /<(?:\\[<>]?|[^\s<>\\])*>|[^\s\x00-\x1f]*/;
 inline._title = /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/;
 
@@ -1148,6 +1229,11 @@ inline.reflink = edit$1(inline.reflink)
   .replace('label', inline._label)
   .getRegex();
 
+inline.reflinkSearch = edit$1(inline.reflinkSearch, 'g')
+  .replace('reflink', inline.reflink)
+  .replace('nolink', inline.nolink)
+  .getRegex();
+
 /**
  * Normal Inline Grammar
  */
@@ -1159,8 +1245,18 @@ inline.normal = merge$1({}, inline);
  */
 
 inline.pedantic = merge$1({}, inline.normal, {
-  strong: /^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,
-  em: /^_(?=\S)([\s\S]*?\S)_(?!_)|^\*(?=\S)([\s\S]*?\S)\*(?!\*)/,
+  strong: {
+    start: /^__|\*\*/,
+    middle: /^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,
+    endAst: /\*\*(?!\*)/g,
+    endUnd: /__(?!_)/g
+  },
+  em: {
+    start: /^_|\*/,
+    middle: /^()\*(?=\S)([\s\S]*?\S)\*(?!\*)|^_(?=\S)([\s\S]*?\S)_(?!_)/,
+    endAst: /\*(?!\*)/g,
+    endUnd: /_(?!_)/g
+  },
   link: edit$1(/^!?\[(label)\]\((.*?)\)/)
     .replace('label', inline._label)
     .getRegex(),
@@ -1519,8 +1615,28 @@ var Lexer_1 = class Lexer {
   /**
    * Lexing/Compiling
    */
-  inlineTokens(src, tokens = [], inLink = false, inRawBlock = false) {
+  inlineTokens(src, tokens = [], inLink = false, inRawBlock = false, prevChar = '') {
     let token;
+
+    // String with links masked to avoid interference with em and strong
+    let maskedSrc = src;
+    let match;
+
+    // Mask out reflinks
+    if (this.tokens.links) {
+      const links = Object.keys(this.tokens.links);
+      if (links.length > 0) {
+        while ((match = this.tokenizer.rules.inline.reflinkSearch.exec(maskedSrc)) != null) {
+          if (links.includes(match[0].slice(match[0].lastIndexOf('[') + 1, -1))) {
+            maskedSrc = maskedSrc.slice(0, match.index) + '[' + 'a'.repeat(match[0].length - 2) + ']' + maskedSrc.slice(this.tokenizer.rules.inline.reflinkSearch.lastIndex);
+          }
+        }
+      }
+    }
+    // Mask out other blocks
+    while ((match = this.tokenizer.rules.inline.blockSkip.exec(maskedSrc)) != null) {
+      maskedSrc = maskedSrc.slice(0, match.index) + '[' + 'a'.repeat(match[0].length - 2) + ']' + maskedSrc.slice(this.tokenizer.rules.inline.blockSkip.lastIndex);
+    }
 
     while (src) {
       // escape
@@ -1560,7 +1676,7 @@ var Lexer_1 = class Lexer {
       }
 
       // strong
-      if (token = this.tokenizer.strong(src)) {
+      if (token = this.tokenizer.strong(src, maskedSrc, prevChar)) {
         src = src.substring(token.raw.length);
         token.tokens = this.inlineTokens(token.text, [], inLink, inRawBlock);
         tokens.push(token);
@@ -1568,7 +1684,7 @@ var Lexer_1 = class Lexer {
       }
 
       // em
-      if (token = this.tokenizer.em(src)) {
+      if (token = this.tokenizer.em(src, maskedSrc, prevChar)) {
         src = src.substring(token.raw.length);
         token.tokens = this.inlineTokens(token.text, [], inLink, inRawBlock);
         tokens.push(token);
@@ -1614,6 +1730,7 @@ var Lexer_1 = class Lexer {
       // text
       if (token = this.tokenizer.inlineText(src, inRawBlock, smartypants)) {
         src = src.substring(token.raw.length);
+        prevChar = token.raw.slice(-1);
         tokens.push(token);
         continue;
       }
@@ -2200,20 +2317,22 @@ function marked(src, opt, callback) {
     marked.walkTokens(tokens, function(token) {
       if (token.type === 'code') {
         pending++;
-        highlight(token.text, token.lang, function(err, code) {
-          if (err) {
-            return done(err);
-          }
-          if (code != null && code !== token.text) {
-            token.text = code;
-            token.escaped = true;
-          }
+        setTimeout(() => {
+          highlight(token.text, token.lang, function(err, code) {
+            if (err) {
+              return done(err);
+            }
+            if (code != null && code !== token.text) {
+              token.text = code;
+              token.escaped = true;
+            }
 
-          pending--;
-          if (pending === 0) {
-            done();
-          }
-        });
+            pending--;
+            if (pending === 0) {
+              done();
+            }
+          });
+        }, 0);
       }
     });
 
@@ -2364,7 +2483,8 @@ var hasOwnProperty = Object.hasOwnProperty,
     isFrozen = Object.isFrozen,
     objectKeys = Object.keys;
 var freeze = Object.freeze,
-    seal = Object.seal; // eslint-disable-line import/no-mutable-exports
+    seal = Object.seal,
+    create = Object.create; // eslint-disable-line import/no-mutable-exports
 
 var _ref = typeof Reflect !== 'undefined' && Reflect,
     apply = _ref.apply,
@@ -2464,7 +2584,7 @@ function addToSet(set, array) {
 
 /* Shallow clone an object */
 function clone(object) {
-  var newObject = {};
+  var newObject = create(null);
 
   var property = void 0;
   for (property in object) {
@@ -2489,7 +2609,7 @@ var text = freeze(['#text']);
 
 var html$1 = freeze(['accept', 'action', 'align', 'alt', 'autocapitalize', 'autocomplete', 'autopictureinpicture', 'autoplay', 'background', 'bgcolor', 'border', 'capture', 'cellpadding', 'cellspacing', 'checked', 'cite', 'class', 'clear', 'color', 'cols', 'colspan', 'controls', 'controlslist', 'coords', 'crossorigin', 'datetime', 'decoding', 'default', 'dir', 'disabled', 'disablepictureinpicture', 'disableremoteplayback', 'download', 'draggable', 'enctype', 'enterkeyhint', 'face', 'for', 'headers', 'height', 'hidden', 'high', 'href', 'hreflang', 'id', 'inputmode', 'integrity', 'ismap', 'kind', 'label', 'lang', 'list', 'loading', 'loop', 'low', 'max', 'maxlength', 'media', 'method', 'min', 'minlength', 'multiple', 'muted', 'name', 'noshade', 'novalidate', 'nowrap', 'open', 'optimum', 'pattern', 'placeholder', 'playsinline', 'poster', 'preload', 'pubdate', 'radiogroup', 'readonly', 'rel', 'required', 'rev', 'reversed', 'role', 'rows', 'rowspan', 'spellcheck', 'scope', 'selected', 'shape', 'size', 'sizes', 'span', 'srclang', 'start', 'src', 'srcset', 'step', 'style', 'summary', 'tabindex', 'title', 'translate', 'type', 'usemap', 'valign', 'value', 'width', 'xmlns']);
 
-var svg$1 = freeze(['accent-height', 'accumulate', 'additive', 'alignment-baseline', 'ascent', 'attributename', 'attributetype', 'azimuth', 'basefrequency', 'baseline-shift', 'begin', 'bias', 'by', 'class', 'clip', 'clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-interpolation-filters', 'color-profile', 'color-rendering', 'cx', 'cy', 'd', 'dx', 'dy', 'diffuseconstant', 'direction', 'display', 'divisor', 'dur', 'edgemode', 'elevation', 'end', 'fill', 'fill-opacity', 'fill-rule', 'filter', 'filterunits', 'flood-color', 'flood-opacity', 'font-family', 'font-size', 'font-size-adjust', 'font-stretch', 'font-style', 'font-variant', 'font-weight', 'fx', 'fy', 'g1', 'g2', 'glyph-name', 'glyphref', 'gradientunits', 'gradienttransform', 'height', 'href', 'id', 'image-rendering', 'in', 'in2', 'k', 'k1', 'k2', 'k3', 'k4', 'kerning', 'keypoints', 'keysplines', 'keytimes', 'lang', 'lengthadjust', 'letter-spacing', 'kernelmatrix', 'kernelunitlength', 'lighting-color', 'local', 'marker-end', 'marker-mid', 'marker-start', 'markerheight', 'markerunits', 'markerwidth', 'maskcontentunits', 'maskunits', 'max', 'mask', 'media', 'method', 'mode', 'min', 'name', 'numoctaves', 'offset', 'operator', 'opacity', 'order', 'orient', 'orientation', 'origin', 'overflow', 'paint-order', 'path', 'pathlength', 'patterncontentunits', 'patterntransform', 'patternunits', 'points', 'preservealpha', 'preserveaspectratio', 'primitiveunits', 'r', 'rx', 'ry', 'radius', 'refx', 'refy', 'repeatcount', 'repeatdur', 'restart', 'result', 'rotate', 'scale', 'seed', 'shape-rendering', 'specularconstant', 'specularexponent', 'spreadmethod', 'startoffset', 'stddeviation', 'stitchtiles', 'stop-color', 'stop-opacity', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit', 'stroke-opacity', 'stroke', 'stroke-width', 'style', 'surfacescale', 'tabindex', 'targetx', 'targety', 'transform', 'text-anchor', 'text-decoration', 'text-rendering', 'textlength', 'type', 'u1', 'u2', 'unicode', 'values', 'viewbox', 'visibility', 'version', 'vert-adv-y', 'vert-origin-x', 'vert-origin-y', 'width', 'word-spacing', 'wrap', 'writing-mode', 'xchannelselector', 'ychannelselector', 'x', 'x1', 'x2', 'xmlns', 'y', 'y1', 'y2', 'z', 'zoomandpan']);
+var svg$1 = freeze(['accent-height', 'accumulate', 'additive', 'alignment-baseline', 'ascent', 'attributename', 'attributetype', 'azimuth', 'basefrequency', 'baseline-shift', 'begin', 'bias', 'by', 'class', 'clip', 'clippathunits', 'clip-path', 'clip-rule', 'color', 'color-interpolation', 'color-interpolation-filters', 'color-profile', 'color-rendering', 'cx', 'cy', 'd', 'dx', 'dy', 'diffuseconstant', 'direction', 'display', 'divisor', 'dur', 'edgemode', 'elevation', 'end', 'fill', 'fill-opacity', 'fill-rule', 'filter', 'filterunits', 'flood-color', 'flood-opacity', 'font-family', 'font-size', 'font-size-adjust', 'font-stretch', 'font-style', 'font-variant', 'font-weight', 'fx', 'fy', 'g1', 'g2', 'glyph-name', 'glyphref', 'gradientunits', 'gradienttransform', 'height', 'href', 'id', 'image-rendering', 'in', 'in2', 'k', 'k1', 'k2', 'k3', 'k4', 'kerning', 'keypoints', 'keysplines', 'keytimes', 'lang', 'lengthadjust', 'letter-spacing', 'kernelmatrix', 'kernelunitlength', 'lighting-color', 'local', 'marker-end', 'marker-mid', 'marker-start', 'markerheight', 'markerunits', 'markerwidth', 'maskcontentunits', 'maskunits', 'max', 'mask', 'media', 'method', 'mode', 'min', 'name', 'numoctaves', 'offset', 'operator', 'opacity', 'order', 'orient', 'orientation', 'origin', 'overflow', 'paint-order', 'path', 'pathlength', 'patterncontentunits', 'patterntransform', 'patternunits', 'points', 'preservealpha', 'preserveaspectratio', 'primitiveunits', 'r', 'rx', 'ry', 'radius', 'refx', 'refy', 'repeatcount', 'repeatdur', 'restart', 'result', 'rotate', 'scale', 'seed', 'shape-rendering', 'specularconstant', 'specularexponent', 'spreadmethod', 'startoffset', 'stddeviation', 'stitchtiles', 'stop-color', 'stop-opacity', 'stroke-dasharray', 'stroke-dashoffset', 'stroke-linecap', 'stroke-linejoin', 'stroke-miterlimit', 'stroke-opacity', 'stroke', 'stroke-width', 'style', 'surfacescale', 'systemlanguage', 'tabindex', 'targetx', 'targety', 'transform', 'text-anchor', 'text-decoration', 'text-rendering', 'textlength', 'type', 'u1', 'u2', 'unicode', 'values', 'viewbox', 'visibility', 'version', 'vert-adv-y', 'vert-origin-x', 'vert-origin-y', 'width', 'word-spacing', 'wrap', 'writing-mode', 'xchannelselector', 'ychannelselector', 'x', 'x1', 'x2', 'xmlns', 'y', 'y1', 'y2', 'z', 'zoomandpan']);
 
 var mathMl$1 = freeze(['accent', 'accentunder', 'align', 'bevelled', 'close', 'columnsalign', 'columnlines', 'columnspan', 'denomalign', 'depth', 'dir', 'display', 'displaystyle', 'encoding', 'fence', 'frame', 'height', 'href', 'id', 'largeop', 'length', 'linethickness', 'lspace', 'lquote', 'mathbackground', 'mathcolor', 'mathsize', 'mathvariant', 'maxsize', 'minsize', 'movablelimits', 'notation', 'numalign', 'open', 'rowalign', 'rowlines', 'rowspacing', 'rowspan', 'rspace', 'rquote', 'scriptlevel', 'scriptminsize', 'scriptsizemultiplier', 'selection', 'separator', 'separators', 'stretchy', 'subscriptshift', 'supscriptshift', 'symmetric', 'voffset', 'width', 'xmlns']);
 
@@ -2503,7 +2623,7 @@ var ARIA_ATTR = seal(/^aria-[\-\w]+$/); // eslint-disable-line no-useless-escape
 var IS_ALLOWED_URI = seal(/^(?:(?:(?:f|ht)tps?|mailto|tel|callto|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i // eslint-disable-line no-useless-escape
 );
 var IS_SCRIPT_OR_DATA = seal(/^(?:\w+script|data):/i);
-var ATTR_WHITESPACE = seal(/[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205f\u3000]/g // eslint-disable-line no-control-regex
+var ATTR_WHITESPACE = seal(/[\u0000-\u0020\u00A0\u1680\u180E\u2000-\u2029\u205F\u3000]/g // eslint-disable-line no-control-regex
 );
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
@@ -2564,7 +2684,7 @@ function createDOMPurify() {
    * Version label, exposed for easier checks
    * if DOMPurify is up to date or not
    */
-  DOMPurify.version = '2.0.11';
+  DOMPurify.version = '2.0.15';
 
   /**
    * Array of elements that DOMPurify removed during sanitation.
@@ -2610,7 +2730,7 @@ function createDOMPurify() {
   }
 
   var trustedTypesPolicy = _createTrustedTypesPolicy(trustedTypes, originalDocument);
-  var emptyHTML = trustedTypesPolicy ? trustedTypesPolicy.createHTML('') : '';
+  var emptyHTML = trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML('') : '';
 
   var _document = document,
       implementation = _document.implementation,
@@ -2620,12 +2740,14 @@ function createDOMPurify() {
   var importNode = originalDocument.importNode;
 
 
+  var documentMode = clone(document).documentMode ? document.documentMode : {};
+
   var hooks = {};
 
   /**
    * Expose whether this browser supports running the full DOMPurify.
    */
-  DOMPurify.isSupported = implementation && typeof implementation.createHTMLDocument !== 'undefined' && document.documentMode !== 9;
+  DOMPurify.isSupported = implementation && typeof implementation.createHTMLDocument !== 'undefined' && documentMode !== 9;
 
   var MUSTACHE_EXPR$$1 = MUSTACHE_EXPR,
       ERB_EXPR$$1 = ERB_EXPR,
@@ -2698,7 +2820,7 @@ function createDOMPurify() {
    * DOMPurify. */
   var RETURN_DOM_IMPORT = false;
 
-  /* Try to return a Trusted Type object instead of a string, retrun a string in
+  /* Try to return a Trusted Type object instead of a string, return a string in
    * case Trusted Types are not supported  */
   var RETURN_TRUSTED_TYPE = false;
 
@@ -2749,6 +2871,9 @@ function createDOMPurify() {
     if (!cfg || (typeof cfg === 'undefined' ? 'undefined' : _typeof(cfg)) !== 'object') {
       cfg = {};
     }
+
+    /* Shield configuration object from prototype pollution */
+    cfg = clone(cfg);
 
     /* Set configuration parameters */
     ALLOWED_TAGS = 'ALLOWED_TAGS' in cfg ? addToSet({}, cfg.ALLOWED_TAGS) : DEFAULT_ALLOWED_TAGS;
@@ -2863,7 +2988,6 @@ function createDOMPurify() {
   var _forceRemove = function _forceRemove(node) {
     arrayPush(DOMPurify.removed, { element: node });
     try {
-      // eslint-disable-next-line unicorn/prefer-node-remove
       node.parentNode.removeChild(node);
     } catch (_) {
       node.outerHTML = emptyHTML;
@@ -3033,6 +3157,12 @@ function createDOMPurify() {
       return true;
     }
 
+    /* Check if tagname contains Unicode */
+    if (stringMatch(currentNode.nodeName, /[\u0080-\uFFFF]/)) {
+      _forceRemove(currentNode);
+      return true;
+    }
+
     /* Now let's check the element's type and name */
     var tagName = stringToLowerCase(currentNode.nodeName);
 
@@ -3050,7 +3180,7 @@ function createDOMPurify() {
 
     /* Remove element if anything forbids its presence */
     if (!ALLOWED_TAGS[tagName] || FORBID_TAGS[tagName]) {
-      /* Keep content except for black-listed elements */
+      /* Keep content except for bad-listed elements */
       if (KEEP_CONTENT && !FORBID_CONTENTS[tagName] && typeof currentNode.insertAdjacentHTML === 'function') {
         try {
           var htmlToInsert = currentNode.innerHTML;
@@ -3074,7 +3204,7 @@ function createDOMPurify() {
     }
 
     /* Convert markup to cover jQuery behavior */
-    if (SAFE_FOR_JQUERY && !currentNode.firstElementChild && (!currentNode.content || !currentNode.content.firstElementChild) && regExpTest(/</g, currentNode.textContent)) {
+    if (SAFE_FOR_JQUERY && !_isNode(currentNode.firstElementChild) && (!_isNode(currentNode.content) || !_isNode(currentNode.content.firstElementChild)) && regExpTest(/</g, currentNode.textContent)) {
       arrayPush(DOMPurify.removed, { element: currentNode.cloneNode() });
       if (currentNode.innerHTML) {
         currentNode.innerHTML = stringReplace(currentNode.innerHTML, /</g, '&lt;');
@@ -3375,10 +3505,10 @@ function createDOMPurify() {
       }
     } else {
       /* Exit directly if we have nothing to do */
-      if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT && RETURN_TRUSTED_TYPE &&
+      if (!RETURN_DOM && !SAFE_FOR_TEMPLATES && !WHOLE_DOCUMENT &&
       // eslint-disable-next-line unicorn/prefer-includes
       dirty.indexOf('<') === -1) {
-        return trustedTypesPolicy ? trustedTypesPolicy.createHTML(dirty) : dirty;
+        return trustedTypesPolicy && RETURN_TRUSTED_TYPE ? trustedTypesPolicy.createHTML(dirty) : dirty;
       }
 
       /* Initialize the document to work on */
@@ -3568,7 +3698,7 @@ var purify = createDOMPurify();
  * @param  {String} markdown markdown string
  * @return {TemplateResult}          lit-element template result
  */
-var parse = (markdown) => {
+var parse = (markdown, config = {}) => {
   if (!markdown) {
     return html$2`
       ${nothing}
@@ -3576,7 +3706,7 @@ var parse = (markdown) => {
   }
 
   return html$2`
-    ${unsafeHTML(purify.sanitize(marked_1(markdown)))}
+    ${unsafeHTML(purify.sanitize(marked_1(markdown), config))}
   `;
 };
 

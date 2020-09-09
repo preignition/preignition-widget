@@ -9,7 +9,7 @@ const contentObserver = new MutationObserver(callback);
 /**
  * ## PwiContentObserver
  *
- * `<pwi-content-observer>` brings slottted text content and exposes it un content properties
+ * `<pwi-content-observer>` brings slottted text content and exposes it on content properties
  * 
  * @fires content-changed - eventfired when slotted content changes
  * @slot - default slot
@@ -41,7 +41,7 @@ class PwiContentObserver extends LitElement {
   }
   
   disconnectedCallback() {
-    this._observer.disconnect();
+    this._observer && this._observer.disconnect();
     super.disconnectedCallback();
   }
 
