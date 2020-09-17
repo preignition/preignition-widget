@@ -6,8 +6,8 @@ import { Switch } from '@material/mwc-switch';
  * value changes
  */
 class PwiSwitch extends Switch {
-  _changeHandler(e) {
-    super._changeHandler(...arguments);
+  changeHandler(e) {
+    super.changeHandler(...arguments);
     this.dispatchEvent(new CustomEvent('checked-changed', { detail: { value: this.checked }, bubbles: true, composed: true }));
   }
 
@@ -16,3 +16,4 @@ class PwiSwitch extends Switch {
 customElements.define('pwi-switch', PwiSwitch);
 
 export { PwiSwitch };
+
