@@ -75,6 +75,25 @@ class FormDemo extends DemoBase {
               <demo-api-viewer selected="pwi-textfield"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
+          <expansion-panel opened>
+              <div slot="header">pwi-wrapper</div>
+              <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'api'} label="api"></mwc-tab>
+            </mwc-tab-bar >
+            ${this.activeTab === 'intro' ? html `
+              <h2>Example</h2>
+              <pwi-wrapper label="this is a label">
+                <p>coucou</p>
+                <p>coucou2</p>
+
+                <input/>
+              </pwi-wrapper>` : ''}
+            ${this.activeTab === 'api' ? html `
+              <h2>API</h2>
+              <demo-api-viewer selected="pwi-cron-builder"  src="/docs/pwi-cron-builder.json">` : ''}
+          </expansion-panel>
+
            <expansion-panel >
               <div slot="header">pwi-radio-group</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">

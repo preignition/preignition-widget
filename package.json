@@ -80,6 +80,7 @@
       "lit-html/directives/cache.js",
       "lit-html/directives/unsafe-html.js",
       "lit-html/directives/style-map.js",
+      "lit-html/directives/class-map.js",
       "lit-html/directives/if-defined.js",
       "tslib"
     ],

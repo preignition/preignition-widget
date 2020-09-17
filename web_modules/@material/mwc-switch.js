@@ -2,12 +2,12 @@ import { __extends, __assign, __decorate } from '../tslib.js';
 import { h as html } from '../common/lit-html-f37bf389.js';
 import { property, query, queryAsync, internalProperty, eventOptions, css, customElement } from '../lit-element.js';
 import '../common/directive-651fd9cf.js';
-import { M as MDCFoundation, a as addHasRemoveClass } from '../common/foundation-08cd9cb2.js';
-import '../common/foundation-fe75356e.js';
-import '../common/class-map-755611e9.js';
+import { M as MDCFoundation, b as addHasRemoveClass } from '../common/foundation-1fec3a2e.js';
+import '../common/foundation-e17fb4b7.js';
+import '../lit-html/directives/class-map.js';
 import '../lit-html/directives/style-map.js';
-import { R as RippleHandlers } from '../common/ripple-handlers-0b65020a.js';
-import { F as FormElement } from '../common/form-element-e4cf33f9.js';
+import { R as RippleHandlers } from '../common/ripple-handlers-91c9979e.js';
+import { F as FormElement } from '../common/form-element-f16ef419.js';
 import { o as observer } from '../common/observer-0bd28502.js';
 
 /**

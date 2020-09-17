@@ -2,9 +2,9 @@ import { __extends, __assign, __decorate } from '../tslib.js';
 import { h as html } from '../common/lit-html-f37bf389.js';
 import { property, query, css, customElement } from '../lit-element.js';
 import '../common/directive-651fd9cf.js';
-import { M as MDCFoundation, B as BaseElement, f as findAssignedElement } from '../common/foundation-08cd9cb2.js';
-import { c as classMap } from '../common/class-map-755611e9.js';
-import { F as FormElement } from '../common/form-element-e4cf33f9.js';
+import { M as MDCFoundation, B as BaseElement, f as findAssignedElement } from '../common/foundation-1fec3a2e.js';
+import { classMap } from '../lit-html/directives/class-map.js';
+import { F as FormElement } from '../common/form-element-f16ef419.js';
 import { o as observer } from '../common/observer-0bd28502.js';
 
 /**
