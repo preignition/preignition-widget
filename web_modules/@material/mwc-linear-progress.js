@@ -2,7 +2,7 @@ import { __extends, __assign, __decorate } from '../tslib.js';
 import { h as html } from '../common/lit-html-f37bf389.js';
 import { query, property, internalProperty, css, customElement } from '../lit-element.js';
 import '../common/directive-651fd9cf.js';
-import { M as MDCFoundation, B as BaseElement } from '../common/foundation-1fec3a2e.js';
+import { M as MDCFoundation, B as BaseElement } from '../common/foundation-08cd9cb2.js';
 import { classMap } from '../lit-html/directives/class-map.js';
 import { styleMap } from '../lit-html/directives/style-map.js';
 import { o as observer } from '../common/observer-0bd28502.js';

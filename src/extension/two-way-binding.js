@@ -6,9 +6,12 @@
 export const TwoWayBinding = (baseElement) => class extends baseElement {
   handleInputChange() {
     super.handleInputChange(...arguments);
-    this.dispatchEvent(new CustomEvent('value-changed', { detail: { value: this.value }, bubbles: true, composed: true }));
+    this.dispatchValueChanged();
   }
 
+  dispatchValueChanged() {
+    this.dispatchEvent(new CustomEvent('value-changed', { detail: { value: this.value }, bubbles: true, composed: true }));
+  }
 
   // update(changedProperties) {
   //   if (changedProperties.has('value') && this.value === undefined) {

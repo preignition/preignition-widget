@@ -31,7 +31,7 @@ class PwiTextArea extends TwoWayBinding(TextFieldOverride(TextArea)) {
       },
 
       /*
-       * `resize` {'vertival' | 'horizontal' | 'auto'}
+       * `resize` {'vertical' | 'horizontal' | 'auto'}
        * apply resize css to text area
        * Should be removed when https://github.com/material-components/material-components-web-components/issues/1305 lands
        */

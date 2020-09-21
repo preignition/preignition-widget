@@ -2,11 +2,11 @@ import { __extends, __assign, __read, __decorate } from '../tslib.js';
 import { h as html } from '../common/lit-html-f37bf389.js';
 import { query, eventOptions, css, customElement, property } from '../lit-element.js';
 import '../common/directive-651fd9cf.js';
-import { M as MDCFoundation, B as BaseElement, b as addHasRemoveClass, m as matches } from '../common/foundation-1fec3a2e.js';
-import '../common/foundation-e17fb4b7.js';
+import { M as MDCFoundation, B as BaseElement, a as addHasRemoveClass, m as matches } from '../common/foundation-08cd9cb2.js';
+import '../common/foundation-fe75356e.js';
 import '../lit-html/directives/class-map.js';
 import { o as observer } from '../common/observer-0bd28502.js';
-import '../common/ripple-directive-7e28757e.js';
+import '../common/ripple-directive-b6a890a0.js';
 import { Tab } from './mwc-tab.js';
 
 /**

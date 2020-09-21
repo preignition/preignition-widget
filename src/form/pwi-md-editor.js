@@ -11,10 +11,10 @@ import '@material/mwc-textarea';
 /**
  * ## PwiMdEditr
  *
- * `<pwi-md-editor>` is a markdown text editor with a priview tab, similar to gitlab edit
+ * `<pwi-md-editor>` is a markdown text editor with a preview tab, similar to gitlab edit
  * 
  * @fires md-changes - eventfired when `md` changes
- * @fires md-paste - event fired when user paste on textarea. User to listed for image copy.
+ * @fires md-paste - event fired when user paste on textarea. Used to listed for image copy.
  */
 class PwiMdEditor extends LitElement {
 

@@ -1,5 +1,8 @@
 import { html, css } from 'lit-element';
 import { DemoBase, } from '@preignition/preignition-demo';
+import '@material/mwc-fab';
+
+
 
 class FormDemo extends DemoBase {
 
@@ -7,7 +10,6 @@ class FormDemo extends DemoBase {
     return [
     super.styles, 
     css `
-
       #toolbar {
         position: relative;
         margin-top: var(--space-xx-small, 4px);
@@ -17,8 +19,17 @@ class FormDemo extends DemoBase {
         bottom: 0;
         right: 0;
         left: 0;
+      }
+      .ct {
+        display: flex;
+        flex-direction: row;
+      }
 
-      }`];
+      .flex {
+        flex: 1;
+        margin-right: 10px;
+      }
+      `];
   }
 
   static get properties() {
@@ -60,7 +71,7 @@ class FormDemo extends DemoBase {
       </div>
       <fancy-accordion >
           
-          <expansion-panel >
+          <expansion-panel opened>
               <div slot="header">pwi-textfield</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -68,14 +79,29 @@ class FormDemo extends DemoBase {
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
-              <!--pwi-md .md="${'# coucou'}" ></pwi-md-->
-              <pwi-textfield label="text"></pwi-textfield>
+              <h3>text field - simple</h3>
+              <div class="ct">
+                <pwi-textfield class="flex" label="text" helper="helper text"></pwi-textfield>
+                <pwi-textarea class="flex" label="textarea" helper="helper text for texarea"></pwi-textarea>
+              </div>
+              <h3>Text field - accessible version</h3>
+              <div class="ct">
+                <pwi-accessible-textfield class="flex" label-above label="looooooooooooog accessible laaaaaaaaaaaabel"></pwi-accessible-textfield>
+                <pwi-accessible-textarea class="flex" label-above label="looooooooooooog accessible laaaaaaaaaaaabel"></pwi-accessible-textarea>
+              </div>
+              <h3>Text field - accessible version - alternate type</h3>
+              <div class="ct">
+                <pwi-accessible-number class="flex" label-above label="number"></pwi-accessible-number>
+                <pwi-accessible-email class="flex" label-above label="email"></pwi-accessible-email>
+                <pwi-accessible-locale class="flex" @value-changed=${this.onLocaleChange} value="30000" label="locale"></pwi-accessible-locale>
+              </div>
+
               
               <h2>API</h2>
               <demo-api-viewer selected="pwi-textfield"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
-          <expansion-panel opened>
+          <expansion-panel >
               <div slot="header">pwi-wrapper</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -164,6 +190,10 @@ class FormDemo extends DemoBase {
     </demos-container>
     
     `;
+  }
+
+  onLocaleChange(e) {
+    console.info('LocaleChange', e.detail.value)
   }
 
   constructor() {

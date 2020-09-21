@@ -1,10 +1,10 @@
 {
   "imports": {
     "@material/mwc-button": "./@material/mwc-button.js",
+    "@material/mwc-fab": "./@material/mwc-fab.js",
     "@material/mwc-formfield": "./@material/mwc-formfield.js",
     "@material/mwc-icon-button": "./@material/mwc-icon-button.js",
     "@material/mwc-linear-progress": "./@material/mwc-linear-progress.js",
-    "@material/mwc-list": "./@material/mwc-list.js",
     "@material/mwc-radio": "./@material/mwc-radio.js",
     "@material/mwc-switch": "./@material/mwc-switch.js",
     "@material/mwc-tab": "./@material/mwc-tab.js",
