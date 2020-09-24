@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map.js';
-import { TextField } from '@material/mwc-textfield';
+import { PwiAccessibleTextfield } from './accessible/pwi-accessible-textfield.js';
 
 class PwiPseudoInput extends LitElement {
 
@@ -33,7 +33,7 @@ customElements.define('pwi-pseudo-input', PwiPseudoInput);
  * a wrapper around form fields like checkbox and radio-buttons
  */
 
-class PwiWrapper extends TextField {
+class PwiFieldWrapper extends PwiAccessibleTextfield {
 
 
   static get styles() {
@@ -48,6 +48,11 @@ class PwiWrapper extends TextField {
       display: inline-block;
     }
     `];
+  }
+
+  constructor() {
+    super();
+    this.labelAbove = true; 
   }
 
   get formElement() {
@@ -91,4 +96,4 @@ class PwiWrapper extends TextField {
   // }
 }
 
-customElements.define('pwi-wrapper', PwiWrapper);
+customElements.define('pwi-field-wrapper', PwiFieldWrapper);

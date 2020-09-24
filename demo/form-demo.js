@@ -1,6 +1,10 @@
 import { html, css } from 'lit-element';
 import { DemoBase, } from '@preignition/preignition-demo';
 import '@material/mwc-fab';
+import '@material/mwc-list';
+import '@material/mwc-list/mwc-list-item.js';
+import '@material/mwc-list/mwc-check-list-item.js';
+import '@material/mwc-list/mwc-radio-list-item.js';
 
 
 
@@ -23,6 +27,10 @@ class FormDemo extends DemoBase {
       .ct {
         display: flex;
         flex-direction: row;
+      }
+
+      .ct pwi-select {
+        margin-right: 10px;
       }
 
       .flex {
@@ -55,6 +63,10 @@ class FormDemo extends DemoBase {
 
       loading: {
         type: Boolean
+      },
+
+      selectValue: {
+        type: String
       }
 
 
@@ -71,7 +83,7 @@ class FormDemo extends DemoBase {
       </div>
       <fancy-accordion >
           
-          <expansion-panel opened>
+          <expansion-panel>
               <div slot="header">pwi-textfield</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -95,26 +107,78 @@ class FormDemo extends DemoBase {
                 <pwi-accessible-email class="flex" label-above label="email"></pwi-accessible-email>
                 <pwi-accessible-locale class="flex" @value-changed=${this.onLocaleChange} value="30000" label="locale"></pwi-accessible-locale>
               </div>
-
-              
               <h2>API</h2>
               <demo-api-viewer selected="pwi-textfield"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
-          <expansion-panel >
-              <div slot="header">pwi-wrapper</div>
+          <expansion-panel opened>
+              <div slot="header">pwi-select</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'api'} label="api"></mwc-tab>
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
-              <pwi-wrapper label="this is a label">
-                <p>coucou</p>
-                <p>coucou2</p>
+              <div class="ct">
+                <pwi-select label="select label" helper="help me out" @value-changed="${e => this.selectValue = e.detail.value}" .value="${this.selectValue}">
+                  <mwc-list-item></mwc-list-item>
+                  <mwc-list-item value="1">Option 1</mwc-list-item>
+                  <mwc-list-item value="2">Option 2</mwc-list-item>
+                  <mwc-list-item value="3">Option 3</mwc-list-item>
+                </pwi-select>
+                <pwi-select label="select label - bound" required @value-changed="${e => this.selectValue = e.detail.value}" .value="${this.selectValue}">
+                  <mwc-list-item></mwc-list-item>
+                  <mwc-list-item value="1">Option 1</mwc-list-item>
+                  <mwc-list-item value="2">Option 2</mwc-list-item>
+                  <mwc-list-item value="3">Option 3</mwc-list-item>
+                </pwi-select>
+                <pwi-accessible-number class="flex" label-above label="number"></pwi-accessible-number>
+              </div>
+              <div>SelectedValue : ${this.selectValue}</div>
+              <div class="ct">
+              <pwi-accessible-select class="flex" label="select accessible label">
+                <mwc-list-item></mwc-list-item>
+                <mwc-list-item value="1">Option 1</mwc-list-item>
+                <mwc-list-item value="2">Option 2</mwc-list-item>
+                <mwc-list-item value="3">Option 3</mwc-list-item>
+              </pwi-accessible-select>
+              <pwi-accessible-select label-above class="flex" label="label above variant">
+                <mwc-list-item></mwc-list-item>
+                <mwc-list-item value="1">Option 1</mwc-list-item>
+                <mwc-list-item value="2">Option 2</mwc-list-item>
+                <mwc-list-item value="3">Option 3</mwc-list-item>
+              </pwi-accessible-select>
+              </div>
 
-                <input/>
-              </pwi-wrapper>` : ''}
+
+              ` : ''}
+            ${this.activeTab === 'api' ? html `
+              <h2>API</h2>
+              <demo-api-viewer selected="pwi-cron-builder"  src="/docs/pwi-cron-builder.json">` : ''}
+          </expansion-panel>
+
+          <expansion-panel >
+              <div slot="header">pwi-field-wrapper</div>
+              <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'api'} label="api"></mwc-tab>
+            </mwc-tab-bar >
+            ${this.activeTab === 'intro' ? html `
+              <h2>Example</h2>
+              <pwi-field-wrapper label="this is a label">
+                <p>coucou</p>
+              </pwi-field-wrapper>
+              <pwi-field-wrapper label="Label for checklist" helper="my helper" required>
+                <mwc-list multi id="checklist">
+                  <mwc-check-list-item selected>Item 0</mwc-check-list-item>
+                  <mwc-check-list-item>Item 1</mwc-check-list-item>
+                  <mwc-check-list-item left selected>Item 2 (left)</mwc-check-list-item>
+                  <mwc-check-list-item left>Item 3 (left)</mwc-check-list-item>
+                  <mwc-check-list-item disabled><span>disabled</span></mwc-check-list-item>
+                </mwc-list>
+              </pwi-field-wrapper>
+
+              ` : ''}
             ${this.activeTab === 'api' ? html `
               <h2>API</h2>
               <demo-api-viewer selected="pwi-cron-builder"  src="/docs/pwi-cron-builder.json">` : ''}
@@ -200,6 +264,7 @@ class FormDemo extends DemoBase {
     super();
     this.tabs = ['intro', 'api', 'demo2'];
     this.activeTab = 'intro';
+    this.selectValue = '2';
   }
 
   // get upload() {

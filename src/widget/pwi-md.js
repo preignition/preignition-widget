@@ -17,20 +17,18 @@ class PwiMd extends LitElement {
         type: Object
       }
     };
-
   }
-  
 
   render() {
     return html `<div class="markdown">${parse(this.md, this.mdConfig)}</div>`;
   }
 
   constructor() {
-    super()
-    this.mdConfig = {ADD_ATTR: ['target']};
+    super();
+    this.mdConfig = {ADD_ATTR: ['target', 'width', 'height']};
   }
 
-  // Note(cg): we want to render value in light dom so that 
+  // Note(cg): we want to render value in light dom so that
   // textContent work on parent elements.
   createRenderRoot() {
     return this;

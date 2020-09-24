@@ -37,6 +37,7 @@ export const AccessibleLabel = (baseElement) => class extends baseElement {
   }
 
   renderLabelAbove() {
+    console.info('rrr', this.label)
     return html `
      <pwi-label id="label" class="label-above" .label="${this.label}" .terminology="${this.terminology}" ?required="${this.required}" ></pwi-label>
     `;
@@ -58,7 +59,6 @@ export const AccessibleLabel = (baseElement) => class extends baseElement {
     }
     return super.renderLabel();
   }
-
 };
 
 export default AccessibleLabel;

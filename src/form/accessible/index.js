@@ -5,4 +5,5 @@ import './pwi-accessible-email.js';
 import './pwi-accessible-number.js';
 import './pwi-accessible-locale.js';
 import './pwi-accessible-locale-form.js';
+import './pwi-accessible-select.js';
 import './pwi-accessible-tel.js';

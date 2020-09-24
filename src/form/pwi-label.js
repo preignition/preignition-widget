@@ -51,7 +51,14 @@ class PwiLabel extends LitElement {
        */
       terminology: {
         type: Array
-      }
+      },
+
+      /*
+       * `label` 
+       */
+      label: {
+        type: String,
+      },
 
     };
   }
