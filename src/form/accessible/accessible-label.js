@@ -32,23 +32,11 @@ export const AccessibleLabel = (baseElement) => class extends baseElement {
     };
   }
 
-  get aboveLabel() {
-    return this.renderRoot.querySelector('pwi-label');
-  }
-
   renderLabelAbove() {
-    console.info('rrr', this.label)
     return html `
      <pwi-label id="label" class="label-above" .label="${this.label}" .terminology="${this.terminology}" ?required="${this.required}" ></pwi-label>
     `;
   }
-
-  // render() {
-  //   return html `
-  //     ${this.labelAbove && this.label ? this.renderLabelAbove() : nothing}
-  //     ${super.render()}
-  //   `;
-  // }
 
   renderLabel() {
     if (!this.label) {

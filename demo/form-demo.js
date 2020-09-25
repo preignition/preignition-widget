@@ -111,7 +111,7 @@ class FormDemo extends DemoBase {
               <demo-api-viewer selected="pwi-textfield"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
-          <expansion-panel opened>
+          <expansion-panel>
               <div slot="header">pwi-select</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -157,7 +157,7 @@ class FormDemo extends DemoBase {
               <demo-api-viewer selected="pwi-cron-builder"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
-          <expansion-panel >
+          <expansion-panel opened>
               <div slot="header">pwi-field-wrapper</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -165,7 +165,8 @@ class FormDemo extends DemoBase {
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
-              <pwi-field-wrapper label="this is a label">
+              <pwi-field-wrapper label="this is a label" helper="helper">
+                <input></input>
                 <p>coucou</p>
               </pwi-field-wrapper>
               <pwi-field-wrapper label="Label for checklist" helper="my helper" required>

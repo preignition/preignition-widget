@@ -1,5 +1,6 @@
 dependencies:
   '@duetds/tokens': 2.0.28
+  '@material/mwc-base': 0.18.0
   '@material/mwc-button': 0.18.0
   '@material/mwc-fab': 0.18.0
   '@material/mwc-formfield': 0.18.0
@@ -7009,6 +7010,7 @@ packages:
       integrity: sha512-faQrqNMzcPCHGVC2aaOINk13K+aaBDUPjGWl0teOXywElLjyVAB6Oe2jj62jHYtwsU49jXhScYbvPENK+6zAvQ==
 specifiers:
   '@duetds/tokens': ^2.0.28
+  '@material/mwc-base': ^0.18.0
   '@material/mwc-button': ^0.18.0
   '@material/mwc-fab': ^0.18.0
   '@material/mwc-formfield': ^0.18.0

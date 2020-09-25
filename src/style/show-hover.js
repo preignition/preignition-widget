@@ -1,7 +1,7 @@
 import { css } from 'lit-element';
 
 /*
-  show hover will only appear on host hover, avtice or focus
+  show hover will only appear on host hover, avtive or focus
  */
 export default css `
   [show-hover] {
