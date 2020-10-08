@@ -7,11 +7,11 @@ import TextFieldValidityMessageOverride from './text-field-validity-message-over
  * extension of mwc-textfield emiting a value-changed event when
  * value changes
  */
-class PwiTextField extends 
+class PwiTextField extends
   TwoWayBinding(
     TextFieldOverride(
-      TextFieldValidityMessageOverride(
-        TextField))) {
+        TextFieldValidityMessageOverride(
+          TextField))) {
 }
 
 customElements.define('pwi-textfield', PwiTextField);

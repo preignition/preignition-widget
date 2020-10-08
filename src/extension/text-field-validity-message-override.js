@@ -1,11 +1,11 @@
 /**
- * mixin overrideing how mdc-textfiel handle validation message
- * It gets native input validation message when 
+ * mixin overriding how mdc-textfiel handle validation message
+ * It gets native input validation message when
  * no default validatationMessage is set.
- * 
- * Related issue: 
+ *
+ * Related issue:
  * https://github.com/material-components/material-components-web-components/issues/971
- * 
+ *
  */
 
 export const TextFielValidityMessagedOverride = (baseElement) => class extends baseElement {
