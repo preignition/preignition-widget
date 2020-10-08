@@ -1,5 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import { classMap } from 'lit-html/directives/class-map.js';
+import { ifDefined } from 'lit-html/directives/if-defined.js';
 import AccessibleLabel from './accessible-label.js';
 import { PwiTextField } from '../../extension/pwi-textfield.js';
 // import { PwiAccessibleTextfield } from './accessible/pwi-accessible-textfield.js';
@@ -7,8 +8,21 @@ import { PwiTextField } from '../../extension/pwi-textfield.js';
 
 class PwiPseudoInput extends LitElement {
 
-  render() {
-    return html `<slot></slot>`;
+
+  // static get styles() {
+  //   return css`
+  //     :host {
+  //       display: block;
+  //       height: unset;
+  //       padding-bottom: var(--space-x-small);
+  //       padding-top: var(--space-x-small);
+  //     }
+  //   `;
+  // }
+
+  createRenderRoot() {
+    return this;
+    // return this.attachShadow({ mode: 'open', delegatesFocus: true });
   }
 
   get properties() {
@@ -18,6 +32,7 @@ class PwiPseudoInput extends LitElement {
       }
     };
   }
+
 
   constructor() {
     super();
@@ -47,6 +62,13 @@ class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
 
     .mdc-text-field .label-above {
      color: var(--mdc-text-field-label-ink-color, rgba(0, 0, 0, 0.6));
+    }
+    
+    .mdc-text-field__input {
+      display: block;
+      height: unset;
+      padding-bottom: var(--space-x-small);
+      padding-top: var(--space-x-small);
     }
 
     :host(:hover:not([hasfocus]):not([disabled]):not([invalid])) .mdc-text-field .label-above {
@@ -82,7 +104,7 @@ class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
      }
 
      :host(:hover) .mdc-line-ripple:before {
-       opacity: 1;
+       opacity: 0.2;
      }
 
     .mdc-text-field {
@@ -141,6 +163,27 @@ class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
     return this.renderRoot.querySelector('slot');
   }
 
+  updated(props) {
+    if (props.has('label') && this.label) {
+      this.addLightDom('label');
+    }
+    if (props.has('helper') && this.helper) {
+      this.addLightDom('helper');
+    }
+  }
+
+ addLightDom(id) {
+   let el = this[id + '__'] || this.querySelector('#' + id);
+   if (!el) {
+     el = document.createElement('span');
+     el.id = id;
+     el.style.display = 'none';
+     this[id + '__'] = el;
+     this.appendChild(el);
+   }
+   el.innerText = this[id];
+ }
+
   render() {
     const classes = {
       'mdc-text-field--disabled': this.disabled,
@@ -164,8 +207,12 @@ class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
 
   renderInput() {
     return html `
-    <pwi-pseudo-input tabindex="0"
+    <pwi-pseudo-input _tabindex="0"
       aria-labelledby="label"
+      aria-controls="helper"
+      aria-describedby="helper"
+      aria-errormessage="helper"
+      aria-invalid="${ifDefined(this.isUiValid ? undefined : 'true')}"
       class="mdc-text-field__input">
       <slot></slot>
     </pwi-pseudo-input>`;
