@@ -3,7 +3,7 @@
  * 
  */
 
-export const TextFieldOverride = (baseElement) => class extends baseElement {
+export const OverrideTextfield = (baseElement) => class extends baseElement {
 
   update(changedProperties) {
     if (changedProperties.has('value') && this.value === undefined) {
@@ -13,4 +13,4 @@ export const TextFieldOverride = (baseElement) => class extends baseElement {
   }
 };
 
-export default TextFieldOverride;
+export default OverrideTextfield;

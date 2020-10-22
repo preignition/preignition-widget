@@ -32,7 +32,20 @@ class WidgetDemo extends DemoBase {
         <demo-readme src="${this.readme}"></demo-readme>
       </div>
       <fancy-accordion >
-          
+
+        <expansion-panel opened>
+              <div slot="header">pwi-log-in</div>
+              <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'api'} label="api"></mwc-tab>
+            </mwc-tab-bar >
+            ${this.activeTab === 'intro' ? html `
+              <h2>Example</h2>
+              <pwi-log-in></pwi-log-in>` : ''}
+            ${this.activeTab === 'api' ? html `
+              <h2>API</h2>
+              <demo-api-viewer selected="pwi-log-in"  src="/docs/pwi-log-in.json">` : ''}
+          </expansion-panel>          
 
           <expansion-panel >
               <div slot="header">pwi-error-panel</div>

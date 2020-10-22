@@ -1,0 +1,20 @@
+export default {
+  email: 'e-mail',
+  password: 'password',
+  forgotPsw: 'I forgot my password',
+  signIn: 'sign-in',
+  signInWith: 'Sign-in with ',
+  signUp: 'sign-up',
+  signingIn: 'signing-in',
+  signingUp: 'signing-up',
+  orSignUpWith: 'Or sign-up-with',
+  createAccount: 'create account',
+  continueAsGuest: 'continue as guest',
+  signInInProcess: 'signing in progress',
+  or: 'or',
+  backToApp: 'back to app',
+  backToSignIn: 'Back to sign-in',
+  firstName: 'first name',
+  firstNameHelp: 'name under which you will appear in the application',
+
+};

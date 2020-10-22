@@ -1,13 +1,18 @@
 import { TextArea } from '@material/mwc-textarea';
 import TwoWayBinding from './two-way-binding.js';
-import TextFieldOverride from './text-field-override.js';
+import OverrideTextfield from './override-textfield.js';
+import OverrideTextfieldReadonly from './override-textfield-readonly.js';
 import {css} from 'lit-element';
 
 /**
  * extenstion of mwc-textfield emiting a value-changed event when
  * value changes
  */
-class PwiTextArea extends TwoWayBinding(TextFieldOverride(TextArea)) {
+class PwiTextArea extends 
+  TwoWayBinding(
+    OverrideTextfield(
+      OverrideTextfieldReadonly(
+        TextArea))) {
 
   static get styles() {
     return [

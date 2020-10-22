@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 // import Droppable from '../util/droppable.js';
-import { default as droppable } from '../style/droppable.js';
+import { default as droppable } from '../../style/droppable.js';
 
 import '@material/mwc-button';
 import '@material/mwc-linear-progress';

@@ -52,6 +52,10 @@ class FormDemo extends DemoBase {
 
       },
 
+      checked : {
+        type: Boolean, 
+      },
+
       readme: {
         type: String,
         value: '/src/form/README.md'
@@ -67,8 +71,14 @@ class FormDemo extends DemoBase {
 
       selectValue: {
         type: String
-      }
+      },
 
+      rv: {
+        type: String
+      },
+      cv: {
+        type: Array
+      }
 
 
     };
@@ -82,8 +92,23 @@ class FormDemo extends DemoBase {
         <demo-readme src="${this.readme}"></demo-readme>
       </div>
       <fancy-accordion >
+          <expansion-panel opened>
+              <div slot="header">Form Mix</div>
+              <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'api'} label="api"></mwc-tab>
+            </mwc-tab-bar >
+            ${this.activeTab === 'intro' ? html `
+              <h2>Example</h2>
+              <h3>checkbox</h3>
+              <pwi-form-checkbox label="checkbox label" .checked="${this.checked}" @checked-changed="${e=>this.checked = e.detail.value}" checkboxlabel="check me" helper="checkbox helper text"></pwi-form-checkbox>
+              <pwi-form-switch label="switch label"  .checked="${this.checked}" @checked-changed="${e=>this.checked = e.detail.value}" checkboxlabel="switch me" helper="switch helper text"></pwi-form-switch>
+              
+              <h2>API</h2>
+              <demo-api-viewer selected="pwi-textfield"  src="/docs/pwi-cron-builder.json">` : ''}
+          </expansion-panel>
           
-          <expansion-panel>
+          <expansion-panel >
               <div slot="header">pwi-textfield</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -91,7 +116,12 @@ class FormDemo extends DemoBase {
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
-              <h3>text field - simple</h3>
+              <!--h3>text field - original</h3>
+              <div class="ct">
+                <mwc-textfield class="flex" label="text" helper="helper text" maxlength="100" charCounter></mwc-textfield>
+                <!--mwc-textarea class="flex" label="textarea" helper="helper text for texarea"></mwc-textarea-->
+              </div-->
+              <h3>pwi text field - simple</h3>
               <div class="ct">
                 <pwi-textfield class="flex" label="text" helper="helper text"></pwi-textfield>
                 <pwi-textarea class="flex" label="textarea" helper="helper text for texarea"></pwi-textarea>
@@ -157,7 +187,7 @@ class FormDemo extends DemoBase {
               <demo-api-viewer selected="pwi-cron-builder"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
-          <expansion-panel opened>
+          <expansion-panel>
               <div slot="header">pwi-field-wrapper</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -185,7 +215,7 @@ class FormDemo extends DemoBase {
               <demo-api-viewer selected="pwi-cron-builder"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
-           <expansion-panel >
+           <expansion-panel>
               <div slot="header">pwi-radio-group</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -193,7 +223,7 @@ class FormDemo extends DemoBase {
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
-              <pwi-radio-group label="text">
+              <pwi-radio-group label="text" useShadow helper="this is a radio group">
                 <mwc-formfield label="first">
                   <mwc-radio name="test" value="first"></mwc-radio>
                 </mwc-formfield>
@@ -205,7 +235,12 @@ class FormDemo extends DemoBase {
                 </mwc-formfield>
                 
               </pwi-radio-group>
-              
+              <pwi-radio-group label="initial value" selected="1" precise = 'i will precise' useShadow helper="this is a radio group"></pwi-radio-group>
+              <pwi-checkbox-group label="checkbox" @precise-changed=${e => console.info('pp:',e.detail.value)} @selected-changed="${e => this.cv = e.detail.value}" useShadow helper="this is a checkbox group"></pwi-checkbox-group>
+              <div> value: ${(this.cv || []).map(v => v)}</div>
+              <pwi-radio-group label="initial value aligned column" @selected-changed="${e => this.rv = e.detail.value}"  class="column" selected="2" useShadow helper="this is a radio group"></pwi-radio-group>
+              <div> value: ${this.rv || ''}</div>
+              <pwi-checkbox-group label="checkbox aligned column"  class="column"    useShadow helper="this is a checkbox group"></pwi-checkbox-group>
               <h2>API</h2>
               <demo-api-viewer selected="pwi-radio-group"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
@@ -225,7 +260,23 @@ class FormDemo extends DemoBase {
               <demo-api-viewer selected="pwi-cron-builder"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
-          <expansion-panel opened>
+
+          <expansion-panel >
+              <div slot="header">pwi-form-upload</div>
+              <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
+                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'api'} label="api"></mwc-tab>
+            </mwc-tab-bar >
+            ${this.activeTab === 'intro' ? html `
+              <h2>Example</h2>
+              <pwi-form-upload label="upload file" useShadow helper="drag and drop file or press the upload button"></pwi-form-upload>
+              ` : ''}
+            ${this.activeTab === 'api' ? html `
+              <h2>API</h2>
+              <demo-api-viewer selected="pwi-cron-builder"  src="/docs/pwi-cron-builder.json">` : ''}
+          </expansion-panel>
+
+          <expansion-panel>
               <div slot="header">pwi-md-editor</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -266,6 +317,7 @@ class FormDemo extends DemoBase {
     this.tabs = ['intro', 'api', 'demo2'];
     this.activeTab = 'intro';
     this.selectValue = '2';
+    this.checked = false;
   }
 
   // get upload() {

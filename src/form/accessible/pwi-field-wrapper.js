@@ -3,49 +3,9 @@ import { classMap } from 'lit-html/directives/class-map.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import AccessibleLabel from './accessible-label.js';
 import { PwiTextField } from '../../extension/pwi-textfield.js';
-// import { PwiAccessibleTextfield } from './accessible/pwi-accessible-textfield.js';
-// import { findAssignedElement } from '@material/mwc-base/utils.js';
 
-class PwiPseudoInput extends LitElement {
+import '../pwi-pseudo-input.js';
 
-
-  // static get styles() {
-  //   return css`
-  //     :host {
-  //       display: block;
-  //       height: unset;
-  //       padding-bottom: var(--space-x-small);
-  //       padding-top: var(--space-x-small);
-  //     }
-  //   `;
-  // }
-
-  createRenderRoot() {
-    return this;
-    // return this.attachShadow({ mode: 'open', delegatesFocus: true });
-  }
-
-  get properties() {
-    return {
-      validity: {
-        type: Boolean
-      }
-    };
-  }
-
-
-  constructor() {
-    super();
-    this.value = '';
-    this.validity = {
-      badInput: false,
-      valid: true,
-    };
-  }
-}
-
-// Register the new element with the browser.
-customElements.define('pwi-pseudo-input', PwiPseudoInput);
 
 /**
  * a wrapper around form fields like checkbox and radio-buttons

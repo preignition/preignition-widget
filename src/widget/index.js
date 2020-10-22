@@ -4,6 +4,7 @@ import './pwi-user-img.js';
 import './pwi-program.js';
 import './pwi-md.js';
 import './pwi-lif-md.js';
+import './pwi-log-in.js';
 import './resource/index.js';
 import './pwi-expansion-panel/expansion-panel.js';
 import './pwi-accordion/fancy-accordion.js';

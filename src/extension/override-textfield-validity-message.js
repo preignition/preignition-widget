@@ -8,7 +8,7 @@
  *
  */
 
-export const TextFielValidityMessagedOverride = (baseElement) => class extends baseElement {
+export const OverrideTextfielValidityMessage = (baseElement) => class extends baseElement {
 
   firstUpdated() {
     if (this.validationMessage) {
@@ -31,4 +31,4 @@ export const TextFielValidityMessagedOverride = (baseElement) => class extends b
   }
 };
 
-export default TextFielValidityMessagedOverride;
+export default OverrideTextfielValidityMessage;

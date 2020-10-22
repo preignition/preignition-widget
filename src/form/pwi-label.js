@@ -7,7 +7,9 @@ class PwiLabel extends LitElement {
     
     :host {
       display: block;
-      padding-top: 4px;
+      /* hard-coding padding and margin to make text field same size */
+      padding-top: 6px;
+      margin-bottom: -2px;
       font-size: var(--mdc-typography-subtitle1-font-size, 1rem);
     }
 

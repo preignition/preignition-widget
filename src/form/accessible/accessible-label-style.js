@@ -21,11 +21,12 @@ export default css`
      color: var(--mdc-text-field-label-ink-color, rgba(0, 0, 0, 0.6));
     }
 
-    :host([label-above]:hover) .mdc-text-field:not(.mdc-text-field--focused):not(.mdc-text-field--disabled):not(.mdc-text-field--invalid) .label-above {
+    :host([label-above]:hover):not([focused]) .mdc-text-field:not(.mdc-text-field--focused):not(.mdc-text-field--disabled):not(.mdc-text-field--invalid) .label-above {
      color: var(--mdc-theme-text-primary-on-background);
     }
 
-    :host([label-above]) .mdc-text-field--focused .label-above {
+    :host([label-above]) .mdc-text-field--focused .label-above,
+    :host([label-above][focused])  .label-above {
       color: var(--mdc-theme-primary, #6200ee);
     }
 
@@ -60,6 +61,14 @@ export default css`
       left: -10px;
       top: 7px;
     }
+
+    /* HELPER - display when host is [focused]*/
+
+    :host([label-above][focused]) .mdc-text-field-helper-line .mdc-text-field-helper-text:not(.mdc-text-field-helper-text--validation-msg) {
+      opacity: 1;
+    }
+
+
 
     /* PREFIX - NOT YET WORKING */
     :host([label-above]) .mdc-text-field__affix {

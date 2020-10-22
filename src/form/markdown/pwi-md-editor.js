@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import { cache } from 'lit-html/directives/cache.js';
 import { parse } from '@preignition/preignition-util';
-import { default as styleTypography } from '../style/typography.js';
+import { default as styleTypography } from '../../style/typography.js';
 
 import '@material/mwc-tab';
 import '@material/mwc-tab-bar';
@@ -184,7 +184,7 @@ class PwiMdEditor extends LitElement {
        * true to make texarea readonly
        * @type {Boolean}
        */
-      readOnly: {
+      readonly: {
         type: Boolean
       },
 
@@ -239,7 +239,7 @@ class PwiMdEditor extends LitElement {
                 .ripple=${this.dragoverValid}
                 .cols=${this.cols}
                 .rows=${this.rows}
-                .readOnly=${this.readOnly}
+                .readonly=${this.readonly}
                 .value=${this.md} 
                 .resize=${this.resize}
                 .maxLength=${this.maxLength}
