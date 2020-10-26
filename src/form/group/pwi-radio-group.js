@@ -77,7 +77,7 @@ class PwiRadioGroup extends PwiGenericGroup {
     return html `
       <pwi-pseudo-input
         part="pwi-group-container"
-        role="group"
+        role="radiogroup"
         aria-labelledby="label"
         aria-describedby="${
         ifDefined(
@@ -86,15 +86,15 @@ class PwiRadioGroup extends PwiGenericGroup {
                 undefined)}"
         >${
           (this.options || []).map((option, index) => html`
-            <div><mwc-formfield label="${option.label}">
-              <mwc-radio 
+            <div><pwi-formfield label="${option.label}">
+              <pwi-radio 
                 name="${option.name || this.name}" 
                 value="${option.code}" 
                 ?checked="${option.code + '' === this._value}"
                 ?disabled="${this.disabled || this.readonly || option.disabled}"
                 aria-controls=${ifDefined(option.precise ? `precise${index}` : undefined)} 
-                ></mwc-radio>
-            </mwc-formfield>${this.renderPrecise(option, index)}</div>`)
+                ></pwi-radio>
+            </pwi-formfield>${this.renderPrecise(option, index)}</div>`)
         }<slot></slot></pwi-pseudo-input>
       `;
   }

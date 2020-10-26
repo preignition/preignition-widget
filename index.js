@@ -5,5 +5,5 @@ import './src/dom/index.js';
 import './src/extension/index.js';
 import './src/widget/index.js';
 
-export * from  './src/util/index.js';
-export * from  './src/style/index.js';
+export * from './src/util/index.js';
+export * from './src/style/index.js';

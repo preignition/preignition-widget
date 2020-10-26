@@ -75,6 +75,16 @@ export default css`
       opacity: 0;
       position: absolute;
     }
+
+    /* RTL */
+   :host-context([dir=rtl]) .mdc-text-field--filled .mdc-floating-label {
+     right: 16px;
+     left: initial;
+   }
+   .mdc-text-field--filled .mdc-floating-label:dir(rtl) {
+     right: 16px;
+     left: initial;
+   }
 }
 
 `;

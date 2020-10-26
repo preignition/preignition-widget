@@ -51,7 +51,7 @@ class PwiCheckboxGroup extends PwiGenericGroup {
 
   set selected(value) {
     const old = this._value;
-    [...this._queryItems(['mwc-checkbox'])].forEach(check => check.checked = value.indexOf(check.value) > -1);
+    [...this._queryItems(['mwc-checkbox'])].forEach(check => check.checked = (value || []).indexOf(check.value) > -1);
     this._value = value;
     this.requestUpdate('selected', old);
   }
@@ -93,14 +93,14 @@ class PwiCheckboxGroup extends PwiGenericGroup {
                 undefined)}"
         >${
           (this.options || []).map((option, index) => html`
-            <div><mwc-formfield label="${option.label}">
-              <mwc-checkbox 
+            <div><pwi-formfield label="${option.label}">
+              <pwi-checkbox 
                 value="${option.code}" 
                 ?checked="${this.isCodeSelected(this._value, option.code)}"
                 ?disabled="${this.disabled || this.readonly || option.disabled}"
                 aria-controls=${ifDefined(option.precise ? `precise${index}` : undefined)} 
-                ></mwc-checkbox>
-            </mwc-formfield>${this.renderPrecise(option, index)}</div>`)
+                ></pwi-checkbox>
+            </pwi-formfield>${this.renderPrecise(option, index)}</div>`)
         }<slot></slot></pwi-pseudo-input>
       `;
   }

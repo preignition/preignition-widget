@@ -92,7 +92,7 @@ class FormDemo extends DemoBase {
         <demo-readme src="${this.readme}"></demo-readme>
       </div>
       <fancy-accordion >
-          <expansion-panel opened>
+          <expansion-panel>
               <div slot="header">Form Mix</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -102,13 +102,15 @@ class FormDemo extends DemoBase {
               <h2>Example</h2>
               <h3>checkbox</h3>
               <pwi-form-checkbox label="checkbox label" .checked="${this.checked}" @checked-changed="${e=>this.checked = e.detail.value}" checkboxlabel="check me" helper="checkbox helper text"></pwi-form-checkbox>
+              <pwi-form-checkbox  .checked="${this.checked}" @checked-changed="${e=>this.checked = e.detail.value}" checkboxlabel="check me" helper="checkbox helper text"></pwi-form-checkbox>
               <pwi-form-switch label="switch label"  .checked="${this.checked}" @checked-changed="${e=>this.checked = e.detail.value}" checkboxlabel="switch me" helper="switch helper text"></pwi-form-switch>
-              
+              <pwi-accessible-textfield label="date - accessible" label-above type="date"></pwi-accessible-textfield>
+              <pwi-textfield label="date"  type="date"></pwi-textfield>
               <h2>API</h2>
               <demo-api-viewer selected="pwi-textfield"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
           
-          <expansion-panel >
+          <expansion-panel>
               <div slot="header">pwi-textfield</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -131,6 +133,12 @@ class FormDemo extends DemoBase {
                 <pwi-accessible-textfield class="flex" label-above label="looooooooooooog accessible laaaaaaaaaaaabel"></pwi-accessible-textfield>
                 <pwi-accessible-textarea class="flex" label-above label="looooooooooooog accessible laaaaaaaaaaaabel"></pwi-accessible-textarea>
               </div>
+              h3>Text field - rtl</h3>
+              <div class="ct" dir="rtl">
+                <pwi-accessible-textfield class="flex" label="rtl label"></pwi-accessible-textfield>
+                <pwi-accessible-textfield class="flex" label-above label="rtl label"></pwi-accessible-textfield>
+                <pwi-accessible-textarea class="flex" label-above label="rtl label"></pwi-accessible-textarea>
+              </div>
               <h3>Text field - accessible version - alternate type</h3>
               <div class="ct">
                 <pwi-accessible-number class="flex" label-above label="number"></pwi-accessible-number>
@@ -141,7 +149,7 @@ class FormDemo extends DemoBase {
               <demo-api-viewer selected="pwi-textfield"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
-          <expansion-panel>
+          <expansion-panel opened>
               <div slot="header">pwi-select</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -150,6 +158,7 @@ class FormDemo extends DemoBase {
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
               <div class="ct">
+                <input type="checkbox"></input>
                 <pwi-select label="select label" helper="help me out" @value-changed="${e => this.selectValue = e.detail.value}" .value="${this.selectValue}">
                   <mwc-list-item></mwc-list-item>
                   <mwc-list-item value="1">Option 1</mwc-list-item>
@@ -166,19 +175,34 @@ class FormDemo extends DemoBase {
               </div>
               <div>SelectedValue : ${this.selectValue}</div>
               <div class="ct">
-              <pwi-accessible-select class="flex" label="select accessible label">
-                <mwc-list-item></mwc-list-item>
-                <mwc-list-item value="1">Option 1</mwc-list-item>
-                <mwc-list-item value="2">Option 2</mwc-list-item>
-                <mwc-list-item value="3">Option 3</mwc-list-item>
-              </pwi-accessible-select>
-              <pwi-accessible-select label-above class="flex" label="label above variant">
-                <mwc-list-item></mwc-list-item>
-                <mwc-list-item value="1">Option 1</mwc-list-item>
-                <mwc-list-item value="2">Option 2</mwc-list-item>
-                <mwc-list-item value="3">Option 3</mwc-list-item>
-              </pwi-accessible-select>
-              </div>
+                <pwi-accessible-select class="flex" label="select accessible label">
+                  <mwc-list-item></mwc-list-item>
+                  <mwc-list-item value="1">Option 1</mwc-list-item>
+                  <mwc-list-item value="2">Option 2</mwc-list-item>
+                  <mwc-list-item value="3">Option 3</mwc-list-item>
+                </pwi-accessible-select>
+                <pwi-accessible-select label-above class="flex" label="label above variant">
+                  <mwc-list-item></mwc-list-item>
+                  <mwc-list-item value="1">Option 1</mwc-list-item>
+                  <mwc-list-item value="2">Option 2</mwc-list-item>
+                  <mwc-list-item value="3">Option 3</mwc-list-item>
+                </pwi-accessible-select>
+             </div>
+             <div>RTL : ${this.selectValue}</div>
+             <div class="ct" dir="rtl">
+                <pwi-accessible-select class="flex" label="rtl select">
+                  <mwc-list-item></mwc-list-item>
+                  <mwc-list-item value="1">Option 1</mwc-list-item>
+                  <mwc-list-item value="2">Option 2</mwc-list-item>
+                  <mwc-list-item value="3">Option 3</mwc-list-item>
+                </pwi-accessible-select>
+                <pwi-accessible-select label-above class="flex" label="rtl label above variant">
+                  <mwc-list-item></mwc-list-item>
+                  <mwc-list-item value="1">Option 1</mwc-list-item>
+                  <mwc-list-item value="2">Option 2</mwc-list-item>
+                  <mwc-list-item value="3">Option 3</mwc-list-item>
+                </pwi-accessible-select>
+             </div>
 
 
               ` : ''}
