@@ -110,8 +110,8 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
 
 
   async onChange(e) {
-    this.dispatchEvent(new CustomEvent('selected-changed', { detail: { value: this.selected } }));
     await this.updateCompleted;
+    this.dispatchEvent(new CustomEvent('selected-changed', { detail: { value: this.selected } }));
     this._value = this.selected; // Note(cg): get _value from the actual selection (dom query).
     this.requestUpdate(); // Note(cg): this is required for instance to make please precise field to appear.
   }
