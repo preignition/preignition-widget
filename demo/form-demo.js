@@ -149,7 +149,7 @@ class FormDemo extends DemoBase {
               <demo-api-viewer selected="pwi-textfield"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
-          <expansion-panel opened>
+          <expansion-panel >
               <div slot="header">pwi-select</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -239,7 +239,7 @@ class FormDemo extends DemoBase {
               <demo-api-viewer selected="pwi-cron-builder"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
-           <expansion-panel>
+           <expansion-panel opened>
               <div slot="header">pwi-radio-group</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -247,7 +247,7 @@ class FormDemo extends DemoBase {
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
-              <pwi-radio-group label="text" useShadow helper="this is a radio group">
+              <pwi-radio-group label="text" required useShadow helper="this is a radio group">
                 <mwc-formfield label="first">
                   <mwc-radio name="test" value="first"></mwc-radio>
                 </mwc-formfield>

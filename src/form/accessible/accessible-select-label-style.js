@@ -2,9 +2,8 @@ import { css } from 'lit-element';
 
 export default css`
      /* By default, occupy all width*/
-     :host(.full-width) {
+     :host([label-above]) {
        width: 100%;
-
      }
 
      :host([label-above]) .mdc-select__anchor {

@@ -6,7 +6,7 @@ import '../pwi-pseudo-input.js';
 import '@material/mwc-formfield';
 import '@material/mwc-checkbox';
 
-const options = [{ code: 1, label: 'first option', precise: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
+// const options = [{ code: 1, label: 'first option', precise: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
 
 class PwiCheckboxGroup extends PwiGenericGroup {
 
@@ -75,7 +75,18 @@ class PwiCheckboxGroup extends PwiGenericGroup {
   constructor() {
     super();
     this.precise = {};
-    this.options = options;
+     // Note(cg): see. https://github.com/material-components/material-components-web-components/tree/master/packages/textfield
+    this.validityTransform = (value, validity) => {
+      value = this.selected;
+      if (this.required && (!value || value.length === 0)) {
+        validity.valid = false;
+        validity.valueMissing = true;
+        validity.customError = 'this field is required';
+        return validity;
+      }
+      return validity;
+    };
+    // this.options = options;
     // this.name = '__';
   }
 

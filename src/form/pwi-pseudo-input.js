@@ -1,4 +1,9 @@
-import { LitElement} from 'lit-element';
+import { LitElement } from 'lit-element';
+
+const validity = {
+  badInput: false,
+  valid: true,
+};
 
 class PwiPseudoInput extends LitElement {
 
@@ -11,7 +16,7 @@ class PwiPseudoInput extends LitElement {
     return {
       validity: {
         type: Boolean
-      }
+      },
     };
   }
 
@@ -19,13 +24,20 @@ class PwiPseudoInput extends LitElement {
   constructor() {
     super();
     this.value = '';
-    this.validity = {
-      badInput: false,
-      valid: true,
-    };
+    this.validity = validity;
   }
+
+  // // Note(cg): see. https://github.com/material-components/material-components-web-components/tree/master/packages/textfield
+  // validityTransform(value, validity) {
+  //   if (this.required && (value === '' || value === undefined)) {
+  //     validity.valid = false;
+  //     validity.valuMissing = true;
+  //     return validity;
+  //   }
+  //   Object.assign({}, initValidity);
+  // }
+
 }
 
 // Register the new element with the browser.
 customElements.define('pwi-pseudo-input', PwiPseudoInput);
-

@@ -147,6 +147,7 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
   _onFocusout() {
     // console.info('focusout', this)
     this.focused = false;
+    this.reportValidity();
   }
 
   _onFocusin() {
@@ -199,10 +200,6 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
         <div>This component is not suposed to be used directly</div>
       `;
   }
-  
-
 }
-
-// customElements.define('pwi-radio-group', PwiGenericGroup);
 
 export { PwiGenericGroup };

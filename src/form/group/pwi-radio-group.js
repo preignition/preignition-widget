@@ -6,7 +6,7 @@ import '../pwi-pseudo-input.js';
 import '@material/mwc-formfield';
 import '@material/mwc-radio';
 
-const options = [{ code: 1, label: 'first option', precise: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
+// const options = [{ code: 1, label: 'first option', precise: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
 
 class PwiRadioGroup extends PwiGenericGroup {
 
@@ -68,8 +68,19 @@ class PwiRadioGroup extends PwiGenericGroup {
 
   constructor() {
     super();
-    this.options = options;
+    // this.options = options;
     this.name = '__';
+    // Note(cg): see. https://github.com/material-components/material-components-web-components/tree/master/packages/textfield
+    this.validityTransform = (value, validity) => {
+      value = this.selected;
+      if (this.required && (value === '' || value === undefined)) {
+        validity.valid = false;
+        validity.valueMissing = true;
+        validity.customError = 'this field is required'
+        return validity;
+      }
+      return validity;
+    };
   }
 
   renderInput() {
@@ -113,12 +124,14 @@ class PwiRadioGroup extends PwiGenericGroup {
   
   isCodeSelected(value, code) {
     return value === code + '';
-  } 
+  }
   
   onPreciseChange() {
-    console.info('precise change: ', this.precise);
+    // console.info('precise change: ', this.precise);
     this.dispatchEvent(new CustomEvent('precise-changed', { detail: { value: this.precise } }));
   }
+
+  
 }
 
 customElements.define('pwi-radio-group', PwiRadioGroup);

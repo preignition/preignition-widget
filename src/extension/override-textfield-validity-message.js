@@ -10,18 +10,18 @@
 
 export const OverrideTextfielValidityMessage = (baseElement) => class extends baseElement {
 
-  firstUpdated() {
+  firstUpdated(props) {
     if (this.validationMessage) {
       this._initialValidationMessage = this.validationMessage;
     }
-    super.firstUpdated();
+    super.firstUpdated(props);
   }
 
   reportValidity() {
     const isValid = super.reportValidity();
     // Note(cg): override validationMessage only if no initial message set.
     if (!this._initialValidationMessage && !isValid) {
-      this.validationMessage = this.nativeValidationMessage;
+      this.validationMessage = (this._validity && this._validity.customError) || this.nativeValidationMessage;
     }
     return isValid;
   }
