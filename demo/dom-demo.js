@@ -1,5 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
-import { DemoBase, } from '@preignition/preignition-demo';
+import { DemoBase } from '@preignition/preignition-demo';
+
+import '@github/details-dialog-element'
 
 
 // Note(cg): render i light DOM instead of shadowDOM to allow innerText work properly. .
@@ -70,6 +72,7 @@ class DomDemo extends DemoBase {
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
+            </details>
               <pwi-content-observer @pwi-content-changed="${e => console.info(e.detail)}">I am a <span>span</span> <demo-test-dom></demo-test-dom> node<div>and a <span>div<span></div></pwi-content-observer>` : ''}
             ${this.activeTab === 'api' ? html `
               <h2>API</h2>

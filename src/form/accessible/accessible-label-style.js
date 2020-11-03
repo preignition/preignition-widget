@@ -8,7 +8,13 @@ export default css`
     
      :host([label-above]) .mdc-text-field {
        flex-direction: column;
-     }  
+       overflow: visible; /* this is to allow tooltip */
+     }
+
+     :host([label-above]) .mdc-text-field__ripple {
+       overflow: hidden; /* this is to allow tooltip */
+     }
+
      :host([label-above]) input.mdc-text-field__input {
        padding: 1px 0px 4px;
      }

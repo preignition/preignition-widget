@@ -8,6 +8,11 @@ export default css`
 
      :host([label-above]) .mdc-select__anchor {
        flex-direction: column;
+       overflow: visible; /* this is to allow tooltip */
+     }
+
+     :host([label-above]) .mdc-select__ripple {
+       overflow: hidden; /* this is to allow tooltip */
      }
 
      :host([label-above]) span.mdc-select__selected-text {

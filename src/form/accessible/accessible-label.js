@@ -29,12 +29,19 @@ export const AccessibleLabel = (baseElement) => class extends baseElement {
       terminology: {
         type: Array
       },
+
+      /*
+       * `parseLabel` if true, parse label as markdown
+       */
+      parseLabel: {
+        type: Boolean,
+      },
     };
   }
 
   renderLabelAbove() {
     return html `
-     <pwi-label id="label" class="label-above" .label="${this.label}" .terminology="${this.terminology}" ?required="${this.required}" ></pwi-label>
+     <pwi-label id="label" class="label-above" .label="${this.label}" .terminology="${this.terminology}" parse ?required="${this.required}" ></pwi-label>
     `;
   }
 

@@ -25,7 +25,7 @@ class PwiMd extends LitElement {
 
   constructor() {
     super();
-    this.mdConfig = {ADD_ATTR: ['target', 'width', 'height']};
+    // this.mdConfig = {ADD_ATTR: ['target', 'width', 'height']};
   }
 
   // Note(cg): we want to render value in light dom so that

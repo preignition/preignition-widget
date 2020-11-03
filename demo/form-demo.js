@@ -1,5 +1,6 @@
 import { html, css } from 'lit-element';
 import { DemoBase, } from '@preignition/preignition-demo';
+import 'lite-youtube-embed';
 import '@material/mwc-fab';
 import '@material/mwc-list';
 import '@material/mwc-list/mwc-list-item.js';
@@ -311,13 +312,22 @@ class FormDemo extends DemoBase {
 
               <pwi-md-droppable-editor 
                 id="editor" 
-                md="## test" 
+                md="## Test " 
                 helper="i should appear" 
                 max-file-size="50000"
                 path="/blogData/PAC1cc5j9EN99ZG5A33mZS4Pf5i1/image/upload" 
                 write-label="Write your own terms" class="example">
+              </pwi-md-droppable-editor>
+
+              <pwi-md-editor 
+                translate
+                id="id" 
+                md="## Test "
+                translatedmd="## Test translation"
+                helper="i should appear" 
                 
-              </pwi-md-droppable-editor>` : ''}
+                write-label="Write your own terms" class="example">
+              </pwi-md-editor>` : ''}
             ${this.activeTab === 'api' ? html `
               <h2>API</h2>
               <demo-api-viewer selected="pwi-md-editor"  src="/docs/pwi-md-editor.json">` : ''}

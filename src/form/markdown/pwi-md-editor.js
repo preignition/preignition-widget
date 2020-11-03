@@ -1,7 +1,9 @@
 import { LitElement, html, css } from 'lit-element';
+import { nothing } from 'lit-html';
 import { cache } from 'lit-html/directives/cache.js';
 import { parse } from '@preignition/preignition-util';
 import { default as styleTypography } from '../../style/typography.js';
+import liteYoutube from '../../style/lite-youtube.js';
 
 import '@material/mwc-tab';
 import '@material/mwc-tab-bar';
@@ -20,6 +22,7 @@ class PwiMdEditor extends LitElement {
 
   static get styles() {
     return [
+    liteYoutube,
     styleTypography,
     css `
     :host {
@@ -112,6 +115,14 @@ class PwiMdEditor extends LitElement {
         type: String
       },
 
+     /**
+       * translated mardown text
+       * @type {String}
+       */
+      mdtranslate: {
+        type: String
+      },
+
       /**
        * label for this field
        * @type {Object}
@@ -148,6 +159,22 @@ class PwiMdEditor extends LitElement {
         type: String,
       },
 
+      /*
+       * label appering under translate tab
+       * @type {String} 'Translate'
+       */
+       translateLabel: {
+        type: String,
+      },
+
+      /*
+       * label appering under transalte preview tab
+       * @type {String} 'Preview Transation'
+       */
+      translatePreviewLabel: {
+        type: String,
+      },
+
       /**
        * rows to apply to textarea
        * @type {Number}
@@ -169,6 +196,13 @@ class PwiMdEditor extends LitElement {
        * @type {String}
        */
       helper: {
+        type: String
+      },
+      /**
+       * textarea helper for traslation
+       * @type {String}
+       */
+      helpertranslate: {
         type: String
       },
 
@@ -217,7 +251,14 @@ class PwiMdEditor extends LitElement {
        */
       resize: {
         type: String,
-      }
+      },
+
+      /*
+       * `translate` flag to make this editor alaso a translation
+       */
+      translate: {
+        type: Boolean,
+      },
 
 
     };
@@ -227,20 +268,24 @@ class PwiMdEditor extends LitElement {
     return html `
     
        <mwc-tab-bar @MDCTabBar:activated=${e => this._selected = e.detail.index} .activeIndex="${this._selected}" theme="centered">
-          <mwc-tab isMinWidthIndicator .label=${this.writeLabel}></mwc-tab>
-          <mwc-tab isMinWidthIndicator .label=${this.previewLabel}></mwc-tab>
+          <mwc-tab isMinWidthIndicator .label="${this.writeLabel}"></mwc-tab>
+          <mwc-tab isMinWidthIndicator .label="${this.previewLabel}"></mwc-tab>
+          ${this.translate ? html `
+            <mwc-tab isMinWidthIndicator icon="translate" .label="${this.translateLabel}"></mwc-tab>
+            <mwc-tab isMinWidthIndicator .label="${this.translatePreviewLabel}"></mwc-tab>
+          ` : nothing}
       </mwc-tab-bar>
       <div id="container"> 
       ${cache(
-        this._selected === 0
+        this._selected === 0 || this._selected === 2
           ? html`<div>
               <pwi-textarea
                 droppable 
                 .ripple=${this.dragoverValid}
                 .cols=${this.cols}
                 .rows=${this.rows}
-                .readonly=${this.readonly}
-                .value=${this.md} 
+                .readonly=${this._selected === 0 && this.translate ? true : this.readonly}
+                .value=${this._selected === 0 ? this.md : this.mdtranslate} 
                 .resize=${this.resize}
                 .maxLength=${this.maxLength}
                 .minLength=${this.minLength}
@@ -252,7 +297,7 @@ class PwiMdEditor extends LitElement {
                 ${this.renderToolbar()}
              </div>
               `
-          : html`<div id="markdown">${parse(this.md)}</div>`
+          : html`<div id="markdown">${parse(this._selected === 1 ? this.md : this.mdtranslate)}</div>`
           )}
       </div>
     `;
@@ -260,7 +305,7 @@ class PwiMdEditor extends LitElement {
 
   renderToolbar() {
     return html `
-     <small class="toolbar"><span class="flex">${this.helper} <a tabindex="-1" rel="noopener" href="https://en.wikipedia.org/wiki/Markdown" target="blank">Markdown</a> is supported. </span class="helper"></span></span><slot name="bottomToolbar">${this.renderSlotToolbar()}</slot></small>
+     <small class="toolbar"><span class="flex">${this._selected === 3 ? this.helpertranslate : this.helper} <a tabindex="-1" rel="noopener" href="https://en.wikipedia.org/wiki/Markdown" target="blank">Markdown</a> is supported. </span class="helper"></span></span><slot name="bottomToolbar">${this.renderSlotToolbar()}</slot></small>
     `;
   }
 
@@ -287,6 +332,8 @@ class PwiMdEditor extends LitElement {
     this._selected = 0;
     this.writeLabel = 'Write';
     this.previewLabel = 'Preview';
+    this.translateLabel = 'Translate';
+    this.translatePreviewLabel = 'Translation Preview';
   }
 
   get pwitextarea() {
@@ -319,8 +366,14 @@ class PwiMdEditor extends LitElement {
 
   onValueChanged(e) {
     // console.info('changed', e)
-    this.md = e.target.value;
-    this.dispatchEvent(new CustomEvent('md-changed', {detail: {value: this.md}, bubbles: true, composed: true})); 
+    if (this._selected === 0) {
+      this.md = e.target.value;
+      this.dispatchEvent(new CustomEvent('md-changed', {detail: {value: this.md}, bubbles: true, composed: true})); 
+    }
+    if (this._selected === 2) {
+      this.mdtranslate = e.target.value;
+      this.dispatchEvent(new CustomEvent('mdtranslate-changed', {detail: {value: this.mdtranslate}, bubbles: true, composed: true})); 
+    }
   }
 }
 

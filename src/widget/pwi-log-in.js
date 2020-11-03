@@ -296,7 +296,7 @@ class PwiLogIn extends Translate(LitElement, locale) {
         <div aria-live="polite">
           ${this.renderError()}
           ${this.renderSuccess()}
-          ${this.renderForScreenReader(this.signingIn, this.getTranslate('signingIn'))}
+          ${this.renderForScreenReader(this.signingIn, html`<span>${this.translate('signingIn')}</span>`)}
         </div>
         <div aria-live="assertive">
           ${this.errorMsg !== '' && this.email !== ''
@@ -316,7 +316,7 @@ class PwiLogIn extends Translate(LitElement, locale) {
             `
           }
         </div>
-        ${this.hideSocial ? nothing : this.renderSocial(this.getTranslate('signInWith'))}
+        ${this.hideSocial ? nothing : this.renderSocial(html`<span>${this.translate('signInWith')}</span>`)}
         ${this.enableRedirect && !this.onlyLogin
           ? html`
             <a href="/main/home" class="back" title="${this.translate('backToApp')}">
@@ -340,7 +340,7 @@ class PwiLogIn extends Translate(LitElement, locale) {
         <div aria-live="polite">
             ${this.renderError()}
             ${this.renderSuccess()}
-            ${this.renderForScreenReader(this.signingIn, this.getTranslate('signingUp'))}
+            ${this.renderForScreenReader(this.signingIn, html`<span>${this.translate('signingUp')}</span>`)}
         </div>
         <div class="button-container">
           <mwc-button icon="person_add" @click="${this.createUserHandler}" label="${this.translate('createAccount')}" raised></mwc-button>
@@ -348,7 +348,7 @@ class PwiLogIn extends Translate(LitElement, locale) {
             ? html`<span>${this.translate('or')}</span><mwc-button @click="${this.loginHandler}" icon="person_outline" data-provider="anonymous" raised label="${this.translate('continueAsGuest')}"></mwc-button>`
             : html`<div></div>`}
         </div>
-        ${this.hideSocial ? nothing : this.renderSocial(this.getTranslate('orSignUpWith'))}
+        ${this.hideSocial ? nothing : this.renderSocial(html`<span>${this.translate('orSignUpWith')}</span>`)}
         <div class="break "></div>
         <div class="button-container">
           <div></div>
