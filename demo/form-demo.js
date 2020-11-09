@@ -150,7 +150,7 @@ class FormDemo extends DemoBase {
               <demo-api-viewer selected="pwi-textfield"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
 
-          <expansion-panel >
+          <expansion-panel opened>
               <div slot="header">pwi-select</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -159,23 +159,22 @@ class FormDemo extends DemoBase {
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
               <div class="ct">
-                <input type="checkbox"></input>
-                <pwi-select label="select label" helper="help me out" @value-changed="${e => this.selectValue = e.detail.value}" .value="${this.selectValue}">
+                <pwi-select id="select" label="select label" helper="help me out" @value-changed="${e => this.selectValue = e.detail.value}" .value="${this.selectValue}">
                   <mwc-list-item></mwc-list-item>
                   <mwc-list-item value="1">Option 1</mwc-list-item>
                   <mwc-list-item value="2">Option 2</mwc-list-item>
                   <mwc-list-item value="3">Option 3</mwc-list-item>
                 </pwi-select>
-                <pwi-select label="select label - bound" required @value-changed="${e => this.selectValue = e.detail.value}" .value="${this.selectValue}">
+                <!--pwi-select label="select label - bound" required @value-changed="${e => this.selectValue = e.detail.value}" .value="${this.selectValue}">
                   <mwc-list-item></mwc-list-item>
                   <mwc-list-item value="1">Option 1</mwc-list-item>
                   <mwc-list-item value="2">Option 2</mwc-list-item>
                   <mwc-list-item value="3">Option 3</mwc-list-item>
-                </pwi-select>
+                </pwi-select-->
                 <pwi-accessible-number class="flex" label-above label="number"></pwi-accessible-number>
               </div>
               <div>SelectedValue : ${this.selectValue}</div>
-              <div class="ct">
+              <!--div class="ct">
                 <pwi-accessible-select class="flex" label="select accessible label">
                   <mwc-list-item></mwc-list-item>
                   <mwc-list-item value="1">Option 1</mwc-list-item>
@@ -203,7 +202,7 @@ class FormDemo extends DemoBase {
                   <mwc-list-item value="2">Option 2</mwc-list-item>
                   <mwc-list-item value="3">Option 3</mwc-list-item>
                 </pwi-accessible-select>
-             </div>
+             </div-->
 
 
               ` : ''}
@@ -220,9 +219,11 @@ class FormDemo extends DemoBase {
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
-              <pwi-field-wrapper label="this is a label" helper="helper">
-                <input></input>
-                <p>coucou</p>
+              <pwi-field-wrapper isRecursive label="this is a label" helper="helper">
+                <div>
+                <pwi-textfield label="text"></pwi-textfield>
+                <pwi-textfield label="text2"></pwi-textfield>
+                </div>
               </pwi-field-wrapper>
               <pwi-field-wrapper label="Label for checklist" helper="my helper" required>
                 <mwc-list multi id="checklist">
@@ -260,12 +261,12 @@ class FormDemo extends DemoBase {
                 </mwc-formfield>
                 
               </pwi-radio-group>
-              <pwi-radio-group label="initial value" selected="1" precise = 'i will precise' useShadow helper="this is a radio group"></pwi-radio-group>
+              <!--pwi-radio-group label="initial value" selected="1" precise = 'i will precise' useShadow helper="this is a radio group"></pwi-radio-group>
               <pwi-checkbox-group label="checkbox" @precise-changed=${e => console.info('pp:',e.detail.value)} @selected-changed="${e => this.cv = e.detail.value}" useShadow helper="this is a checkbox group"></pwi-checkbox-group>
               <div> value: ${(this.cv || []).map(v => v)}</div>
               <pwi-radio-group label="initial value aligned column" @selected-changed="${e => this.rv = e.detail.value}"  class="column" selected="2" useShadow helper="this is a radio group"></pwi-radio-group>
               <div> value: ${this.rv || ''}</div>
-              <pwi-checkbox-group label="checkbox aligned column"  class="column"    useShadow helper="this is a checkbox group"></pwi-checkbox-group>
+              <pwi-checkbox-group label="checkbox aligned column"  class="column"    useShadow helper="this is a checkbox group"></pwi-checkbox-group-->
               <h2>API</h2>
               <demo-api-viewer selected="pwi-radio-group"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
@@ -350,8 +351,23 @@ class FormDemo extends DemoBase {
     super();
     this.tabs = ['intro', 'api', 'demo2'];
     this.activeTab = 'intro';
-    this.selectValue = '2';
+    this.selectValue = '4';
     this.checked = false;
+  }
+
+  firstUpdated(props) {
+    super.firstUpdated(props);
+    setTimeout(() => {
+      const select = this.renderRoot.querySelector('#select');
+      const item = document.createElement('mwc-list-item')
+      item.value = '4';
+      item.innerText = 'Option 4'
+      select.appendChild(item);
+      // select.innerHTML = `<mwc-list-item></mwc-list-item>
+      //               <mwc-list-item value="1">Option 1</mwc-list-item>
+      //               <mwc-list-item value="2">Option 2</mwc-list-item>
+      //               <mwc-list-item value="3">Option 3</mwc-list-item>`;
+                  }, 500);
   }
 
   // get upload() {
