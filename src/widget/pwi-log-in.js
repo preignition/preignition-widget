@@ -375,6 +375,9 @@ class PwiLogIn extends Translate(LitElement, locale) {
     if (e.defaultPrevented) {
       return; // Do nothing if the event was already processed
     }
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      return e.stopPropagation();
+    }
     if (e.key === 'Enter') {
       if (this.isSignUp) {
         return this.createUserHandler();
