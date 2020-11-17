@@ -16,12 +16,19 @@ export default css`
      }
 
      :host([label-above]) span.mdc-select__selected-text {
-       margin: 2px 0px 4px;
+       /*margin: 2px 0px 4px;*/
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        display: inline-block;
      }
 
      :host([label-above]) .mdc-select__selected-text-container {
-       margin-bottom: 4px;
-       margin-top: 1px;
+       /* margin-bottom: 4px;
+       margin-top: 1px; */
+       height: 33px;
+       width: calc(100% - 48px); /*to avoid overflow */
+       overflow-x: hidden;
      }
 
      :host([label-above]) .mdc-select--filled .mdc-select__anchor::before {

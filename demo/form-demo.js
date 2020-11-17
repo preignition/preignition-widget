@@ -119,11 +119,12 @@ class FormDemo extends DemoBase {
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
-              <!--h3>text field - original</h3>
+              <h3>text field - original</h3>
               <div class="ct">
-                <mwc-textfield class="flex" label="text" helper="helper text" maxlength="100" charCounter></mwc-textfield>
+                <mwc-textfield class="flex" autocomplete="username email" type="email" name="email" label="text" helper="helper text" maxlength="100" charCounter></mwc-textfield>
+                <mwc-textfield class="flex" autocomplete="name"  name="name" label="name" helper="helper text" maxlength="100" charCounter></mwc-textfield>
                 <!--mwc-textarea class="flex" label="textarea" helper="helper text for texarea"></mwc-textarea-->
-              </div-->
+              </div>
               <h3>pwi text field - simple</h3>
               <div class="ct">
                 <pwi-textfield class="flex" label="text" helper="helper text"></pwi-textfield>
@@ -171,25 +172,25 @@ class FormDemo extends DemoBase {
                   <mwc-list-item value="2">Option 2</mwc-list-item>
                   <mwc-list-item value="3">Option 3</mwc-list-item>
                 </pwi-select-->
-                <pwi-accessible-number class="flex" label-above label="number"></pwi-accessible-number>
               </div>
               <div>SelectedValue : ${this.selectValue}</div>
-              <!--div class="ct">
+              <div class="ct">
                 <pwi-accessible-select class="flex" label="select accessible label">
                   <mwc-list-item></mwc-list-item>
-                  <mwc-list-item value="1">Option 1</mwc-list-item>
-                  <mwc-list-item value="2">Option 2</mwc-list-item>
-                  <mwc-list-item value="3">Option 3</mwc-list-item>
+                  <mwc-list-item value="1">green green green green green green green green green green green green green green green green green green </mwc-list-item>
+                  <mwc-list-item value="2">purple</mwc-list-item>
+                  <mwc-list-item value="3">yellow</mwc-list-item>
                 </pwi-accessible-select>
                 <pwi-accessible-select label-above class="flex" label="label above variant">
                   <mwc-list-item></mwc-list-item>
-                  <mwc-list-item value="1">Option 1</mwc-list-item>
-                  <mwc-list-item value="2">Option 2</mwc-list-item>
-                  <mwc-list-item value="3">Option 3</mwc-list-item>
+                  <mwc-list-item value="1">green green green green green green green green green green green green green green green green green </mwc-list-item>
+                  <mwc-list-item value="2">purple</mwc-list-item>
+                  <mwc-list-item value="3">yellow</mwc-list-item>
+                  
                 </pwi-accessible-select>
              </div>
              <div>RTL : ${this.selectValue}</div>
-             <div class="ct" dir="rtl">
+             <!--div class="ct" dir="rtl">
                 <pwi-accessible-select class="flex" label="rtl select">
                   <mwc-list-item></mwc-list-item>
                   <mwc-list-item value="1">Option 1</mwc-list-item>
