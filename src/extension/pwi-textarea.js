@@ -3,8 +3,10 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
 import { live } from 'lit-html/directives/live.js';
 import { TextArea } from '@material/mwc-textarea';
 import TwoWayBinding from './two-way-binding.js';
+import PreventNavigationPropagation from './prevent-navigation-propagation.js';
 import OverrideTextfield from './override-textfield.js';
 import OverrideTextfieldReadonly from './override-textfield-readonly.js';
+
 import { css } from 'lit-element';
 
 /**
@@ -12,10 +14,11 @@ import { css } from 'lit-element';
  * value changes
  */
 class PwiTextArea extends
+PreventNavigationPropagation(
 TwoWayBinding(
   OverrideTextfield(
     OverrideTextfieldReadonly(
-      TextArea))) {
+      TextArea)))) {
 
   static get styles() {
     return [
