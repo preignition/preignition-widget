@@ -47,7 +47,7 @@ export const AccessibleLabel = (baseElement) => class extends baseElement {
 
   renderLabel() {
     if (!this.label) {
-      return nothing;
+      return '';
     }
     if (this.labelAbove) {
       return this.renderLabelAbove();

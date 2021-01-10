@@ -6,4 +6,5 @@ import './pwi-radio.js';
 import './pwi-textarea.js';
 import './pwi-textfield.js';
 import './pwi-linear-progress.js';
+import './pwi-top-app-bar.js';
 // import './pwi-radio-group.js';

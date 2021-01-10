@@ -2,6 +2,7 @@ import './pwi-copy.js';
 import './pwi-error-panel.js';
 import './pwi-user-img.js';
 import './pwi-program.js';
+import './pwi-date-format.js';
 import './pwi-md.js';
 import './pwi-lif-md.js';
 import './pwi-log-in.js';

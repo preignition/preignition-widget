@@ -4,6 +4,7 @@ export default css`
      /* By default, occupy all width*/
      :host([label-above]) {
        width: 100%;
+       /* display: inline-flex; */
      }
 
      :host([label-above]) .mdc-select__anchor {
@@ -16,7 +17,6 @@ export default css`
      }
 
      :host([label-above]) span.mdc-select__selected-text {
-       /*margin: 2px 0px 4px;*/
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
@@ -24,8 +24,6 @@ export default css`
      }
 
      :host([label-above]) .mdc-select__selected-text-container {
-       /* margin-bottom: 4px;
-       margin-top: 1px; */
        height: 33px;
        width: calc(100% - 48px); /*to avoid overflow */
        overflow-x: hidden;
@@ -62,6 +60,7 @@ export default css`
 
      :host([label-above]) .mdc-select--filled .mdc-select__anchor {
        height: unset;
+       min-height: 56px;
      }
 
      :host([label-above]) .mdc-select__dropdown-icon {

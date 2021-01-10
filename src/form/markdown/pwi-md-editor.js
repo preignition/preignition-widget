@@ -2,8 +2,7 @@ import { LitElement, html, css } from 'lit-element';
 import { nothing } from 'lit-html';
 import { cache } from 'lit-html/directives/cache.js';
 import { parse } from '@preignition/preignition-util';
-import { default as styleTypography } from '../../style/typography.js';
-import liteYoutube from '../../style/lite-youtube.js';
+import { styleTypography, liteYoutube } from '@preignition/preignition-styles';
 
 import '@material/mwc-tab';
 import '@material/mwc-tab-bar';

@@ -1,4 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
+import { nothing } from 'lit-html';
 import { classMap } from 'lit-html/directives/class-map.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 import AccessibleLabel from './accessible-label.js';
@@ -9,6 +10,8 @@ import '../pwi-pseudo-input.js';
 
 /**
  * a wrapper around form fields like checkbox and radio-buttons
+ * It is also used for displayinga label and show other fields, 
+ * e.g. in the context of recursive form section
  */
 
 class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
@@ -72,6 +75,17 @@ class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
       position: relative;
       display: inline-block;
     }
+
+    
+    /* RECURSIVE */
+    :host([is-recursive]) .mdc-text-field {
+      padding-right: 0;
+    }
+    
+    :host([is-recursive]) #label {
+      margin-left: -16px;
+    }
+
     `];
   }
 
@@ -92,7 +106,19 @@ class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
       disabled: {
         type: Boolean,
         reflect: true
-      }
+      },
+      /*
+       * `isRecursive` true to indicate that field-wrapper is used in a recursive context
+       * - hover style should not apply
+       */
+      isRecursive: {
+        type: Boolean,
+        attribute: 'is-recursive',
+        reflect: true
+      },
+
+
+
     };
   }
 
@@ -156,7 +182,7 @@ class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
     };
     return html `
       <label class="mdc-text-field ${classMap(classes)}">
-        ${this.renderRipple()}
+        ${this.isRecursive ? nothing : this.renderRipple() }
         ${this.outlined ? this.renderOutline() : this.renderLabel()}
         ${this.renderInput()}
         ${this.renderLineRipple()}
@@ -167,7 +193,9 @@ class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
 
   renderInput() {
     return html `
-    <pwi-pseudo-input _tabindex="0"
+    <pwi-pseudo-input 
+      tabindex="${ifDefined(this.isRecursive || this.label ? '0' : undefined)}"
+      role="group"
       aria-labelledby="label"
       aria-controls="helper"
       aria-describedby="helper"

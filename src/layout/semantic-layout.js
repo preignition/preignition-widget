@@ -5,6 +5,8 @@ import { LitElement, html, css } from 'lit-element';
  *
  * A responsive layout using semantic tag,
  *
+ * Do not use this - better import semanticLayout css 
+ *
  * @element preignition-semantic-layout
  * @slot header - header slot
  * @slot aside - aside slot
@@ -106,26 +108,26 @@ export class SemanticLayout extends LitElement {
   render() {
     return html `
     ${!this.noHeader ? html `
-      <header>
+      <header part="header">
         <slot name="header"></slot>
       </header>` : ''}
       
       <div id="main">
-        <div id="main-slot">
+        <article id="main-slot" part="main">
           <slot></slot>
-        </div>
+        </article>
         ${!this.noAside ? html `
-          <aside>
+          <aside part="aside">
              <slot name="aside"></slot>
           </aside> ` : ''}
       </div>
 
-      <div id="actions">
+      <div id="actions" part="actions">
         <slot name="action"></slot>
       </div>
 
       ${!this.noFooter ? html `
-      <footer>
+      <footer part="footer">
         <slot name="footer"></slot>
       </footer>` : ''}
     `;
@@ -165,6 +167,6 @@ export class SemanticLayout extends LitElement {
 }
 
 // Register the new element with the browser.
-customElements.define('preignition-semantic-layout', SemanticLayout);
+// customElements.define('pwi-semantic-layout', SemanticLayout);
 
 export default SemanticLayout;

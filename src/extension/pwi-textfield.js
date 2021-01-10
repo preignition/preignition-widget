@@ -25,25 +25,28 @@ TwoWayBinding(
   // aria-invalie is set to invalid;
   // aria-errormessage replaces aria-errortext
   // .
-  renderInput() {
-    const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
-    const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
-    const autocapitalizeOrUndef = this.autocapitalize ?
-      this.autocapitalize :
-      undefined;
-    const showValidationMessage = this.validationMessage && !this.isUiValid;
-    // TODO: live() directive needs casting for lit-analyzer
-    // https://github.com/runem/lit-analyzer/pull/91/files
-    // TODO: lit-analyzer labels min/max as (number|string) instead of string
-    return html `
+   renderInput(shouldRenderHelperText) {
+        const minOrUndef = this.minLength === -1 ? undefined : this.minLength;
+        const maxOrUndef = this.maxLength === -1 ? undefined : this.maxLength;
+        const autocapitalizeOrUndef = this.autocapitalize ?
+            this.autocapitalize :
+            undefined;
+        const showValidationMessage = this.validationMessage && !this.isUiValid;
+        const ariaControlsOrUndef = shouldRenderHelperText ? 'helper-text' : undefined;
+        const ariaDescribedbyOrUndef = this.focused || this.helperPersistent || showValidationMessage ?
+            'helper-text' :
+            undefined;
+        const ariaErrortextOrUndef = showValidationMessage ? 'helper-text' : undefined;
+        // TODO: live() directive needs casting for lit-analyzer
+        // https://github.com/runem/lit-analyzer/pull/91/files
+        // TODO: lit-analyzer labels min/max as (number|string) instead of string
+        return html `
       <input
           aria-labelledby="label"
-          aria-controls="${ifDefined(this.shouldRenderHelperText ? 'helper-text' : undefined)}"
-          aria-describedby="${ifDefined(this.focused || this.helperPersistent || showValidationMessage ?
-            'helper-text' :
-            undefined)}"
-         aria-errormessage="${ifDefined(showValidationMessage ? 'helper-text' : undefined)}"
-         aria-invalid="${ifDefined(this.isUiValid ? undefined : 'true')}"
+          aria-controls="${ifDefined(ariaControlsOrUndef)}"
+          aria-describedby="${ifDefined(ariaDescribedbyOrUndef)}"
+          aria-errormessage="${ifDefined(ariaErrortextOrUndef)}"
+          aria-invalid="${ifDefined(this.isUiValid ? undefined : 'true')}"
           class="mdc-text-field__input"
           type="${this.type}"
           .value="${live(this.value)}"
@@ -64,35 +67,33 @@ TwoWayBinding(
           @input="${this.handleInputChange}"
           @focus="${this.onInputFocus}"
           @blur="${this.onInputBlur}">`;
-  }
-
+    }
 
   // Note(cg): added aria-live. and role
-  renderHelperText(charCounterTemplate = nothing) {
-    if (!this.shouldRenderHelperText) {
-      return nothing;
-    }
-    const showValidationMessage = this.validationMessage && !this.isUiValid;
-    const classes = {
-      'mdc-text-field-helper-text--persistent': this.helperPersistent,
-      'mdc-text-field-helper-text--validation-msg': showValidationMessage,
-    };
-    const role = showValidationMessage ? 'alert' : undefined;
-
-    return html `
-      <div class="mdc-text-field-helper-line">
-        <div
-        id="helper-text"
-        role="${ifDefined(role)}"
-        aria-live="${ifDefined(showValidationMessage ? 'assertive' : undefined)}"
-        aria-hidden="${ifDefined(this.focused || this.helperPersistent || showValidationMessage ?
+  renderHelperText(shouldRenderHelperText, shouldRenderCharCounter) {
+        const showValidationMessage = this.validationMessage && !this.isUiValid;
+        /** @classMap */
+        const classes = {
+            'mdc-text-field-helper-text--persistent': this.helperPersistent,
+            'mdc-text-field-helper-text--validation-msg': showValidationMessage,
+        };
+        const ariaHiddenOrUndef = this.focused || this.helperPersistent || showValidationMessage ?
             undefined :
-            'true')}"
-        class="mdc-text-field-helper-text ${classMap(classes)}">${showValidationMessage ? this.validationMessage : this.helper}</div>
-        ${charCounterTemplate}
-      </div>
-    `;
-  }
+            'true';
+        const helperText = showValidationMessage ? this.validationMessage : this.helper;
+        const role = showValidationMessage ? 'alert' : undefined;
+        return !shouldRenderHelperText ? '' : html `
+      <div class="mdc-text-field-helper-line">
+        <div id="helper-text"
+            role="${ifDefined(role)}"
+            aria-live="${ifDefined(showValidationMessage ? 'assertive' : undefined)}"
+             aria-hidden="${ifDefined(ariaHiddenOrUndef)}"
+             class="mdc-text-field-helper-text ${classMap(classes)}"
+             >${helperText}</div>
+        ${this.renderCharCounter(shouldRenderCharCounter)}
+      </div>`;
+    } 
+
 }
 
 customElements.define('pwi-textfield', PwiTextField);

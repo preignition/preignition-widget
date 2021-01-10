@@ -5,7 +5,11 @@ export default css`
      :host {
        width: 100%;
      }  
-    
+     /*
+     :host([label-above])  {
+       line-height: initial;
+     }*/
+
      :host([label-above]) .mdc-text-field {
        flex-direction: column;
        overflow: visible; /* this is to allow tooltip */
@@ -21,6 +25,7 @@ export default css`
 
     :host([label-above]) .mdc-text-field--filled::before {
       height: 0;
+      position: absolute; /* we need this otherwise we loose space */
     }
     
     :host([label-above]) .mdc-text-field .label-above {

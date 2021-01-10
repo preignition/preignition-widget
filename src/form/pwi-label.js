@@ -9,7 +9,7 @@ class PwiLabel extends LitElement {
     :host {
       display: block;
       /* hard-coding padding and margin to make text field same size */
-      padding-top: 6px;
+      margin-top: 6px;
       margin-bottom: -2px;
       font-size: var(--mdc-typography-subtitle1-font-size, 1rem);
     }
@@ -30,13 +30,13 @@ class PwiLabel extends LitElement {
    */
   renderLabel(label, terminology) {
     if (this.parse) {
-      return parseInline(this.label)
+      return parseInline(this.label);
     }
     if (terminology) {
       // Note(cg): parse label to get terminolotgy.
-      return this.label; 
+      return this.label;
     }
-    return this.label; 
+    return this.label;
   }
 
   render() {

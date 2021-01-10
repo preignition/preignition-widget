@@ -1,107 +1,14 @@
-import { __extends, __assign, __decorate } from '../tslib.js';
-import { h as html } from '../common/lit-html-f37bf389.js';
-import { query, property, css, customElement } from '../lit-element.js';
+import { h as html } from '../common/lit-html-f57783b7.js';
+import { query, property, internalProperty, queryAsync, eventOptions, css, customElement } from '../lit-element.js';
 import '../common/directive-651fd9cf.js';
-import { M as MDCFoundation, b as addHasRemoveClass } from '../common/foundation-1fec3a2e.js';
-import '../common/foundation-e17fb4b7.js';
-import { F as FormElement } from '../common/form-element-f16ef419.js';
-import { o as observer } from '../common/observer-0bd28502.js';
-import { r as ripple } from '../common/ripple-directive-7e28757e.js';
-
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var strings = {
-    NATIVE_CONTROL_SELECTOR: '.mdc-radio__native-control',
-};
-var cssClasses = {
-    DISABLED: 'mdc-radio--disabled',
-    ROOT: 'mdc-radio',
-};
-
-/**
- * @license
- * Copyright 2016 Google Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
-var MDCRadioFoundation = /** @class */ (function (_super) {
-    __extends(MDCRadioFoundation, _super);
-    function MDCRadioFoundation(adapter) {
-        return _super.call(this, __assign(__assign({}, MDCRadioFoundation.defaultAdapter), adapter)) || this;
-    }
-    Object.defineProperty(MDCRadioFoundation, "cssClasses", {
-        get: function () {
-            return cssClasses;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCRadioFoundation, "strings", {
-        get: function () {
-            return strings;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(MDCRadioFoundation, "defaultAdapter", {
-        get: function () {
-            return {
-                addClass: function () { return undefined; },
-                removeClass: function () { return undefined; },
-                setNativeControlDisabled: function () { return undefined; },
-            };
-        },
-        enumerable: true,
-        configurable: true
-    });
-    MDCRadioFoundation.prototype.setDisabled = function (disabled) {
-        var DISABLED = MDCRadioFoundation.cssClasses.DISABLED;
-        this.adapter.setNativeControlDisabled(disabled);
-        if (disabled) {
-            this.adapter.addClass(DISABLED);
-        }
-        else {
-            this.adapter.removeClass(DISABLED);
-        }
-    };
-    return MDCRadioFoundation;
-}(MDCFoundation));
+import { a as addHasRemoveClass } from '../common/utils-c3e1aa64.js';
+import './mwc-base.js';
+import { FormElement } from './mwc-base/form-element.js';
+import { __extends, __assign, __decorate } from '../tslib.js';
+import { M as MDCFoundation } from '../common/foundation-61b2c8ea.js';
+import { classMap } from '../lit-html/directives/class-map.js';
+import { R as RippleHandlers } from '../common/ripple-handlers-7e965c1d.js';
+import { o as observer } from '../common/observer-eeb64c16.js';
 
 /**
  * @license
@@ -145,6 +52,8 @@ class SingleSelectionSet {
  * - Grouping of checkable elements by name
  *   - Defaults grouping scope to host shadow root
  *   - Document-wide scoping enabled
+ * - Land focus only on checked element. Focuses leading element when none
+ *   checked.
  *
  * Intended Usage:
  *
@@ -179,10 +88,6 @@ class SingleSelectionSet {
  *   disconnectedCallback() {
  *     this.selectionController!.unregister(this);
  *     this.selectionController = null;
- *   }
- *
- *   focus() {
- *     // focus native radio element
  *   }
  * }
  * ```
@@ -291,6 +196,8 @@ class SingleSelectionController {
      *
      * @param element Element from which selection set is derived and subsequently
      *     focused.
+     * @deprecated update() method now handles focus management by setting
+     *     appropriate tabindex to form element.
      */
     focus(element) {
         // Only manage focus state when using keyboard
@@ -303,6 +210,18 @@ class SingleSelectionController {
         if (currentFocusedSet != set && set.selected && set.selected != element) {
             set.selected.focus();
         }
+    }
+    /**
+     * @return Returns true if atleast one radio is selected in the radio group.
+     */
+    isAnySelected(element) {
+        const set = this.getSet(element.name);
+        for (const e of set.set) {
+            if (e.checked) {
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * Returns the elements in the given element's selection set in document
@@ -340,7 +259,12 @@ class SingleSelectionController {
      * @param element Element to register. Registers in set of `element.name`.
      */
     register(element) {
-        const set = this.getSet(element.name);
+        // TODO(b/168546148): Remove accessing 'name' via getAttribute() when new
+        // base class is created without single selection controller. Component
+        // maybe booted up after it is connected to DOM in which case properties
+        // (including `name`) are not updated yet.
+        const name = element.name || element.getAttribute('name') || '';
+        const set = this.getSet(name);
         set.set.add(element);
         set.ordered = null;
     }
@@ -368,19 +292,127 @@ class SingleSelectionController {
             return;
         }
         this.updating = true;
+        const set = this.getSet(element.name);
         if (element.checked) {
-            const set = this.getSet(element.name);
             for (const e of set.set) {
-                e.checked = (e == element);
+                if (e == element) {
+                    continue;
+                }
+                e.checked = false;
             }
             set.selected = element;
+        }
+        // When tabbing through land focus on the checked radio in the group.
+        if (this.isAnySelected(element)) {
+            for (const e of set.set) {
+                if (e.formElementTabIndex === undefined) {
+                    break;
+                }
+                e.formElementTabIndex = e.checked ? 0 : -1;
+            }
         }
         this.updating = false;
     }
 }
 
 /**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var strings = {
+    NATIVE_CONTROL_SELECTOR: '.mdc-radio__native-control',
+};
+var cssClasses = {
+    DISABLED: 'mdc-radio--disabled',
+    ROOT: 'mdc-radio',
+};
+
+/**
+ * @license
+ * Copyright 2016 Google Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+var MDCRadioFoundation = /** @class */ (function (_super) {
+    __extends(MDCRadioFoundation, _super);
+    function MDCRadioFoundation(adapter) {
+        return _super.call(this, __assign(__assign({}, MDCRadioFoundation.defaultAdapter), adapter)) || this;
+    }
+    Object.defineProperty(MDCRadioFoundation, "cssClasses", {
+        get: function () {
+            return cssClasses;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCRadioFoundation, "strings", {
+        get: function () {
+            return strings;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(MDCRadioFoundation, "defaultAdapter", {
+        get: function () {
+            return {
+                addClass: function () { return undefined; },
+                removeClass: function () { return undefined; },
+                setNativeControlDisabled: function () { return undefined; },
+            };
+        },
+        enumerable: true,
+        configurable: true
+    });
+    MDCRadioFoundation.prototype.setDisabled = function (disabled) {
+        var DISABLED = MDCRadioFoundation.cssClasses.DISABLED;
+        this.adapter.setNativeControlDisabled(disabled);
+        if (disabled) {
+            this.adapter.addClass(DISABLED);
+        }
+        else {
+            this.adapter.removeClass(DISABLED);
+        }
+    };
+    return MDCRadioFoundation;
+}(MDCFoundation));
+
+/**
  * @fires checked
+ * @soyCompatible
  */
 class RadioBase extends FormElement {
     constructor() {
@@ -390,7 +422,27 @@ class RadioBase extends FormElement {
         this.disabled = false;
         this.value = '';
         this.name = '';
+        /**
+         * Touch target extends beyond visual boundary of a component by default.
+         * Set to `true` to remove touch target added to the component.
+         * @see https://material.io/design/usability/accessibility.html
+         */
+        this.reducedTouchTarget = false;
         this.mdcFoundationClass = MDCRadioFoundation;
+        /**
+         * input's tabindex is updated based on checked status.
+         * Tab navigation will be removed from unchecked radios.
+         */
+        this.formElementTabIndex = 0;
+        this.shouldRenderRipple = false;
+        this.rippleElement = null;
+        this.rippleHandlers = new RippleHandlers(() => {
+            this.shouldRenderRipple = true;
+            this.ripple.then((v) => {
+                this.rippleElement = v;
+            });
+            return this.ripple;
+        });
     }
     get checked() {
         return this._checked;
@@ -414,20 +466,25 @@ class RadioBase extends FormElement {
      * In this case we'd first see all changes for radio1, and then for radio2,
      * and we couldn't tell that radio1 was the most recently checked.
      */
-    set checked(checked) {
+    set checked(isChecked) {
+        var _a, _b;
         const oldValue = this._checked;
-        if (!!checked === !!oldValue) {
+        if (isChecked === oldValue) {
             return;
         }
-        this._checked = checked;
+        this._checked = isChecked;
         if (this.formElement) {
-            this.formElement.checked = checked;
+            this.formElement.checked = isChecked;
         }
-        if (this._selectionController !== undefined) {
-            this._selectionController.update(this);
+        (_a = this._selectionController) === null || _a === void 0 ? void 0 : _a.update(this);
+        if (isChecked === false) {
+            // Remove focus ring when unchecked on other radio programmatically.
+            // Blur on input since this determines the focus style.
+            (_b = this.formElement) === null || _b === void 0 ? void 0 : _b.blur();
         }
         this.requestUpdate('checked', oldValue);
         // useful when unchecks self and wrapping element needs to synchronize
+        // TODO(b/168543810): Remove triggering event on programmatic API call.
         this.dispatchEvent(new Event('checked', { bubbles: true, composed: true }));
     }
     _handleUpdatedValue(newValue) {
@@ -436,6 +493,16 @@ class RadioBase extends FormElement {
         // wrapper.
         this.formElement.value = newValue;
     }
+    /** @soyTemplate */
+    renderRipple() {
+        return this.shouldRenderRipple ?
+            html `<mwc-ripple unbounded accent .disabled="${this.disabled}"></mwc-ripple>` :
+            '';
+    }
+    get isRippleActive() {
+        var _a;
+        return ((_a = this.rippleElement) === null || _a === void 0 ? void 0 : _a.isActive) || false;
+    }
     connectedCallback() {
         super.connectedCallback();
         // Note that we must defer creating the selection controller until the
@@ -443,17 +510,19 @@ class RadioBase extends FormElement {
         // radio's shadow root. For example, if we're stamping in a lit-html map
         // or repeat, then we'll be constructed before we're added to a root node.
         //
-        // Also note if we aren't using native shadow DOM, then we don't technically
-        // need a SelectionController, because our inputs will share document-scoped
-        // native selection groups. However, it simplifies implementation and
-        // testing to use one in all cases. In particular, it means we correctly
-        // manage groups before the first update stamps the native input.
+        // Also note if we aren't using native shadow DOM, we still need a
+        // SelectionController, because we should update checked status of other
+        // radios in the group when selection changes. It also simplifies
+        // implementation and testing to use one in all cases.
         //
         // eslint-disable-next-line @typescript-eslint/no-use-before-define
         this._selectionController = SingleSelectionController.getController(this);
         this._selectionController.register(this);
-        // With native <input type="radio">, when a checked radio is added to the
-        // root, then it wins. Immediately update to emulate this behavior.
+        // Radios maybe checked before connected, update selection as soon it is
+        // connected to DOM. Last checked radio button in the DOM will be selected.
+        //
+        // NOTE: If we update selection only after firstUpdate() we might mistakenly
+        // update checked status before other radios are rendered.
         this._selectionController.update(this);
     }
     disconnectedCallback() {
@@ -464,58 +533,87 @@ class RadioBase extends FormElement {
         this._selectionController = undefined;
     }
     focus() {
-        this.focusNative();
-    }
-    focusNative() {
         this.formElement.focus();
-    }
-    get ripple() {
-        return this.rippleElement.ripple;
     }
     createAdapter() {
         return Object.assign(Object.assign({}, addHasRemoveClass(this.mdcRoot)), { setNativeControlDisabled: (disabled) => {
                 this.formElement.disabled = disabled;
             } });
     }
-    _changeHandler() {
-        this.checked = this.formElement.checked;
+    handleFocus() {
+        this.handleRippleFocus();
     }
-    _focusHandler() {
-        if (this._selectionController !== undefined) {
-            this._selectionController.focus(this);
-        }
-    }
-    _clickHandler() {
+    handleClick() {
         // Firefox has weird behavior with radios if they are not focused
         this.formElement.focus();
     }
+    handleBlur() {
+        this.formElement.blur();
+        this.rippleHandlers.endFocus();
+    }
+    /**
+     * @soyTemplate
+     * @soyAttributes radioAttributes: input
+     * @soyClasses radioClasses: .mdc-radio
+     */
     render() {
+        /** @classMap */
+        const classes = {
+            'mdc-radio--touch': !this.reducedTouchTarget,
+            'mdc-radio--disabled': this.disabled,
+        };
         return html `
-      <div class="mdc-radio" .ripple=${ripple()}>
+      <div class="mdc-radio ${classMap(classes)}">
         <input
+          tabindex="${this.formElementTabIndex}"
           class="mdc-radio__native-control"
           type="radio"
           name="${this.name}"
           .checked="${this.checked}"
           .value="${this.value}"
-          @change="${this._changeHandler}"
-          @focus="${this._focusHandler}"
-          @click="${this._clickHandler}">
+          ?disabled="${this.disabled}"
+          @change="${this.changeHandler}"
+          @focus="${this.handleFocus}"
+          @click="${this.handleClick}"
+          @blur="${this.handleBlur}"
+          @mousedown="${this.handleRippleMouseDown}"
+          @mouseenter="${this.handleRippleMouseEnter}"
+          @mouseleave="${this.handleRippleMouseLeave}"
+          @touchstart="${this.handleRippleTouchStart}"
+          @touchend="${this.handleRippleDeactivate}"
+          @touchcancel="${this.handleRippleDeactivate}">
         <div class="mdc-radio__background">
           <div class="mdc-radio__outer-circle"></div>
           <div class="mdc-radio__inner-circle"></div>
         </div>
-        <div class="mdc-radio__ripple"></div>
+        ${this.renderRipple()}
       </div>`;
     }
-    firstUpdated() {
-        super.firstUpdated();
-        // We might not have been able to synchronize this from the checked setter
-        // earlier, if checked was set before the input was stamped.
-        this.formElement.checked = this.checked;
-        if (this._selectionController !== undefined) {
-            this._selectionController.update(this);
-        }
+    handleRippleMouseDown(event) {
+        const onUp = () => {
+            window.removeEventListener('mouseup', onUp);
+            this.handleRippleDeactivate();
+        };
+        window.addEventListener('mouseup', onUp);
+        this.rippleHandlers.startPress(event);
+    }
+    handleRippleTouchStart(event) {
+        this.rippleHandlers.startPress(event);
+    }
+    handleRippleDeactivate() {
+        this.rippleHandlers.endPress();
+    }
+    handleRippleMouseEnter() {
+        this.rippleHandlers.startHover();
+    }
+    handleRippleMouseLeave() {
+        this.rippleHandlers.endHover();
+    }
+    handleRippleFocus() {
+        this.rippleHandlers.startFocus();
+    }
+    changeHandler() {
+        this.checked = this.formElement.checked;
     }
 }
 __decorate([
@@ -524,9 +622,6 @@ __decorate([
 __decorate([
     query('input')
 ], RadioBase.prototype, "formElement", void 0);
-__decorate([
-    query('.mdc-radio__ripple')
-], RadioBase.prototype, "rippleElement", void 0);
 __decorate([
     property({ type: Boolean })
 ], RadioBase.prototype, "global", void 0);
@@ -548,6 +643,21 @@ __decorate([
 __decorate([
     property({ type: String })
 ], RadioBase.prototype, "name", void 0);
+__decorate([
+    property({ type: Boolean })
+], RadioBase.prototype, "reducedTouchTarget", void 0);
+__decorate([
+    property({ type: Number })
+], RadioBase.prototype, "formElementTabIndex", void 0);
+__decorate([
+    internalProperty()
+], RadioBase.prototype, "shouldRenderRipple", void 0);
+__decorate([
+    queryAsync('mwc-ripple')
+], RadioBase.prototype, "ripple", void 0);
+__decorate([
+    eventOptions({ passive: true })
+], RadioBase.prototype, "handleRippleTouchStart", null);
 
 /**
 @license
@@ -565,7 +675,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
-const style = css `.mdc-touch-target-wrapper{display:inline}.mdc-radio{padding:10px;display:inline-block;position:relative;flex:0 0 auto;box-sizing:content-box;width:20px;height:20px;cursor:pointer;will-change:opacity,transform,border-color,color}.mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:rgba(0,0,0,.54)}.mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:#018786;border-color:var(--mdc-theme-secondary, #018786)}.mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:#018786;border-color:var(--mdc-theme-secondary, #018786)}.mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:rgba(0,0,0,.38)}.mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:rgba(0,0,0,.38)}.mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:rgba(0,0,0,.38)}.mdc-radio .mdc-radio__background::before{background-color:#018786;background-color:var(--mdc-theme-secondary, #018786)}.mdc-radio .mdc-radio__background::before{top:-10px;left:-10px;width:40px;height:40px}.mdc-radio .mdc-radio__native-control{top:0px;right:0px;left:0px;width:40px;height:40px}.mdc-radio__background{display:inline-block;position:relative;box-sizing:border-box;width:20px;height:20px}.mdc-radio__background::before{position:absolute;transform:scale(0, 0);border-radius:50%;opacity:0;pointer-events:none;content:"";transition:opacity 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__outer-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;border-width:2px;border-style:solid;border-radius:50%;transition:border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__inner-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;transform:scale(0, 0);border-width:10px;border-style:solid;border-radius:50%;transition:transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__native-control{position:absolute;margin:0;padding:0;opacity:0;cursor:inherit;z-index:1}.mdc-radio--touch{margin-top:4px;margin-bottom:4px;margin-right:4px;margin-left:4px}.mdc-radio--touch .mdc-radio__native-control{top:-4px;right:-4px;left:-4px;width:48px;height:48px}.mdc-radio__native-control:checked+.mdc-radio__background,.mdc-radio__native-control:disabled+.mdc-radio__background{transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__outer-circle{transition:border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio--disabled{cursor:default;pointer-events:none}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle{transform:scale(0.5);transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:disabled+.mdc-radio__background,[aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background{cursor:default}.mdc-radio__native-control:focus+.mdc-radio__background::before{transform:scale(1);opacity:.12;transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}@keyframes mdc-ripple-fg-radius-in{from{animation-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transform:translate(var(--mdc-ripple-fg-translate-start, 0)) scale(1)}to{transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}}@keyframes mdc-ripple-fg-opacity-in{from{animation-timing-function:linear;opacity:0}to{opacity:var(--mdc-ripple-fg-opacity, 0)}}@keyframes mdc-ripple-fg-opacity-out{from{animation-timing-function:linear;opacity:var(--mdc-ripple-fg-opacity, 0)}to{opacity:0}}.mdc-radio{--mdc-ripple-fg-size: 0;--mdc-ripple-left: 0;--mdc-ripple-top: 0;--mdc-ripple-fg-scale: 1;--mdc-ripple-fg-translate-end: 0;--mdc-ripple-fg-translate-start: 0;-webkit-tap-highlight-color:rgba(0,0,0,0);will-change:transform,opacity}.mdc-radio .mdc-radio__ripple::before,.mdc-radio .mdc-radio__ripple::after{position:absolute;border-radius:50%;opacity:0;pointer-events:none;content:""}.mdc-radio .mdc-radio__ripple::before{transition:opacity 15ms linear,background-color 15ms linear;z-index:1}.mdc-radio.mdc-ripple-upgraded .mdc-radio__ripple::before{transform:scale(var(--mdc-ripple-fg-scale, 1))}.mdc-radio.mdc-ripple-upgraded .mdc-radio__ripple::after{top:0;left:0;transform:scale(0);transform-origin:center center}.mdc-radio.mdc-ripple-upgraded--unbounded .mdc-radio__ripple::after{top:var(--mdc-ripple-top, 0);left:var(--mdc-ripple-left, 0)}.mdc-radio.mdc-ripple-upgraded--foreground-activation .mdc-radio__ripple::after{animation:mdc-ripple-fg-radius-in 225ms forwards,mdc-ripple-fg-opacity-in 75ms forwards}.mdc-radio.mdc-ripple-upgraded--foreground-deactivation .mdc-radio__ripple::after{animation:mdc-ripple-fg-opacity-out 150ms;transform:translate(var(--mdc-ripple-fg-translate-end, 0)) scale(var(--mdc-ripple-fg-scale, 1))}.mdc-radio .mdc-radio__ripple::before,.mdc-radio .mdc-radio__ripple::after{top:calc(50% - 50%);left:calc(50% - 50%);width:100%;height:100%}.mdc-radio.mdc-ripple-upgraded .mdc-radio__ripple::before,.mdc-radio.mdc-ripple-upgraded .mdc-radio__ripple::after{top:var(--mdc-ripple-top, calc(50% - 50%));left:var(--mdc-ripple-left, calc(50% - 50%));width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-radio.mdc-ripple-upgraded .mdc-radio__ripple::after{width:var(--mdc-ripple-fg-size, 100%);height:var(--mdc-ripple-fg-size, 100%)}.mdc-radio .mdc-radio__ripple::before,.mdc-radio .mdc-radio__ripple::after{background-color:#018786;background-color:var(--mdc-theme-secondary, #018786)}.mdc-radio:hover .mdc-radio__ripple::before{opacity:.04}.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__ripple::before,.mdc-radio:not(.mdc-ripple-upgraded):focus .mdc-radio__ripple::before{transition-duration:75ms;opacity:.12}.mdc-radio:not(.mdc-ripple-upgraded) .mdc-radio__ripple::after{transition:opacity 150ms linear}.mdc-radio:not(.mdc-ripple-upgraded):active .mdc-radio__ripple::after{transition-duration:75ms;opacity:.12}.mdc-radio.mdc-ripple-upgraded{--mdc-ripple-fg-opacity: 0.12}.mdc-radio.mdc-ripple-upgraded--background-focused .mdc-radio__background::before{content:none}.mdc-radio__ripple{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}:host{display:inline-block;outline:none}.mdc-radio{vertical-align:bottom}.mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unchecked-color, rgba(0, 0, 0, 0.54))}.mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-color, rgba(0, 0, 0, 0.38))}.mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-color, rgba(0, 0, 0, 0.38))}.mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-disabled-color, rgba(0, 0, 0, 0.38))}`;
+const style = css `.mdc-touch-target-wrapper{display:inline}.mdc-radio{padding:10px;display:inline-block;position:relative;flex:0 0 auto;box-sizing:content-box;width:20px;height:20px;cursor:pointer;will-change:opacity,transform,border-color,color}.mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:rgba(0, 0, 0, 0.54)}.mdc-radio .mdc-radio__native-control:enabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:#018786;border-color:var(--mdc-theme-secondary, #018786)}.mdc-radio .mdc-radio__native-control:enabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:#018786;border-color:var(--mdc-theme-secondary, #018786)}.mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:rgba(0, 0, 0, 0.38)}.mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:rgba(0, 0, 0, 0.38)}.mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:rgba(0, 0, 0, 0.38)}.mdc-radio .mdc-radio__background::before{background-color:#018786;background-color:var(--mdc-theme-secondary, #018786)}.mdc-radio .mdc-radio__background::before{top:-10px;left:-10px;width:40px;height:40px}.mdc-radio .mdc-radio__native-control{top:0px;right:0px;left:0px;width:40px;height:40px}@media screen and (-ms-high-contrast: active){.mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:GrayText}.mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:GrayText}.mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:GrayText}}.mdc-radio__background{display:inline-block;position:relative;box-sizing:border-box;width:20px;height:20px}.mdc-radio__background::before{position:absolute;transform:scale(0, 0);border-radius:50%;opacity:0;pointer-events:none;content:"";transition:opacity 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__outer-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;border-width:2px;border-style:solid;border-radius:50%;transition:border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__inner-circle{position:absolute;top:0;left:0;box-sizing:border-box;width:100%;height:100%;transform:scale(0, 0);border-width:10px;border-style:solid;border-radius:50%;transition:transform 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1),border-color 120ms 0ms cubic-bezier(0.4, 0, 0.6, 1)}.mdc-radio__native-control{position:absolute;margin:0;padding:0;opacity:0;cursor:inherit;z-index:1}.mdc-radio--touch{margin-top:4px;margin-bottom:4px;margin-right:4px;margin-left:4px}.mdc-radio--touch .mdc-radio__native-control{top:-4px;right:-4px;left:-4px;width:48px;height:48px}.mdc-radio__native-control:checked+.mdc-radio__background,.mdc-radio__native-control:disabled+.mdc-radio__background{transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__outer-circle{transition:border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle,.mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio--disabled{cursor:default;pointer-events:none}.mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__inner-circle{transform:scale(0.5);transition:transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1),border-color 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}.mdc-radio__native-control:disabled+.mdc-radio__background,[aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background{cursor:default}.mdc-radio__native-control:focus+.mdc-radio__background::before{transform:scale(1);opacity:.12;transition:opacity 120ms 0ms cubic-bezier(0, 0, 0.2, 1),transform 120ms 0ms cubic-bezier(0, 0, 0.2, 1)}:host{display:inline-block;outline:none}.mdc-radio{vertical-align:bottom}.mdc-radio .mdc-radio__native-control:enabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-unchecked-color, rgba(0, 0, 0, 0.54))}.mdc-radio [aria-disabled=true] .mdc-radio__native-control:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio .mdc-radio__native-control:disabled:not(:checked)+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-color, rgba(0, 0, 0, 0.38))}.mdc-radio [aria-disabled=true] .mdc-radio__native-control:checked+.mdc-radio__background .mdc-radio__outer-circle,.mdc-radio .mdc-radio__native-control:disabled:checked+.mdc-radio__background .mdc-radio__outer-circle{border-color:var(--mdc-radio-disabled-color, rgba(0, 0, 0, 0.38))}.mdc-radio [aria-disabled=true] .mdc-radio__native-control+.mdc-radio__background .mdc-radio__inner-circle,.mdc-radio .mdc-radio__native-control:disabled+.mdc-radio__background .mdc-radio__inner-circle{border-color:var(--mdc-radio-disabled-color, rgba(0, 0, 0, 0.38))}`;
 
 let Radio = class Radio extends RadioBase {
 };

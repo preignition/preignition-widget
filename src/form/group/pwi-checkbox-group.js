@@ -6,7 +6,7 @@ import '../pwi-pseudo-input.js';
 import '@material/mwc-formfield';
 import '@material/mwc-checkbox';
 
-// const options = [{ code: 1, label: 'first option', precise: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
+// const options = [{ code: 1, label: 'first option', specify: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
 
 class PwiCheckboxGroup extends PwiGenericGroup {
 
@@ -41,8 +41,8 @@ class PwiCheckboxGroup extends PwiGenericGroup {
         type: Array
       },
 
-      // Note(cg): object containg values of 'plese precise fields'.
-      precise: {
+      // Note(cg): object containg values of 'plese specify fields'.
+      specify: {
         type: Object
       }
 
@@ -74,7 +74,7 @@ class PwiCheckboxGroup extends PwiGenericGroup {
 
   constructor() {
     super();
-    this.precise = {};
+    this.specify = {};
      // Note(cg): see. https://github.com/material-components/material-components-web-components/tree/master/packages/textfield
     this.validityTransform = (value, validity) => {
       value = this.selected;
@@ -109,32 +109,32 @@ class PwiCheckboxGroup extends PwiGenericGroup {
                 value="${option.code}" 
                 ?checked="${this.isCodeSelected(this._value, option.code)}"
                 ?disabled="${this.disabled || this.readonly || option.disabled}"
-                aria-controls=${ifDefined(option.precise ? `precise${index}` : undefined)} 
+                aria-controls=${ifDefined(option.specify ? `specify${index}` : undefined)} 
                 ></pwi-checkbox>
-            </pwi-formfield>${this.renderPrecise(option, index)}</div>`)
+            </pwi-formfield>${this.renderSpecify(option, index)}</div>`)
         }<slot></slot></pwi-pseudo-input>
       `;
   }
 
-  renderPrecise(option, index) {
+  renderSpecify(option, index) {
     const code = option.code || index;
-    return (option.precise === true) && (this.isCodeSelected(this._value, code)) ?
+    return (option.specify === true) && (this.isCodeSelected(this._value, code)) ?
       html `<pwi-textfield 
-          id="precise${index}" 
-          class="precise"
-          label="${option.preciseLabel || 'please precise'}" 
-          @value-changed="${e => {this.precise[code] = e.detail.value; this.onPreciseChange();}}" 
-          .value="${this.precise[code]}"></pwi-textfield>` :
+          id="specify${index}" 
+          class="specify"
+          label="${option.specifyLabel || 'please specify'}" 
+          @value-changed="${e => {this.specify[code] = e.detail.value; this.onSpecifyChange();}}" 
+          .value="${this.specify[code]}"></pwi-textfield>` :
       '';
   }
 
-  onPreciseChange() {
-    // console.info('precise change: ', this.precise);
+  onSpecifyChange() {
+    // console.info('specify change: ', this.specify);
     
-    // Note(cg): we need precise as a new Object, otherwise change is not notified upstream
+    // Note(cg): we need specify as a new Object, otherwise change is not notified upstream
     // with Polymer.
-    this.precise = Object.assign({}, this.precise);
-    this.dispatchEvent(new CustomEvent('precise-changed', { detail: {value: this.precise}}));
+    this.specify = Object.assign({}, this.specify);
+    this.dispatchEvent(new CustomEvent('specify-changed', { detail: {value: this.specify}}));
   }
 
 }

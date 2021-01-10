@@ -64,11 +64,13 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
 
     /* Option container layout  */
     pwi-pseudo-input {
+      display: var(--pwi-group-pseudo-input-display, block);
+      flex-direction: var(--pwi-group-pseudo-input-flex-direction);
     }
     
-    :host(.column) pwi-pseudo-input {
-      display:flex;
-      flex-direction: column;
+    :host([one-line-per-option]){
+      --pwi-group-pseudo-input-display :flex;
+      --pwi-group-pseudo-input-flex-direction: column;
     }
 
     pwi-pseudo-input > div {
@@ -105,6 +107,15 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
         type: Boolean
       },
 
+      /*
+       * `oneLinePerOption` when true, show each option on their own line
+       */
+      oneLinePerOption: {
+        type: Boolean,
+        reflect: true,
+        attribute: 'one-line-per-option'
+      },
+
     };
   }
 
@@ -113,7 +124,7 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
     await this.updateCompleted;
     this.dispatchEvent(new CustomEvent('selected-changed', { detail: { value: this.selected } }));
     this._value = this.selected; // Note(cg): get _value from the actual selection (dom query).
-    this.requestUpdate(); // Note(cg): this is required for instance to make please precise field to appear.
+    this.requestUpdate(); // Note(cg): this is required for instance to make please specify field to appear.
   }
  
   _queryItem(selector) {

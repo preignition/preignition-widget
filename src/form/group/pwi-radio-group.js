@@ -6,7 +6,7 @@ import '../pwi-pseudo-input.js';
 import '@material/mwc-formfield';
 import '@material/mwc-radio';
 
-// const options = [{ code: 1, label: 'first option', precise: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
+// const options = [{ code: 1, label: 'first option', specify: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
 
 class PwiRadioGroup extends PwiGenericGroup {
 
@@ -40,8 +40,8 @@ class PwiRadioGroup extends PwiGenericGroup {
         type: String
       },
 
-      // Note(cg): object containg values of 'plese precise fields'.
-      precise: {
+      // Note(cg): object containg values of 'plese specify fields'.
+      specify: {
         type: String
       }
 
@@ -103,22 +103,22 @@ class PwiRadioGroup extends PwiGenericGroup {
                 value="${option.code}" 
                 ?checked="${option.code + '' === this._value}"
                 ?disabled="${this.disabled || this.readonly || option.disabled}"
-                aria-controls=${ifDefined(option.precise ? `precise${index}` : undefined)} 
+                aria-controls=${ifDefined(option.specify ? `specify${index}` : undefined)} 
                 ></pwi-radio>
-            </pwi-formfield>${this.renderPrecise(option, index)}</div>`)
+            </pwi-formfield>${this.renderSpecify(option, index)}</div>`)
         }<slot></slot></pwi-pseudo-input>
       `;
   }
   
-  renderPrecise(option, index) {
+  renderSpecify(option, index) {
     const code = option.code || index;
-    return (option.precise === true) && (this.isCodeSelected(this._value, code)) ?
+    return (option.specify === true) && (this.isCodeSelected(this._value, code)) ?
       html `<pwi-textfield
-          id="precise${index}" 
-          class="precise"
-          label="${option.preciseLabel || 'please precise'}" 
-          @value-changed="${e => {this.precise = e.detail.value; this.onPreciseChange();}}" 
-          .value="${this.precise}"></pwi-textfield>` :
+          id="specify${index}" 
+          class="specify"
+          label="${option.specifyLabel || 'please specify'}" 
+          @value-changed="${e => {this.specify = e.detail.value; this.onSpecifyChange();}}" 
+          .value="${this.specify}"></pwi-textfield>` :
       '';
   }
   
@@ -126,9 +126,9 @@ class PwiRadioGroup extends PwiGenericGroup {
     return value === code + '';
   }
   
-  onPreciseChange() {
-    // console.info('precise change: ', this.precise);
-    this.dispatchEvent(new CustomEvent('precise-changed', { detail: { value: this.precise } }));
+  onSpecifyChange() {
+    // console.info('specify change: ', this.specify);
+    this.dispatchEvent(new CustomEvent('specify-changed', { detail: { value: this.specify } }));
   }
 
   

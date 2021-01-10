@@ -274,7 +274,6 @@ class PwiFormUpload extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
            .dropText="${this.dropText}"
            .uploading="${this.uploading}"
            .noFileExtension="${this.noFileExtension}"
-           @meta
         ></firebase-document-upload></pwi-pseudo-input>`;
   }
 

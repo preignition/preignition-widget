@@ -1,4 +1,4 @@
-import { k as AttributePart, q as PropertyPart } from '../../common/lit-html-f37bf389.js';
+import { A as AttributePart, P as PropertyPart } from '../../common/lit-html-f57783b7.js';
 import { d as directive } from '../../common/directive-651fd9cf.js';
 
 /**

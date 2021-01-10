@@ -51,7 +51,7 @@ class WidgetDemo extends DemoRoot {
     return html `
       <div id="header">
         <span class="logo"><a href="https://preignition.org">${preignition}</a></span>
-        <h1>Multi chart - ${this.capitalize(this.activeTab)} API and demos</h1>
+        <h1>Preignition Widget - ${this.capitalize(this.activeTab)} API and demos</h1>
         <a class="github" href="https://www.github.com/preignition/preignition-widget" target="_blank">${github}</a>
       </div>
 

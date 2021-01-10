@@ -1,7 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 import { nothing } from 'lit-html';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
-import { styleTypography } from '../../style/index.js';
+import { styleTypography } from '@preignition/preignition-styles';
 
 import '@material/mwc-button';
 
@@ -38,6 +38,15 @@ class PwiTooltip extends LitElement {
      * @prop --show-delay: The amount of time to wait before showing the tooltip.
      * @prop --show-duration: The amount of time the show transition takes to complete.
      * @prop --show-timing-function: The timing function (easing) to use for the show transition.
+     * 
+     * @prop --pwi-tooltip-border-radius: tooltip radius.
+     * @prop --pwi-tooltip-background-color: color of background.
+     * @prop --pwi-tooltip-decoration-color: color for icon and hover.
+     * @prop --pwi-tooltip-color: text color.
+     * @prop --pwi-tooltip-font-weight: 
+     * @prop --pwi-tooltip-font-size: 
+     * @prop --pwi-tooltip-line-height: 
+
      */
     :host {
       --max-width: 20rem;
@@ -47,6 +56,7 @@ class PwiTooltip extends LitElement {
       --show-delay: 0.1s;
       --show-duration: 0.1s;
       --show-timing-function: ease;
+     
       display: inline-block;
       position: relative;
     }
@@ -82,11 +92,11 @@ class PwiTooltip extends LitElement {
     }
     
     #outline:hover mwc-icon, #outline:active mwc-icon, #outline:focus mwc-icon {
-      color: var(--pwi-tooltip-decoration-color);
+      color: var(--pwi-tooltip-decoration-color, var(--primary-color));
     }
     
     #outline:hover::after, #outline:active::after, #outline:focus::after {
-      background-color: var(--pwi-tooltip-decoration-color);
+      background-color: var(--pwi-tooltip-decoration-color, var(--primary-color));
       opacity: 0.25;
     }
 
@@ -94,15 +104,15 @@ class PwiTooltip extends LitElement {
       position: absolute;
       z-index: var(--z-index-popup);
       max-width: var(--max-width);
-      border-radius: var(--pwi-tooltip-border-radius);
-      background-color: var(--pwi-tooltip-background-color);
+      border-radius: var(--pwi-tooltip-border-radius, var(--radius-default));
+      background-color: var(--pwi-tooltip-background-color, var(--primary-text-color));
       font-family: var(--pwi-tooltip-font-family);
-      font-size: var(--pwi-tooltip-font-size);
-      font-weight: var(--pwi-tooltip-font-weight);
-      line-height: var(--pwi-tooltip-line-height);
+      font-size: var(--pwi-tooltip-font-size, var(--font-size-medium));
+      font-weight: var(--pwi-tooltip-font-weight, var(--font-weight-normal));
+      line-height: var(--pwi-tooltip-line-height, var(--line-height-small));
       opacity: 1;
-      color: var(--pwi-tooltip-color);
-      padding: var(--pwi-tooltip-padding);
+      color: var(--pwi-tooltip-color,var(--color-primary-background));
+      padding: var(--space-xx-small) var(--space-x-small);
       transform: scale(0.2);
       transform-origin: center;
       transition-property: opacity, transform;
@@ -155,7 +165,7 @@ class PwiTooltip extends LitElement {
     }
 
     #tooltip::before {
-        background-color: var(--pwi-tooltip-background-color);
+        background-color: var(--pwi-tooltip-background-color, var(--primary-text-color));
         content: ' ';
         
         position: absolute;
@@ -228,7 +238,7 @@ class PwiTooltip extends LitElement {
           part="outline"
           aria-describedby="tooltip"
           tabindex="0"
-          @keydown="${e => {e.code === 'Enter' || e.code === 'Space' ? this.toggleTooltip() : '';}}"
+          @keydown="${e => {e.code === 'Enter' || e.code === 'Space' ? this.toggleTooltip(e) : '';}}"
           @mouseover="${() => { this.fireonclick ? '' : this.showTooltip();}}"
           @mouseout="${() => { this.fireonclick ? '' : this.hideTooltip();}}"
           @click="${() => {this.fireonclick ? this.showTooltip() : '';}}">
@@ -270,7 +280,8 @@ class PwiTooltip extends LitElement {
     this._opened = true;
   }
 
-  toggleTooltip() {
+  toggleTooltip(e) {
+    e && e.preventDefault(); // Note(cg): prevent Space to scroll down.
     this._opened = !this._opened;
   }
 }

@@ -1,6 +1,4 @@
-// import { css } from 'lit-element';
 import { LifSpan } from '@preignition/lit-firebase';
-// import { themeColor, themeTag } from '../style/index.js';
 
 class PwiResource extends LifSpan {
 
@@ -54,7 +52,7 @@ class PwiResource extends LifSpan {
   }
 
   updated(props) {
-    if (props.has('resourceType') || props.has('resourceId') || props.has('language') || props.has('property')) {
+    if (props.has('resourceType') || props.has('resourceId') || props.has('language') || props.has('property') || props.has('state')) {
       this.setPath();
     }
     super.updated(...arguments);

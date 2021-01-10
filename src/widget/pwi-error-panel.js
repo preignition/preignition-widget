@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 
-import { default as styleTypogrtaphy } from '../style/typography.js';
+import { styleTypography } from '@preignition/preignition-styles';
 import '@material/mwc-button';
 
 /**
@@ -16,7 +16,7 @@ class PwiErrorPanel extends LitElement {
 
   static get styles() {
     return [
-      styleTypogrtaphy,
+      styleTypography,
       css `
     :host {
       display: block;

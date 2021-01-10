@@ -1,12 +1,15 @@
-import { __extends, __assign, __read, __decorate } from '../tslib.js';
-import { h as html } from '../common/lit-html-f37bf389.js';
+import { h as html } from '../common/lit-html-f57783b7.js';
 import { query, eventOptions, css, customElement, property } from '../lit-element.js';
 import '../common/directive-651fd9cf.js';
-import { M as MDCFoundation, B as BaseElement, b as addHasRemoveClass, m as matches } from '../common/foundation-1fec3a2e.js';
-import '../common/foundation-e17fb4b7.js';
+import { a as addHasRemoveClass, m as matches } from '../common/utils-c3e1aa64.js';
+import { BaseElement } from './mwc-base.js';
+import { __extends, __assign, __read, __decorate } from '../tslib.js';
+import { M as MDCFoundation } from '../common/foundation-61b2c8ea.js';
+import '../common/mwc-ripple-6e1d3918.js';
 import '../lit-html/directives/class-map.js';
-import { o as observer } from '../common/observer-0bd28502.js';
-import '../common/ripple-directive-7e28757e.js';
+import '../lit-html/directives/style-map.js';
+import '../common/ripple-handlers-7e965c1d.js';
+import { o as observer } from '../common/observer-eeb64c16.js';
 import { Tab } from './mwc-tab.js';
 
 /**

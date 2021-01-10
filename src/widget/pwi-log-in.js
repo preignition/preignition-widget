@@ -1,6 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import { nothing } from 'lit-html';
-import { styleTypography } from '../style/index.js';
+import { styleTypography } from '@preignition/preignition-styles';
 import locale from './pwi-log-in-locale.js';
 
 /**
@@ -289,10 +289,10 @@ class PwiLogIn extends Translate(LitElement, locale) {
   renderSignIn() {
     return html `
       <div id="sign-in" class="content">
-        <div>
-          <pwi-textfield value="${this.email}" @input="${e => this.email = e.currentTarget.value}" label="${this.translate('email')}" type="email" name="email"></pwi-textfield>
-          <pwi-textfield value="${this.password}" @input="${e => this.password = e.currentTarget.value}" label="${this.translate('password')}" name="password" type="password"></pwi-textfield>
-        </div>
+        <form>
+          <pwi-textfield autocomplete="username" .value="${this.email}" @input="${e => this.email = e.currentTarget.value}" .label="${this.translate('email')}" type="email" name="username"></pwi-textfield>
+          <pwi-textfield autocomplete="password" .value="${this.password}" @input="${e => this.password = e.currentTarget.value}" .label="${this.translate('password')}" name="password" type="password"></pwi-textfield>
+        </form>
         <div aria-live="polite">
           ${this.renderError()}
           ${this.renderSuccess()}
@@ -332,11 +332,11 @@ class PwiLogIn extends Translate(LitElement, locale) {
     return html `
       <div id="sign-up" class="content">
         <h2>Create an account</h2>
-        <div>
-          <pwi-textfield value="${this.email}" @input="${e => this.email = e.currentTarget.value}" label="${this.translate('email')}" type="email" name="email"></pwi-textfield>
-          <pwi-textfield value="${this.password}" @input="${e => this.password = e.currentTarget.value}" label="${this.translate('password')}" name="password" type="password"></pwi-textfield>
-          <pwi-textfield value="${this.displayName}" @input="${e => this.displayName = e.currentTarget.value}" label="${this.translate('firstName')}" helper="${this.translate('firstNameHelp')}"></pwi-textfield>
-        </div>
+        <form>
+          <pwi-textfield autocomplete="username" .value="${this.email}" @input="${e => this.email = e.currentTarget.value}" .label="${this.translate('email')}" type="email" name="username" ></pwi-textfield>
+          <pwi-textfield autocomplete="password" .value="${this.password}" @input="${e => this.password = e.currentTarget.value}" .label="${this.translate('password')}" name="password" type="password"></pwi-textfield>
+          <pwi-textfield autocomplete="name" .value="${this.displayName}" @input="${e => this.displayName = e.currentTarget.value}" .label="${this.translate('firstName')}" .helper="${this.translate('firstNameHelp')}"></pwi-textfield>
+        </form>
         <div aria-live="polite">
             ${this.renderError()}
             ${this.renderSuccess()}

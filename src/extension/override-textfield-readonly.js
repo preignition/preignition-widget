@@ -24,7 +24,7 @@ export const OverrideTextfielReadonly = (baseElement) => class extends baseEleme
       ...super.properties,
 
       readonly: {
-        type: String,
+        type: Boolean,
         reflect: true
       }
     };
