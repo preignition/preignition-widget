@@ -6,17 +6,11 @@ import '../pwi-pseudo-input.js';
 import '@material/mwc-formfield';
 import '@material/mwc-checkbox';
 
-// const options = [{ code: 1, label: 'first option', specify: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
 
-class PwiCheckboxGroup extends PwiGenericGroup {
+import locale from './pwi-checkbox-group-locale.js';
+import { Translate } from '@preignition/preignition-util';
 
-  // static get _styles() {
-  //   return css `
-  //   :host {
-  //     display: block;
-  //   }
-  //   `;
-  // }
+class PwiCheckboxGroup extends Translate(PwiGenericGroup, locale) {
 
   static get properties() {
     return {
@@ -122,15 +116,13 @@ class PwiCheckboxGroup extends PwiGenericGroup {
       html `<pwi-textfield 
           id="specify${index}" 
           class="specify"
-          label="${option.specifyLabel || 'please specify'}" 
+          .label="${option.specifyLabel || this.translate('pleaseSpecify')}" 
           @value-changed="${e => {this.specify[code] = e.detail.value; this.onSpecifyChange();}}" 
           .value="${this.specify[code]}"></pwi-textfield>` :
       '';
   }
 
   onSpecifyChange() {
-    // console.info('specify change: ', this.specify);
-    
     // Note(cg): we need specify as a new Object, otherwise change is not notified upstream
     // with Polymer.
     this.specify = Object.assign({}, this.specify);

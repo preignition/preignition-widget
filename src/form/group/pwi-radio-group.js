@@ -6,9 +6,11 @@ import '../pwi-pseudo-input.js';
 import '@material/mwc-formfield';
 import '@material/mwc-radio';
 
+import locale from './pwi-radio-group-locale.js';
+import { Translate } from '@preignition/preignition-util';
 // const options = [{ code: 1, label: 'first option', specify: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
 
-class PwiRadioGroup extends PwiGenericGroup {
+class PwiRadioGroup extends Translate(PwiGenericGroup, locale) {
 
   // static get _styles() {
   //   return css `
@@ -116,7 +118,7 @@ class PwiRadioGroup extends PwiGenericGroup {
       html `<pwi-textfield
           id="specify${index}" 
           class="specify"
-          label="${option.specifyLabel || 'please specify'}" 
+          .label="${option.specifyLabel || this.translate('pleaseSpecify')}" 
           @value-changed="${e => {this.specify = e.detail.value; this.onSpecifyChange();}}" 
           .value="${this.specify}"></pwi-textfield>` :
       '';

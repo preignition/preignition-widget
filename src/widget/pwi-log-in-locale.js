@@ -9,6 +9,7 @@ export default {
   signingUp: 'signing-up',
   orSignUpWith: 'Or sign-up-with',
   createAccount: 'create account',
+  createAnAccount: 'Create an account',
   continueAsGuest: 'continue as guest',
   signInInProcess: 'signing in progress',
   or: 'or',

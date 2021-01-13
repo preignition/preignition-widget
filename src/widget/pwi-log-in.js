@@ -331,7 +331,7 @@ class PwiLogIn extends Translate(LitElement, locale) {
   renderSignUp() {
     return html `
       <div id="sign-up" class="content">
-        <h2>Create an account</h2>
+        <h2>${this.translate('createAnAccount')}</h2>
         <form>
           <pwi-textfield autocomplete="username" .value="${this.email}" @input="${e => this.email = e.currentTarget.value}" .label="${this.translate('email')}" type="email" name="username" ></pwi-textfield>
           <pwi-textfield autocomplete="password" .value="${this.password}" @input="${e => this.password = e.currentTarget.value}" .label="${this.translate('password')}" name="password" type="password"></pwi-textfield>
