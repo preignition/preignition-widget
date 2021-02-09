@@ -92,6 +92,8 @@ class PwiRadioGroup extends Translate(PwiGenericGroup, locale) {
         part="pwi-group-container"
         role="radiogroup"
         aria-labelledby="label"
+        aria-invalid="${ifDefined(showValidationMessage ? 'true' : undefined)}"
+        aria-errormessage="${ifDefined(showValidationMessage ? 'helper-text' : undefined)}"
         aria-describedby="${
         ifDefined(
             this.focused || this.helperPersistent || showValidationMessage ?

@@ -141,7 +141,7 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
     this.labelAbove = true;
     // Note(cg): we assume to be using shadow-dom by default. .
     // if we have a valid slot element, it will be turned to false
-    this.useShadow = true; 
+    this.useShadow = true;
     this.addEventListener('change', this.onChange);
     this.addEventListener('focusin', this._onFocusin);
     this.addEventListener('focusout', this._onFocusout);

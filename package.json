@@ -5,6 +5,7 @@
   "description": "lit-element based widget for preignition",
   "main": "index.js",
   "module": "index.js",
+  "__type": "module",
   "scripts": {
     "start": "es-dev-server",
     "snowpack": "pnpx snowpack i --clean",

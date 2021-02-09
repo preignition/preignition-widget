@@ -90,6 +90,8 @@ class PwiCheckboxGroup extends Translate(PwiGenericGroup, locale) {
       <pwi-pseudo-input
         part="pwi-group-container"
         role="group"
+        aria-invalid="${ifDefined(showValidationMessage ? 'true' : undefined)}"
+        aria-errormessage="${ifDefined(showValidationMessage ? 'helper-text' : undefined)}"
         aria-labelledby="label"
         aria-describedby="${
         ifDefined(
