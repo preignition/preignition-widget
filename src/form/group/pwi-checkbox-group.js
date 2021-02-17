@@ -1,4 +1,4 @@
-import { html, css } from 'lit-element';
+import { html } from 'lit-element';
 import { PwiGenericGroup } from './pwi-generic-group.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
@@ -69,7 +69,7 @@ class PwiCheckboxGroup extends Translate(PwiGenericGroup, locale) {
   constructor() {
     super();
     this.specify = {};
-     // Note(cg): see. https://github.com/material-components/material-components-web-components/tree/master/packages/textfield
+    // Note(cg): see. https://github.com/material-components/material-components-web-components/tree/master/packages/textfield
     this.validityTransform = (value, validity) => {
       value = this.selected;
       if (this.required && (!value || value.length === 0)) {
@@ -114,7 +114,8 @@ class PwiCheckboxGroup extends Translate(PwiGenericGroup, locale) {
 
   renderSpecify(option, index) {
     const code = option.code || index;
-    return (option.specify === true) && (this.isCodeSelected(this._value, code)) ?
+    return (option.specify === true) &&
+      (this.isCodeSelected(this._value, code)) ?
       html `<pwi-textfield 
           id="specify${index}" 
           class="specify"
@@ -128,7 +129,7 @@ class PwiCheckboxGroup extends Translate(PwiGenericGroup, locale) {
     // Note(cg): we need specify as a new Object, otherwise change is not notified upstream
     // with Polymer.
     this.specify = Object.assign({}, this.specify);
-    this.dispatchEvent(new CustomEvent('specify-changed', { detail: {value: this.specify}}));
+    this.dispatchEvent(new CustomEvent('specify-changed', { detail: { value: this.specify } }));
   }
 
 }

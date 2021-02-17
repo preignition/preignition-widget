@@ -13,7 +13,7 @@ import '@material/mwc-textarea';
  * ## PwiMdEditr
  *
  * `<pwi-md-editor>` is a markdown text editor with a preview tab, similar to gitlab edit
- * 
+ *
  * @fires md-changes - eventfired when `md` changes
  * @fires md-paste - event fired when user paste on textarea. Used to listed for image copy.
  */
@@ -222,21 +222,21 @@ class PwiMdEditor extends LitElement {
       },
 
       /*
-       * `maxLength` 
+       * `maxLength`
        */
       maxLength: {
         type: Number,
       },
 
       /*
-       * `maxLength` 
+       * `maxLength`
        */
       minLength: {
         type: Number,
       },
 
       /*
-       * `charCounter` 
+       * `charCounter`
        */
       charCounter: {
         type: Boolean,
@@ -304,7 +304,7 @@ class PwiMdEditor extends LitElement {
 
   renderToolbar() {
     return html `
-     <small class="toolbar"><span class="flex">${this._selected === 3 ? this.helpertranslate : this.helper} <a tabindex="-1" rel="noopener" href="https://en.wikipedia.org/wiki/Markdown" target="blank">Markdown</a> is supported. </span class="helper"></span></span><slot name="bottomToolbar">${this.renderSlotToolbar()}</slot></small>
+     <small class="toolbar"><span class="flex" style="display: inline-flex;">${this._selected === 3 ? this.helpertranslate : this.helper} <span class="flex"></span><span><a tabindex="-1" rel="noopener" href="https://en.wikipedia.org/wiki/Markdown" target="_blank">Markdown</a> is supported. </span></span><slot name="bottomToolbar">${this.renderSlotToolbar()}</slot></small>
     `;
   }
 
@@ -360,18 +360,18 @@ class PwiMdEditor extends LitElement {
 
   // onPaste(e) {
   //   console.info('Paste Editor', e);
-  //   this.dispatchEvent(new CustomEvent('md-paste', {detail: null, clipboardData: e.clipboardData, bubbles: true, composed: true})); 
+  //   this.dispatchEvent(new CustomEvent('md-paste', {detail: null, clipboardData: e.clipboardData, bubbles: true, composed: true}));
   // }
 
   onValueChanged(e) {
     // console.info('changed', e)
     if (this._selected === 0) {
       this.md = e.target.value;
-      this.dispatchEvent(new CustomEvent('md-changed', {detail: {value: this.md}, bubbles: true, composed: true})); 
+      this.dispatchEvent(new CustomEvent('md-changed', {detail: {value: this.md}, bubbles: true, composed: true}));
     }
     if (this._selected === 2) {
       this.mdtranslate = e.target.value;
-      this.dispatchEvent(new CustomEvent('mdtranslate-changed', {detail: {value: this.mdtranslate}, bubbles: true, composed: true})); 
+      this.dispatchEvent(new CustomEvent('mdtranslate-changed', {detail: {value: this.mdtranslate}, bubbles: true, composed: true}));
     }
   }
 }

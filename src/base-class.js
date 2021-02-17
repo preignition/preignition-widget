@@ -1,6 +1,5 @@
 import { LitElement } from 'lit-element';
-import { DefaultValueMixin, DoNotSetUndefinedValue } from '@preignition/preignition-mixin';
-import { LitNotify } from '@morbidick/lit-element-notify';
+import { DefaultValueMixin, DoNotSetUndefinedValue, LitNotify } from '@preignition/preignition-mixin';
 
 export class Base extends
 DefaultValueMixin(

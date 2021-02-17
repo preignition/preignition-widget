@@ -5,13 +5,13 @@ import locale from './pwi-log-in-locale.js';
 
 /**
  # sign-in / sign-up widget
- 
+
  @fires auth-sign-in  on sign-in attempt
  @fires auth-sign-up on sign-up attempt
  @fires auth-reset-email on email reset attempt
- 
+
  ## Remark
- - We stop animating transition between sign-in and sign-up as waiting 
+ - We stop animating transition between sign-in and sign-up as waiting
  for lit-html version 2 better way to handle animation (https://github.com/Polymer/lit-html/issues/1182)
  */
 
@@ -241,7 +241,7 @@ class PwiLogIn extends Translate(LitElement, locale) {
       },
 
       /*
-       * `queryParams`handle query params like: 
+       * `queryParams`handle query params like:
        * email, view
        */
       queryParams: {
@@ -355,6 +355,7 @@ class PwiLogIn extends Translate(LitElement, locale) {
           <span></span>
           <mwc-button @click="${e => this.isSignUp = false}" label="${this.translate('backToSignIn')}" icon=""></mwc-button>
         </div>
+      </div>
     `;
   }
 

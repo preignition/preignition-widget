@@ -4,6 +4,7 @@ import { d as directive } from '../common/directive-651fd9cf.js';
 import { unsafeHTML } from '../lit-html/directives/unsafe-html.js';
 import purify from '../dompurify.js';
 import { m as marked_1 } from '../common/marked.esm-eb3fcce2.js';
+import { a as appState, e as LANG, T as TERMS_VERSION, f as FORM_ENGINE_VERSION, P as PREFIX } from '../common/state-a1bf7502.js';
 
 var cfg = {
   ADD_ATTR: [
@@ -839,20 +840,6 @@ const translate = (key, values, config) => langChanged(() => get(key, values, co
  */
 const translateUnsafeHTML = (key, values, config) => langChanged(() => unsafeHTML(get(key, values, config)));
 
-const LANG = 'en';
-
-const mapStateToProps = state => {
-  return {
-    language: state.language,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    set_language: ([lan]) => dispatch({ type: 'SET_LANGUAGE', language: lan }),
-  };
-};
-
 let translateConfig$1;
 registerTranslateConfig({
   // Note(cg): loader is injecting component-keyed additional objects 
@@ -871,7 +858,16 @@ registerTranslateConfig({
   }
 });
 // Note(cg): we need to call use early as we need to inject `loaders`, `needLoading` ...
-use(LANG);
+use(appState.language);
+
+const observerFactory = name => () => {
+  const lang = translateConfig$1.currentLang[name];
+  if (lang !== appState.language) {
+    translateConfig$1.needLoading[name] = true;
+  }
+  use(appState.language);
+  translateConfig$1.currentLang[name] = appState.language;
+};
 
 /**
  * mixin enabling component-based translation
@@ -879,18 +875,9 @@ use(LANG);
  * @param  {Object} locale      JSON object containing text for initial/defauld language
  * @return {Class}             extended class
  */
-const EnableTranslation = (baseElement, locale, mapState, mapDispatch) => {
+const EnableTranslation = (baseElement, locale) => {
 
   const cls = class extends baseElement {
-
-    static get properties() {
-      return {
-
-        ...super.properties,
-
-        language: { type: String }
-      };
-    }
 
     static get locale() {
       return locale;
@@ -899,15 +886,22 @@ const EnableTranslation = (baseElement, locale, mapState, mapDispatch) => {
     constructor() {
       super();
       // Note(cg): adding loader first time the class instantiated. .
-      if (!translateConfig$1.strings[this.constructor.name]) {
-        translateConfig$1.currentLang[this.constructor.name] = LANG;
-        translateConfig$1.strings[this.constructor.name] = locale;
-        translateConfig$1.loaders[this.constructor.name] = this.translationLoader();
+      if (!translateConfig$1.strings[this.localName]) {
+        translateConfig$1.currentLang[this.localName] = appState.language;
+        translateConfig$1.strings[this.localName] = locale;
+        translateConfig$1.loaders[this.localName] = this.translationLoader();
       }
+      this.__observer = observerFactory(this.localName);
+      appState.addObserver(this.__observer, ['language']);
+    }
+
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      appState.removeObserver(this.__observer);
     }
 
     translationLoader() {
-      const name = this.constructor.name;
+      const name = this.localName;
       return async (lang, config) => {
         if (lang === LANG) {
           return locale;
@@ -921,47 +915,31 @@ const EnableTranslation = (baseElement, locale, mapState, mapDispatch) => {
       };
     }
 
-    updated(props) {
-      if (props.has('language')) {
-        const lang = translateConfig$1.currentLang[this.constructor.name];
-        translateConfig$1.currentLang[this.constructor.name] = this.language;
-        if (lang !== this.language) {
-          translateConfig$1.needLoading[this.constructor.name] = true;
-        }
-        use(this.language);
-      }
-      super.updated(props);
-    }
-
     translate(key, values) {
-      return translate(`${this.constructor.name}.${key}`, values);
+      return translate(`${this.localName}.${key}`, values);
     }
     
     // Note(cg): avoid used getTranslate as it is not a directive
     // and will not react to language change in template.
     getTranslate(key, values) {
-      return get(`${this.constructor.name}.${key}`, values);
+      return get(`${this.localName}.${key}`, values);
     }
 
     translateUnsafeHTML(key, values) {
-      return translateUnsafeHTML(`${this.constructor.name}.${key}`, values);
+      return translateUnsafeHTML(`${this.localName}.${key}`, values);
     }
   };
-  return connect(
-     mapState || mapStateToProps,
-     mapDispatch || mapDispatchToProps
-     // Object.assign({}, mapStateToProps, mapState),
-     // Object.assign({}, mapDispatchToProps, mapDispatch)
-    )(cls);
+  return cls;
+
 };
 
-const mapStateToProps$1 = state => {
+const mapStateToProps = state => {
   return {
     token: state.token && state.token.string
   };
 };
 
-const mapDispatchToProps$1 = dispatch => {
+const mapDispatchToProps = dispatch => {
   return {
     set_token: ([token]) => dispatch({ type: 'SET_TOKEN', token: token }),
   };
@@ -985,6 +963,7 @@ const DownloadMixin = (baseElement, mapState, mapDispatch) => {
 
     checkDownload(e) {
       e.preventDefault(); // Note(cg): do not use default link as we want to catch auth/id-token-expired error
+      e.stopPropagation();
       const parent = e.currentTarget.parentElement;
       const url = parent.href + '&dryRun=yes';
       const download = () => {
@@ -1025,8 +1004,8 @@ const DownloadMixin = (baseElement, mapState, mapDispatch) => {
 
   };
   return connect(
-    mapState || mapStateToProps$1,
-    mapDispatch || mapDispatchToProps$1
+    mapState || mapStateToProps,
+    mapDispatch || mapDispatchToProps
   )(cls);
 };
 
@@ -1568,8 +1547,8 @@ const deep = (action, obj, keys, id, key) => {
   return action(obj, id);
 };
 
-const get$1 = (obj, prop) => obj[prop];
-const set = n => (obj, prop) => (obj[prop] = n);
+const _get = (obj, prop) => obj[prop];
+const _set = n => (obj, prop) => (obj[prop] = n);
 
 const GetSet = superClass => {
 
@@ -1580,17 +1559,199 @@ const GetSet = superClass => {
   class Mixin extends superClass {
 
     getProp(path, defaultValue) {
-      return deep(get$1, this, path) || defaultValue;
+      return deep(_get, this, path) || defaultValue;
     }
 
     setProp(path, value) {
-      return deep(set(value), this, path);
+      return deep(_set(value), this, path);
     }
 
     setInput(path, valPath = 'value') {
       return e => this.setProp(path, e.target[valPath]);
     }
 
+  }
+
+  return Mixin;
+};
+
+const get$1 = (path, obj) => deep(_get, obj, path);
+const set = (path, value, obj) => deep(_set(value), obj, path);
+
+/*
+  Mixin adding Firestore facilities for reacting to 
+  Firestore change
+ */
+
+const Firestore = superClass => {
+
+  /*
+   * @polymer
+   * @mixinClass
+   */
+  class Mixin extends superClass {
+
+    static get properties() {
+      return {
+        ...super.properties,
+
+        /*
+         * `docs` results of firestore query
+         */
+        docs: {
+          type: Array,
+        },
+      };
+    }
+
+    get firestoreRef() {
+      throw 'firestoreRef need to be overriden';
+    }
+
+    resetFirestore() {
+      if (this._unsubscribe) {
+        this.unsubscribe();
+        this.docs = [];
+        this._firstLoadCompleted = false;
+      }
+    }
+
+    firestoreDecorate(data, id, change) {
+      data.$id = id;
+    }
+
+    firestoreSave(data, id) {
+      return this.firestoreRef.doc(id || data.$id).update(data);
+    }
+
+    async firestoreListen() {
+      this.resetFirestore();
+      if (this.firestoreRef) {
+        this._unsubscribe = this.firestoreRef
+          .onSnapshot((snapshot) => {
+            // Note(cg): we do not react until the first get is complete.
+            if (this._firstLoadCompleted) {
+              snapshot.docChanges().forEach((change) => {
+                if (change.type === 'added') {
+                  const data = change.doc.data();
+                  this.firestoreDecorate(data, change.doc.id, change);
+                  this.docs = this.docs.concat([data]);
+                  this.dispatchEvent(new CustomEvent('firestore-added', { detail: change }));
+                }
+                if (change.type === 'modified') {
+                  const data = change.doc.data();
+                  this.firestoreDecorate(data, change.doc.id, change);
+                  this.docs[change.oldIndex] = data;
+                  this.docs = this.docs.concat();
+                  this.dispatchEvent(new CustomEvent('firestore-modified', { detail: change }));
+                }
+                if (change.type === 'removed') {
+                  const id = change.doc.id;
+                  this.docs = this.docs.filter(item => item.$id !== id);
+                  this.requestUpdate('docs');
+                  this.dispatchEvent(new CustomEvent('firestore-removed', { detail: change }));
+
+                }
+              });
+            }
+          });
+        [this.docs] = await Promise.all([
+          await this.firestoreRef.get().then(snap => {
+            this._firstLoadCompleted = true;
+            return snap.docs.map((doc, i) => {
+              const data = doc.data();
+              this.firestoreDecorate(data, doc.id);
+              return data;
+            });
+          })
+        ]);
+      }
+    }
+
+  }
+
+  return Mixin;
+};
+
+/**
+ * ##  Swipable
+ * 
+ * handles swipe
+ * 
+ */
+
+
+let xDown;
+let yDown;
+let time$1;
+
+function handleTouchStart(evt) {
+  const firstTouch = evt.touches[0];
+  xDown = firstTouch.clientX;
+  yDown = firstTouch.clientY;
+  time$1 = Date.now();
+}
+
+function handleTouchMove(evt) {
+  // if (time && Date.now() - time < 180) {
+  //   evt.preventDefault();
+  // }
+}
+
+function handleTouchEnd(evt) {
+  if (!xDown || !yDown || (time$1 && Date.now() - time$1 >= 180)) {
+    return;
+  }
+  // .changedTouches[0]
+  var xUp = evt.changedTouches[0].clientX;
+  var yUp = evt.changedTouches[0].clientY;
+
+  var xDiff = xDown - xUp;
+  var yDiff = yDown - yUp;
+
+  if (Math.abs(xDiff) > Math.abs(yDiff)) { /*most significant*/
+    if (xDiff > 0) {
+      this.onSwipe('left');
+    } else {
+      this.onSwipe('right');
+    }
+  } else {
+    if (yDiff > 0) {
+      this.onSwipe('up');
+    } else {
+      this.onSwipe('down');
+    }
+  }
+  /* reset values */
+  xDown = null;
+  yDown = null;
+}
+
+
+const Swipe = superClass => {
+
+  /*
+   * @polymer
+   * @mixinClass
+   */
+  class Mixin extends superClass {
+
+    connectedCallback() {
+      super.connectedCallback();
+      this.addEventListener('touchstart', handleTouchStart);
+      this.addEventListener('touchmove', handleTouchMove);
+      this.addEventListener('touchend', handleTouchEnd);
+    }
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      this.removeEventListener('touchstart', handleTouchStart);
+      this.removeEventListener('touchmove', handleTouchMove);
+      this.removeEventListener('touchend', handleTouchEnd);
+    }
+
+    onSwipe(swipeType) {
+      throw new Error('on swipe need to be overridden ');
+    }
   }
 
   return Mixin;
@@ -1641,7 +1802,8 @@ const E = generator('E');
 // Note(cg): to be used as missing stuff.
 const EMissing = generator('Missing');
 
-const formEngineVersion = 'v4';
-const termsVersion = 'v1';
+const termsVersion = TERMS_VERSION;
+const formEngineVersion = FORM_ENGINE_VERSION;
+const storagePrefix = PREFIX;
 
-export { DataRoot, DownloadMixin as Download, E, EMissing, GetSet, Resizable, EnableTranslation as Translate, formEngineVersion, getter, parse, parseInline, connect as reduxConnect, getStore as reduxStore, resizeTextarea, termsVersion };
+export { DataRoot, DownloadMixin as Download, E, EMissing, Firestore, GetSet, Resizable, Swipe, EnableTranslation as Translate, formEngineVersion, get$1 as get, getter, parse, parseInline, connect as reduxConnect, getStore as reduxStore, resizeTextarea, set, storagePrefix, termsVersion };

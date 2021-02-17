@@ -12,13 +12,6 @@ import { Translate } from '@preignition/preignition-util';
 
 class PwiRadioGroup extends Translate(PwiGenericGroup, locale) {
 
-  // static get _styles() {
-  //   return css `
-  //   :host {
-  //     display: block;
-  //   }
-  //   `;
-  // }
 
   static get properties() {
     return {
@@ -78,7 +71,7 @@ class PwiRadioGroup extends Translate(PwiGenericGroup, locale) {
       if (this.required && (value === '' || value === undefined)) {
         validity.valid = false;
         validity.valueMissing = true;
-        validity.customError = 'this field is required'
+        validity.customError = 'this field is required';
         return validity;
       }
       return validity;
@@ -113,10 +106,11 @@ class PwiRadioGroup extends Translate(PwiGenericGroup, locale) {
         }<slot></slot></pwi-pseudo-input>
       `;
   }
-  
+
   renderSpecify(option, index) {
     const code = option.code || index;
-    return (option.specify === true) && (this.isCodeSelected(this._value, code)) ?
+    return (option.specify === true) &&
+      (this.isCodeSelected(this._value, code)) ?
       html `<pwi-textfield
           id="specify${index}" 
           class="specify"
@@ -125,17 +119,17 @@ class PwiRadioGroup extends Translate(PwiGenericGroup, locale) {
           .value="${this.specify}"></pwi-textfield>` :
       '';
   }
-  
+
   isCodeSelected(value, code) {
     return value === code + '';
   }
-  
+
   onSpecifyChange() {
     // console.info('specify change: ', this.specify);
     this.dispatchEvent(new CustomEvent('specify-changed', { detail: { value: this.specify } }));
   }
 
-  
+
 }
 
 customElements.define('pwi-radio-group', PwiRadioGroup);

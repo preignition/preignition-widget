@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
-import { LitNotify } from '@morbidick/lit-element-notify';
+import { LitNotify } from '@preignition/preignition-mixin';
 import cronstrue from 'cronstrue';
 import '@material/mwc-textfield';
 
