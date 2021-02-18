@@ -67,9 +67,9 @@ export const LocaleInput = (baseElement) => class extends baseElement {
       /*
        * `__numValue` value used for validation and firing value canhges up
        */
-      __numValue: {
-        type: Number,
-      },
+      // __numValue: {
+      //   type: Number,
+      // },
     };
   }
 
@@ -87,7 +87,8 @@ export const LocaleInput = (baseElement) => class extends baseElement {
   }
   update(props) {
     if (supportLocale && props.has('value')) {
-      this.__numValue = this.getNumericValue(this.value);
+      const input = this.renderRoot.querySelector('input');
+      this.__numValue = this.getNumericValue(input ? input.value : this.value);
       this.value = this.getFormatedValue(this.__numValue);
     }
     super.update(props);
@@ -113,10 +114,16 @@ export const LocaleInput = (baseElement) => class extends baseElement {
   }
 
   dispatchValueChanged() {
-    this.dispatchEvent(new CustomEvent('value-changed', { detail: { value: supportLocale ? this.getNumericValue(this.value) : this.value }, bubbles: true, composed: true }));
+    this.dispatchEvent(new CustomEvent('value-changed', { detail: {
+      value: supportLocale ? this.getNumericValue(this.renderRoot.querySelector('input').value) : this.value,
+      path: 'value' // we need path to make sure Polymer reads value from event detail and not from element
+    }, bubbles: true, composed: true }));
   }
 
   getNumericValue(value) {
+    if (Number(value) === value) {
+      return value;
+    }
     value = value.replace(reg, '');
     return value.length ? value * Math.pow(10, -this.minimumFractionDigits) : '';
   }
