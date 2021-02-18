@@ -1,4 +1,4 @@
-import { html, css } from 'lit-element';
+import { html } from 'lit-element';
 import { PwiGenericGroup } from './pwi-generic-group.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
@@ -12,6 +12,9 @@ import { Translate } from '@preignition/preignition-util';
 
 class PwiRadioGroup extends Translate(PwiGenericGroup, locale) {
 
+  static get isMulti() {
+    return false;
+  }
 
   static get properties() {
     return {

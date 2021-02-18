@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html } from 'lit-element';
 import { parse } from '@preignition/preignition-util';
 
 class PwiMd extends LitElement {
@@ -23,9 +23,9 @@ class PwiMd extends LitElement {
     return html `<div class="markdown">${parse(this.md, this.mdConfig)}</div>`;
   }
 
-  constructor() {
-    super();
-    // this.mdConfig = {ADD_ATTR: ['target', 'width', 'height']};
+  // Used by readaloud to read text
+  getReadAloud() {
+    return this.innerText || 'this field is empty';
   }
 
   // Note(cg): we want to render value in light dom so that

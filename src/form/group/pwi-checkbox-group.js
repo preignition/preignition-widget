@@ -43,6 +43,10 @@ class PwiCheckboxGroup extends Translate(PwiGenericGroup, locale) {
     };
   }
 
+  static get isMulti() {
+    return true;
+  }
+
   set selected(value) {
     const old = this._value;
     [...this._queryItems(['mwc-checkbox'])].forEach(check => check.checked = (value || []).indexOf(check.value) > -1);
@@ -58,9 +62,6 @@ class PwiCheckboxGroup extends Translate(PwiGenericGroup, locale) {
     return (value || []).indexOf(code + '') > -1;
   }
 
-  // get _selectedValue() {
-  //   return [...this._selectedItems].map(item => item.value);
-  // }
 
   get formElement() {
     return this.renderRoot.querySelector('pwi-pseudo-input');

@@ -1,6 +1,7 @@
 import { html, css } from 'lit-element';
 import { PwiAccessibleTextfield } from '../accessible/pwi-accessible-textfield.js';
 import { DoNotSetUndefinedValue } from '@preignition/preignition-mixin';
+
 class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
 
   static get styles() {
@@ -119,6 +120,9 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
     };
   }
 
+  static get isMulti() {
+    return false;
+  }
 
   async onChange(e) {
     await this.updateCompleted;
@@ -126,14 +130,17 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
     this._value = this.selected; // Note(cg): get _value from the actual selection (dom query).
     this.requestUpdate(); // Note(cg): this is required for instance to make please specify field to appear.
   }
- 
+
   _queryItem(selector) {
-    return this.useShadow ? this.renderRoot.querySelector(selector) : this.querySelector(selector);
+    return this.useShadow ?
+      this.renderRoot.querySelector(selector) :
+      this.querySelector(selector);
   }
   _queryItems(selector) {
-    return this.useShadow ? this.renderRoot.querySelectorAll(selector) : this.querySelectorAll(selector);
+    return this.useShadow ?
+      this.renderRoot.querySelectorAll(selector) :
+      this.querySelectorAll(selector);
   }
-
 
 
   constructor() {
@@ -211,6 +218,24 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
         <div>This component is not suposed to be used directly</div>
       `;
   }
+  getReadAloud(readHelper) {
+    return this._selectedItems.length ?
+      `${[...this._selectedItems].map(item => item.parentElement.renderRoot.textContent)} is the answer to the question ${this.label}` :
+      (this.label + (readHelper && this.helper ? ('hint: ' + this.helper) + '.' : '') + this.getReadAloudOptions(readHelper));
+  }
+
+  getReadAloudOptions(readHelper) {
+    const items = this._queryItems('pwi-formfield');
+    if (!readHelper && items.length > 5) {
+      return `There are ${items.length + 1} options to read. Click "read aloud" again to read them all.`;
+    }
+    const options = [...items].map((item, index) => `option ${index + 1}: ${item.label}.`);
+    return this.constructor.isMulti ?
+      (`Choose your answers from the following options: ${options}`) :
+      (`Choose one answer from the following options: ${options}`);
+  }
+
+
 }
 
 export { PwiGenericGroup };
