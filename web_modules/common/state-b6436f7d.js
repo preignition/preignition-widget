@@ -238,7 +238,7 @@ const localStorageHandlerFactory = prefix => {
     constructor(args) {
       super(args);
       let value = (this.options.urlParam && query[this.options.urlParam]) ||
-        localStorage.getItem(`${prefix}_${this.options.key}`);
+        (this.options.key ? localStorage.getItem(`${prefix}_${this.options.key}`) : null);
       if (value && (
           this.options.type === Boolean ||
           this.options.type === Number ||
@@ -252,7 +252,9 @@ const localStorageHandlerFactory = prefix => {
 
     set(value) {
       super.set(value);
-      localStorage.setItem(`${prefix}_${this.options.key}`, value);
+      if (this.options.key) {
+        localStorage.setItem(`${prefix}_${this.options.key}`, value);
+      }
     }
   };
 };
@@ -303,7 +305,7 @@ class LitFirebaseState extends LitState {
         Object.keys(stateVars)
           .forEach(k => {
             const val = snap.child(k).val();
-            if (val !== null) {
+            if (val !== null && stateVars[k].handler === FirebaseHandler) {
               if (!stateVars[k]._skipSync) {
                 this[k] = val;
               }
@@ -333,13 +335,13 @@ window.firebase && window.firebase.auth().onAuthStateChanged(user => {
   if (user) {
     appState.ref = firebase.database().ref(`/userData/appState/${user.uid}`);
     accessibilityState.ref = firebase.database().ref(`/userData/preference/${user.uid}/accessibility`);
+    tokenState.ref = firebase.database().ref(`/userData/tokenTrigger/${user.uid}`);
     appState.uid = user.uid;
     appState.user = user;
   } else {
     appState.ref = null;
     accessibilityState.ref = null;
-    appState.uid = null;
-    appState.user = null;
+    tokenState.ref = null;
   }
 });
 
@@ -350,7 +352,10 @@ const appStateVars = {
     handler: FirebaseHandler,
     key: 'language',
     urlParam: 'language',
-    initialValue: 'fr'
+    initialValue: 'en'
+  },
+  user: {
+    initialValue: null
   },
   uid: {
     key: 'uid',
@@ -369,6 +374,62 @@ class AppState extends LitFirebaseState {
 }
 const appState = new AppState();
 
+
+const tokenStateVars = {
+  token: {
+    type: Object,
+    initialValue: null
+  },
+  active: {
+    handler: LocalStorageHandler,
+    key: 'active',
+    initialValue: null
+  },
+
+  refreshToken: {
+    handler: FirebaseHandler,
+    initialValue: null
+  }
+};
+
+class TokenState extends LitFirebaseState {
+  static get stateVars() {
+    return tokenStateVars;
+  }
+
+  doRefreshToken() {
+    const firebase = window.firebase;
+    const user = firebase && firebase.auth().currenUser;
+    if (user) {
+      return user.getIdTokenResult(true)
+        .then(token => {
+          console.info('GOT NEW STATE TOKEN', token.claims);
+          tokenState.token = token.claims;
+        })
+        .then(() => {
+          // now, we remove refresh token at db level
+          return firebase.database().ref(`/userData/tokenTrigger/${user.uid}/refreshToken`).remove();
+        })
+        .catch(error => {
+          // const analytics = firebase && firebase.analytics && firebase.analytics();
+          // analytics && analytics.logEvent('token_error', { error: error.message });
+          this.dispatchEvent(new CustomEvent(`app-error`, { detail: {error: error, code: 'tokenRefreshError'}, bubbles: true, composed: true }));
+          console.error(error);
+        });
+    }
+  }
+}
+const tokenState = new TokenState();
+//  set attribute at doc level
+tokenState.addObserver(() => {
+  const {
+    refreshToken
+  } = tokenState;
+  if (refreshToken) {
+    tokenState.doRefresToken();
+  }
+}, ['refreshToken']);
+
 // we want stateVars to be the same object.
 // Otherwise, FirebaseHandler approach does not work
 const accessibilityStateVars = {
@@ -385,6 +446,12 @@ const accessibilityStateVars = {
     urlParam: 'readaloud',
     type: Boolean,
     initialValue: false
+  },
+  readaloudConfig: {
+    handler: FirebaseHandler,
+    type: Object,
+    key: 'readaloudConfig',
+    initialValue: {rate: '1'}
   },
   easyread: {
     handler: FirebaseHandler,
@@ -429,4 +496,4 @@ document.documentElement.dir = appState.direction;
 // For the time being, store appState globally
 window._appState = appState;
 
-export { FirebaseHandler as F, LitState as L, PREFIX as P, StateVar as S, TERMS_VERSION as T, appState as a, accessibilityState as b, LocalStorageHandler as c, LitFirebaseState as d, LANG as e, FORM_ENGINE_VERSION as f, localStorageHandlerFactory as l, observeState as o };
+export { FirebaseHandler as F, LitState as L, PREFIX as P, StateVar as S, TERMS_VERSION as T, appState as a, accessibilityState as b, LocalStorageHandler as c, LitFirebaseState as d, LANG as e, FORM_ENGINE_VERSION as f, localStorageHandlerFactory as l, observeState as o, tokenState as t };
