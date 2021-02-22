@@ -6,8 +6,16 @@
  *   list is populated later on.
  *
  * Related issue:
- * https://github.com/material-components/material-components-web-components/issues/971
+ * https://github.com/material-components/material-components-web-components/issues/1493
+ * https://github.com/material-components/material-components-web-components/issues/2183
  *
+ * The problem with the current approach is that a value-change event is being listened to.
+ * 
+ * Eletenatively, as we do for selec-language: 
+ * 1. mark selected item as .selectged = true/false
+ * 2. call select.mdcFoundation.layoutOptions() once loaded. 
+ * 
+ * 
  */
 
 export const OverrideSelectAsync = (baseElement) => class extends baseElement {

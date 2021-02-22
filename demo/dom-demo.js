@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 import { DemoBase } from '@preignition/preignition-demo';
 
-import '@github/details-dialog-element'
 
 
 // Note(cg): render i light DOM instead of shadowDOM to allow innerText work properly. .

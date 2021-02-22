@@ -15,10 +15,9 @@ import locale from './pwi-log-in-locale.js';
  for lit-html version 2 better way to handle animation (https://github.com/Polymer/lit-html/issues/1182)
  */
 
-import { Translate } from '@preignition/preignition-util';
+import { Translate as translate } from '@preignition/preignition-util';
 
-class PwiLogIn extends Translate(LitElement, locale) {
-
+class PwiLogIn extends translate(LitElement, locale) {
   static get styles() {
     return [styleTypography, css `
         :host {
@@ -299,9 +298,9 @@ class PwiLogIn extends Translate(LitElement, locale) {
           ${this.renderForScreenReader(this.signingIn, html`<span>${this.translate('signingIn')}</span>`)}
         </div>
         <div aria-live="assertive">
-          ${this.errorMsg !== '' && this.email !== ''
-            ? html `<mwc-button @click="${this.resetPasswordHandler}" icon="contact_mail" label="${this.translate('forgotPsw')}" class="accent" raised></mwc-button>`
-            : nothing
+          ${this.errorMsg !== '' && this.email !== '' ?
+            html `<mwc-button @click="${this.resetPasswordHandler}" icon="contact_mail" label="${this.translate('forgotPsw')}" class="accent" raised></mwc-button>` :
+            nothing
           }
         </div>
         <div class="button-container">
@@ -317,9 +316,9 @@ class PwiLogIn extends Translate(LitElement, locale) {
           }
         </div>
         ${this.hideSocial ? nothing : this.renderSocial(html`<span>${this.translate('signInWith')}</span>`)}
-        ${this.enableRedirect && !this.onlyLogin
-          ? html`
-            <a href="/main/home" class="back" title="${this.translate('backToApp')}">
+        ${this.enableRedirect && !this.onlyLogin ?
+          html`
+            <a href="/" class="back" title="${this.translate('backToApp')}">
             <mwc-button outlined icon="exit_to_app" label="${this.translate('backToApp')}" trailingIcon></mwc-button>
           </a>
           ` : nothing
@@ -344,9 +343,9 @@ class PwiLogIn extends Translate(LitElement, locale) {
         </div>
         <div class="button-container">
           <mwc-button icon="person_add" @click="${this.createUserHandler}" label="${this.translate('createAccount')}" raised></mwc-button>
-          ${this.allowAnonymous
-            ? html`<span>${this.translate('or')}</span><mwc-button @click="${this.loginHandler}" icon="person_outline" data-provider="anonymous" raised label="${this.translate('continueAsGuest')}"></mwc-button>`
-            : html`<div></div>`}
+          ${this.allowAnonymous ?
+            html`<span>${this.translate('or')}</span><mwc-button @click="${this.loginHandler}" icon="person_outline" data-provider="anonymous" raised label="${this.translate('continueAsGuest')}"></mwc-button>` :
+            html`<div></div>`}
         </div>
         ${this.hideSocial ? nothing : this.renderSocial(html`<span>${this.translate('orSignUpWith')}</span>`)}
         <div class="break "></div>
@@ -388,6 +387,7 @@ class PwiLogIn extends Translate(LitElement, locale) {
   }
   _resetData() {
     this.email = '';
+
     this.password = '';
     this.displayName = '';
     this._resetMessage();
@@ -398,19 +398,19 @@ class PwiLogIn extends Translate(LitElement, locale) {
     this.successMsg = '';
   }
 
-  updated(props) {
-    if (props.has('queryParams') && this.queryParams) {
-      if (this.queryParams.email) {
-        this.email = this.queryParams.email;
-      }
-      if (this.queryParams.view) {
-        this.isSignUp = this.queryParams.view === 'sign-up';
-      }
-      if (this.queryParams.hideSocial) {
-        this.hideSocial = true;
-      }
-      this.queryParams = null;
+  firstUpdated() {
+    // implementation
+    if (window.location.search) {
+      const params = new URLSearchParams(window.location.search);
+      ['email', 'view', 'hideSocial'].forEach(k => {
+        if (params.has(k)) {
+          this[k] = params.get(k);
+        }
+      });
     }
+  }
+
+  updated(props) {
     if (props.has('isSignUp')) {
       this._resetMessage();
     }
@@ -433,14 +433,7 @@ class PwiLogIn extends Translate(LitElement, locale) {
 
   _checkRedirect() {
     if (this.enableRedirect) {
-      if (app.backRoute) {
-        this.resetLocation(app.backRoute);
-        app.backRoute = null;
-
-        // force a repaint because the header is not shown sometimes
-        document.body.style.webkitTransform = 'scale(1)';
-        document.body.style.webkitTransform = null;
-      } else if (!document.referrer) {
+      if (!document.referrer) {
         // Note(cg): this is happening when we launch the app on /login.
         this.resetLocation();
       } else {
@@ -450,9 +443,9 @@ class PwiLogIn extends Translate(LitElement, locale) {
   }
 
   resetLocation(path) {
-    path = path || '/main/home';
+    path = path || '/';
     window.history.pushState({}, '', path);
-    window.dispatchEvent(new CustomEvent('location-changed'));
+    // window.dispatchEvent(new CustomEvent('location-changed'));
   }
   /*
    * HANDLERS
@@ -504,8 +497,8 @@ class PwiLogIn extends Translate(LitElement, locale) {
           password: this.password,
           successCallback: () => {
             this.successMsg = `Success: new user ${displayName} created!`;
-            setTimeout(() => { this.selected = 0; }, 200);
-            setTimeout(() => { this._checkRedirect(); }, 500);
+            setTimeout(() => {this.selected = 0;}, 200);
+            setTimeout(() => {this._checkRedirect();}, 500);
           },
           errorCallback: this.onErrorCallback.bind(this),
         },
