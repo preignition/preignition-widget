@@ -11,6 +11,9 @@
  *
  * The problem with the current approach is that a value-change event is being listened to.
  * 
+ * This override should not be necessary any more once 
+ * https://github.com/material-components/material-components-web-components/pull/2193 lands.
+ * 
  * Eletenatively, as we do for selec-language: 
  * 1. mark selected item as .selectged = true/false
  * 2. call select.mdcFoundation.layoutOptions() once loaded. 
@@ -36,6 +39,7 @@ export const OverrideSelectAsync = (baseElement) => class extends baseElement {
         // with async lists
         if (indexToSelect === -1) {
           this._missingItem = true;
+          this._initialVale = value;
           if (value) {
             this.selectedText = value;
           }
@@ -47,9 +51,10 @@ export const OverrideSelectAsync = (baseElement) => class extends baseElement {
 
    onItemsUpdated(e) {
       super.onItemsUpdated();
-      if ((this._missingItem && this.value)) {
+      if ((this._missingItem && this._initialVale)) {
         delete this._missingItem;
-        this.selectByValue(this.value);
+        delete this._initialVale;
+        this.selectByValue(this._initialVale);
       }
     }
 
