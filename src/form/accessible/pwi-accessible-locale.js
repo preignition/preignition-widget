@@ -45,7 +45,6 @@ class PwiAccessibleLocale extends LocaleInput(PwiAccessibleTextfield) {
   get nativeValidationMessage() {
     return this.validatorElement.validationMessage;
   }
-
 }
 
 customElements.define('pwi-accessible-locale', PwiAccessibleLocale);

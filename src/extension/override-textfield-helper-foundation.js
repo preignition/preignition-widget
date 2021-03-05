@@ -19,7 +19,7 @@
 //     if (this.mdcFoundation !== undefined) {
 //       this.mdcFoundation.destroy();
 //     }
-    
+
 //     this.mdcFoundation = new this.mdcFoundationClass(this.createAdapter(), {helperText: new MDCTextFieldHelperTextFoundation(this)});
 //     this.mdcFoundation.init();
 //   }

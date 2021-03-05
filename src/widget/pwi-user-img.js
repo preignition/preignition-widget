@@ -4,7 +4,6 @@ import '@preignition/lit-firebase';
  * Displays an image for a user
  */
 class PwiUserImg extends LitElement {
-
   static get styles() {
     return css `
     :host {
@@ -59,26 +58,26 @@ class PwiUserImg extends LitElement {
       },
 
       /*
-       * `photoURL` 
+       * `photoURL`
        */
       photoURL: {
         type: String,
       },
 
       /*
-       * `gravatarURL` 
+       * `gravatarURL`
        */
       gravatarURL: {
         type: String,
       },
       /*
-       * `gravatarType` 
+       * `gravatarType`
        */
       gravatarType: {
         type: String,
       },
       /*
-       * `gravatarSize` 
+       * `gravatarSize`
        */
       gravatarSize: {
         type: String,
@@ -96,7 +95,7 @@ class PwiUserImg extends LitElement {
     return html `
       <lif-document @data-changed="${this.setPhotoURL}" .path="${this.photoPath}"></lif-document>
       <lif-document @data-changed="${e => this.displayName = e.detail.value}" .path="${this.namePath}"></lif-document>
-      ${this.photoURL ? html`<div part="photo"><img src="${this.photoURL}" loading="lazy" alt="${this.displayName}"></div>` :''}
+      ${this.photoURL ? html`<div part="photo"><img src="${this.photoURL}" loading="lazy" alt="${this.displayName}"></div>` : ''}
     `;
   }
 
@@ -104,7 +103,6 @@ class PwiUserImg extends LitElement {
     super();
     this.gravatarURL = 'https://www.gravatar.com/avatar';
     this.gravatarType = 'mm';
-
   }
 
   setPhotoURL(e) {

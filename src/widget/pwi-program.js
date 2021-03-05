@@ -3,14 +3,13 @@ import { LifSpan } from '@preignition/lit-firebase';
 // import { themeColor, themeTag } from '../style/index.js';
 
 class PwiProgram extends LifSpan {
-
   static get properties() {
     return {
 
       ...super.properties,
 
       /*
-       * `language` 
+       * `language`
        */
       language: {
         type: String,
@@ -21,7 +20,6 @@ class PwiProgram extends LifSpan {
       }
 
     };
-
   }
 
   constructor() {
@@ -33,7 +31,7 @@ class PwiProgram extends LifSpan {
   }
 
   updated(props) {
-    if (props.has('prid') || props.has('language') ) {
+    if (props.has('prid') || props.has('language')) {
       this.setPath();
     }
     super.updated(...arguments);
@@ -60,7 +58,6 @@ class PwiProgram extends LifSpan {
   //     composed: true
   //   }));
   // }
-
 }
 
 export default PwiProgram;

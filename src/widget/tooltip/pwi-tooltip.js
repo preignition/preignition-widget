@@ -27,7 +27,6 @@ import '@material/mwc-button';
   @cssprop --pwi-tooltip-padding
  */
 class PwiTooltip extends LitElement {
-
   static get styles() {
     return [styleTypography, css `
     /**
@@ -239,8 +238,8 @@ class PwiTooltip extends LitElement {
           aria-describedby="tooltip"
           tabindex="0"
           @keydown="${e => {e.code === 'Enter' || e.code === 'Space' ? this.toggleTooltip(e) : '';}}"
-          @mouseover="${() => { this.fireonclick ? '' : this.showTooltip();}}"
-          @mouseout="${() => { this.fireonclick ? '' : this.hideTooltip();}}"
+          @mouseover="${() => {this.fireonclick ? '' : this.showTooltip();}}"
+          @mouseout="${() => {this.fireonclick ? '' : this.hideTooltip();}}"
           @click="${() => {this.fireonclick ? this.showTooltip() : '';}}">
           <slot></slot>
           <mwc-icon>info</mwc-icon>

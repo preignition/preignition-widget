@@ -14,7 +14,6 @@ TwoWaySelectBinding(
     OverrideSelectAsync(
       OverrideTextfieldValidityMessage(
         Select)))) {
-
   getReadAloud(readHelper) {
     return this.value ?
       `${this.selectedText} is the answer to the question ${this.label}` :

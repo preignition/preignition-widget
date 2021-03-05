@@ -1,7 +1,7 @@
 import { html } from 'lit-element';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 /**
- * mixin overriding checkbox 
+ * mixin overriding checkbox
  *
  * Related issue:
  * https://github.com/material-components/material-components-web-components/issues/1913
@@ -39,7 +39,6 @@ export const OverrideSwitch = (baseElement) => class extends baseElement {
         </div>
       </div>`;
     }
-
 };
 
 export default OverrideSwitch;

@@ -5,7 +5,7 @@ import { LitElement, html, css } from 'lit-element';
  *
  * A responsive layout using semantic tag,
  *
- * Do not use this - better import semanticLayout css 
+ * Do not use this - better import semanticLayout css
  *
  * @element preignition-semantic-layout
  * @slot header - header slot
@@ -13,7 +13,6 @@ import { LitElement, html, css } from 'lit-element';
  * @slot footer - footer slot
  */
 export class SemanticLayout extends LitElement {
-
   static get styles() {
     return css `
      :host {
@@ -103,7 +102,7 @@ export class SemanticLayout extends LitElement {
           max-width: initial;  
         }
       }
-    `
+    `;
   }
   render() {
     return html `
@@ -162,7 +161,7 @@ export class SemanticLayout extends LitElement {
         type: Boolean,
         attribute: 'no-aside'
       }
-    }
+    };
   }
 }
 

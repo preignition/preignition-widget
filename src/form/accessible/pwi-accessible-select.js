@@ -3,7 +3,6 @@ import AccessibleLabel from './accessible-label.js';
 import AccessibleLabelStyle from './accessible-select-label-style.js';
 
 class PwiAccessibleSelect extends AccessibleLabel(PwiSelect) {
-
   static get styles() {
     return [super.styles, AccessibleLabelStyle];
   }

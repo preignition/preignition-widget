@@ -1,4 +1,4 @@
-import { __decorate } from "tslib";
+import { __decorate } from 'tslib';
 import { LitElement, html, css, customElement, property } from 'lit-element';
 import { ExpansionPanel } from '../pwi-expansion-panel/expansion-panel.js';
 /**
@@ -174,9 +174,9 @@ let FancyAccordion = class FancyAccordion extends LitElement {
 };
 __decorate([
     property({ type: Number, attribute: 'opened-index' })
-], FancyAccordion.prototype, "openedIndex", void 0);
+], FancyAccordion.prototype, 'openedIndex', void 0);
 FancyAccordion = __decorate([
     customElement('pwi-accordion')
 ], FancyAccordion);
 export { FancyAccordion };
-//# sourceMappingURL=fancy-accordion.js.map
+// # sourceMappingURL=fancy-accordion.js.map

@@ -19,7 +19,6 @@ TwoWayBinding(
   OverrideTextfield(
     OverrideTextfieldReadonly(
       TextArea)))) {
-
   static get styles() {
     return [
       super.styles,
@@ -76,7 +75,7 @@ TwoWayBinding(
       this.autocapitalize :
       undefined;
     const showValidationMessage = this.validationMessage && !this.isUiValid;
-    
+
     return html `
       <textarea
           aria-labelledby="label"

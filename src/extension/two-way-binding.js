@@ -1,6 +1,6 @@
 /**
  * small mixin to allow Polymer two-way-binding with mwc-textfield and mwc-textarea
- * 
+ *
  */
 
 export const TwoWayBinding = (baseElement) => class extends baseElement {
@@ -19,8 +19,8 @@ export const TwoWayBinding = (baseElement) => class extends baseElement {
   //   }
   //   super.update(changedProperties);
   // }
-   
-  
+
+
   // updated(changedProperties) {
   //   const maxLength = changedProperties.get('maxLength');
   //   const maxLengthBecameDefined = maxLength === -1 && this.maxLength !== -1;
@@ -31,7 +31,7 @@ export const TwoWayBinding = (baseElement) => class extends baseElement {
   //    * to have maxLength defined to be instantiated. Additionally, there is no
   //    * exposed API on the MdcTextFieldFoundation to dynamically add a char
   //    * counter foundation, so we must recreate it.
-     
+
   //   if (maxLengthBecameDefined || maxLengthBecameUndefined) {
   //     this.createFoundation();
   //   }

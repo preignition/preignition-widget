@@ -10,15 +10,14 @@ import PwiMdEditor from './pwi-md-editor.js';
 const imageLoading = '{{loading image ...}}';
 
 /**
- * Markdown editor, with droppable and image copy/paste facility. 
- * This is supposed to work as blog poset editor where images 
+ * Markdown editor, with droppable and image copy/paste facility.
+ * This is supposed to work as blog poset editor where images
  * can be added.
  *
  * Note: `firebase-document-upload` shall be availalbe in DOM independently
  */
 // class PwiMdDroppableEditor extends Droppable(PwiMdEditor) {
 class PwiMdDroppableEditor extends PwiMdEditor {
-
   static get styles() {
     return [
       super.styles,
@@ -181,7 +180,7 @@ class PwiMdDroppableEditor extends PwiMdEditor {
     }
     if (status.status === 'error') {
       this._errorMessage = status.error;
-      setTimeout(() => {this._errorMessage = null }, 4000);
+      setTimeout(() => {this._errorMessage = null;}, 4000);
     }
   }
 
@@ -263,17 +262,15 @@ class PwiMdDroppableEditor extends PwiMdEditor {
     };
   }
 
-  // Note(cg): handle pasting image data ; ) 
+  // Note(cg): handle pasting image data ; )
   onPaste(e) {
-
     // We need to check if event.clipboardData is supported (Chrome & IE)
     if (e.clipboardData && e.clipboardData.items) {
-
       // Get the items from the clipboard
-      var items = e.clipboardData.items;
+      const items = e.clipboardData.items;
 
       // Loop through all items, looking for any kind of image
-      for (var i = 0; i < items.length; i++) {
+      for (let i = 0; i < items.length; i++) {
         if (items[i].type.indexOf('image') !== -1) {
           // We need to represent the image as a file
           this.upload._uploadFirebaseFile(items[i].getAsFile());

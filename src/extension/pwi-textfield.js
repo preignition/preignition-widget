@@ -19,9 +19,7 @@ TwoWayBinding(
     OverrideTextfieldValidityMessage(
       OverrideTextfieldReadonly(
         TextField)))) {
-
-
-  // Note(cg): improved aria support on text field: 
+  // Note(cg): improved aria support on text field:
   // aria-invalie is set to invalid;
   // aria-errormessage replaces aria-errortext
   // .
@@ -92,8 +90,7 @@ TwoWayBinding(
              >${helperText}</div>
         ${this.renderCharCounter(shouldRenderCharCounter)}
       </div>`;
-    } 
-
+    }
 }
 
 customElements.define('pwi-textfield', PwiTextField);

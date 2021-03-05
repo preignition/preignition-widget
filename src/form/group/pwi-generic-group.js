@@ -3,7 +3,6 @@ import { PwiAccessibleTextfield } from '../accessible/pwi-accessible-textfield.j
 import { DoNotSetUndefinedValue } from '@preignition/preignition-mixin';
 
 class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
-
   static get styles() {
     return [super.styles, css `
     :host {
@@ -234,8 +233,6 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
       (`Choose your answers from the following options: ${options}`) :
       (`Choose one answer from the following options: ${options}`);
   }
-
-
 }
 
 export { PwiGenericGroup };

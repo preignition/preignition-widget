@@ -6,9 +6,7 @@ DefaultValueMixin(
   LitNotify(
     DoNotSetUndefinedValue(
       LitElement))) {
-
   static get properties() {
-
     return {
 
       ...super.properties,
@@ -19,9 +17,8 @@ DefaultValueMixin(
       log: {
         type: Boolean,
       }
-    }
+    };
   }
-
 }
 
 export default Base;

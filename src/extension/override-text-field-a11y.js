@@ -11,7 +11,6 @@ import { live } from 'lit-html/directives/live.js';
  */
 
 export const OverrideTextFielda11y = (baseElement) => class extends baseElement {
-
   static get styles() {
     return [super.styles, css `
     :host([readonly]) {
@@ -69,9 +68,6 @@ export const OverrideTextFielda11y = (baseElement) => class extends baseElement 
           @input="${this.handleInputChange}"
           @blur="${this.onInputBlur}">`;
   }
-
-
-
 };
 
 export default OverrideTextFielda11y;

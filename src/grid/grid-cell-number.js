@@ -6,7 +6,6 @@ class GridCellNumber extends
 DefaultValueMixin(
   DoNotSetUndefinedValue(
     LitElement)) {
-
   static get styles() {
     return css `
      :host {
@@ -21,7 +20,7 @@ DefaultValueMixin(
 
     `;
   }
-  
+
   render() {
     if (this.backgroundScaleColor) {
       this.style['background-color'] = this.backgroundScaleColor(this.value * 1);

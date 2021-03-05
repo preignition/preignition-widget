@@ -1,9 +1,7 @@
 import { LitElement, html, css } from 'lit-element';
 
 class PwiDateFormat extends LitElement {
-
-
-  // Note(cg): we want to render value in light dom so that 
+  // Note(cg): we want to render value in light dom so that
   // textContent work on parent elements.
   createRenderRoot() {
     return this;
@@ -13,7 +11,7 @@ class PwiDateFormat extends LitElement {
     return {
 
       /*
-       * `date` 
+       * `date`
        */
       date: {
         type: String,
@@ -41,7 +39,7 @@ class PwiDateFormat extends LitElement {
   constructor() {
     super();
     this.options = { year: 'numeric', month: 'short', day: 'numeric' };
-    this.interval = 1000 * 60 * 60 * 12; //12 hours.
+    this.interval = 1000 * 60 * 60 * 12; // 12 hours.
   }
 
   render() {

@@ -1,21 +1,20 @@
 import { LifSpan } from '@preignition/lit-firebase';
 
 class PwiResource extends LifSpan {
-
   static get properties() {
     return {
 
       ...super.properties,
 
       /*
-       * `language` 
+       * `language`
        */
       language: {
         type: String,
       },
 
       /*
-       * `property` the property to display 
+       * `property` the property to display
        * default is 'title'
        */
       property: {
@@ -38,7 +37,6 @@ class PwiResource extends LifSpan {
 
 
     };
-
   }
 
   constructor() {
@@ -79,7 +77,6 @@ class PwiResource extends LifSpan {
       composed: true
     }));
   }
-
 }
 
 export default PwiResource;
@@ -102,7 +99,7 @@ const config = {
       this.resourceType = name;
       this.defaultValue = `this ${name}`;
       if (config[name]) {
-        Object.assign(this, config[name])
+        Object.assign(this, config[name]);
       }
     }
   }

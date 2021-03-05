@@ -2,7 +2,6 @@ import { LitElement, html } from 'lit-element';
 import { parse } from '@preignition/preignition-util';
 
 class PwiMd extends LitElement {
-
   static get properties() {
     return {
 

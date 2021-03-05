@@ -11,7 +11,6 @@ import { Translate } from '@preignition/preignition-util';
 // const options = [{ code: 1, label: 'first option', specify: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
 
 class PwiRadioGroup extends Translate(PwiGenericGroup, locale) {
-
   static get isMulti() {
     return false;
   }
@@ -51,7 +50,7 @@ class PwiRadioGroup extends Translate(PwiGenericGroup, locale) {
     // const old = this._value;
     this._value = value;
     const selectedItem = this._queryItem(`[value="${value}"]`);
-    if (selectedItem) { selectedItem.checked = true; }
+    if (selectedItem) {selectedItem.checked = true;}
 
     this.requestUpdate();
   }
@@ -131,8 +130,6 @@ class PwiRadioGroup extends Translate(PwiGenericGroup, locale) {
     // console.info('specify change: ', this.specify);
     this.dispatchEvent(new CustomEvent('specify-changed', { detail: { value: this.specify } }));
   }
-
-
 }
 
 customElements.define('pwi-radio-group', PwiRadioGroup);

@@ -9,7 +9,6 @@
  */
 
 export const OverrideTextfielValidityMessage = (baseElement) => class extends baseElement {
-
   firstUpdated(props) {
     if (this.validationMessage) {
       this._initialValidationMessage = this.validationMessage;

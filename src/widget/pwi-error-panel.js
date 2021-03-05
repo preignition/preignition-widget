@@ -7,13 +7,12 @@ import '@material/mwc-button';
  * ## PwiMdEditr
  *
  * `<pwi-error-panel>` is a simple panel do display error and possible remedy actions
- * 
+ *
  * @fires pwi-error-action - evend fired when `md` changes
  * @slot message - present when message property is not set
  * @slot action - present when action property is not set
  */
 class PwiErrorPanel extends LitElement {
-
   static get styles() {
     return [
       styleTypography,
@@ -41,7 +40,6 @@ class PwiErrorPanel extends LitElement {
   }
 
   static get properties() {
-
     return {
 
       ...super.properties,
@@ -54,7 +52,7 @@ class PwiErrorPanel extends LitElement {
       },
 
       /*
-       * the label 
+       * the label
        */
       action: {
         type: String,
@@ -75,7 +73,7 @@ class PwiErrorPanel extends LitElement {
       },
 
       /*
-       * `theme` 
+       * `theme`
        */
       theme: {
         type: String,

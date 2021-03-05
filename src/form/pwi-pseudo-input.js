@@ -6,7 +6,6 @@ const validity = {
 };
 
 class PwiPseudoInput extends LitElement {
-
   createRenderRoot() {
     return this;
     // return this.attachShadow({ mode: 'open', delegatesFocus: true });
@@ -36,7 +35,6 @@ class PwiPseudoInput extends LitElement {
   //   }
   //   Object.assign({}, initValidity);
   // }
-
 }
 
 // Register the new element with the browser.

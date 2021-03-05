@@ -1,5 +1,5 @@
 import { html, css } from 'lit-element';
-import PwiCheckBase from './pwi-form-check-base.js'
+import PwiCheckBase from './pwi-form-check-base.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 /*
@@ -11,7 +11,6 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
  */
 
 class PwiFormSwitch extends PwiCheckBase {
-
   static get styles() {
     return [super.styles, css `
       pwi-pseudo-input {

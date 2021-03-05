@@ -2,11 +2,10 @@
 
 import { default as droppable } from '../style/droppable.js';
 export const droppableMixin = (superclass) => class extends superclass {
-
   static get styles() {
-    return droppable
+    return droppable;
   }
-  
+
   static get properties() {
     return {
 
@@ -51,7 +50,7 @@ export const droppableMixin = (superclass) => class extends superclass {
       dropTarget: {
         type: Object,
       },
-    }
+    };
   }
 
   // constructor() {
@@ -75,7 +74,7 @@ export const droppableMixin = (superclass) => class extends superclass {
 
     }
   }
-  
+
   _onDragover(event) {
     console.event('dragover', event);
     event.preventDefault();
@@ -85,7 +84,7 @@ export const droppableMixin = (superclass) => class extends superclass {
     }
     event.dataTransfer.dropEffect = !this._dragoverValid || this.nodrop ? 'none' : 'copy';
   }
-  
+
   _onDragleave(event) {
     console.event('draleave', event);
     event.preventDefault();
@@ -102,9 +101,6 @@ export const droppableMixin = (superclass) => class extends superclass {
       this._addFiles(event.dataTransfer.files);
     }
   }
-
-
-
-}
+};
 
 export default droppableMixin;

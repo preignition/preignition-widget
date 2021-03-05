@@ -7,7 +7,6 @@ import { parse } from '@preignition/preignition-util';
  */
 
 class PwiLifMd extends LifSpan {
-
   renderValue() {
     return html `<div class="value">${parse(this.format(this.value))}</div>`;
   }

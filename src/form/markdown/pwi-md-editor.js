@@ -18,7 +18,6 @@ import '@material/mwc-textarea';
  * @fires md-paste - event fired when user paste on textarea. Used to listed for image copy.
  */
 class PwiMdEditor extends LitElement {
-
   static get styles() {
     return [
     liteYoutube,
@@ -96,7 +95,6 @@ class PwiMdEditor extends LitElement {
   }
 
   static get properties() {
-
     return {
 
       ...super.properties,
@@ -276,8 +274,8 @@ class PwiMdEditor extends LitElement {
       </mwc-tab-bar>
       <div id="container"> 
       ${cache(
-        this._selected === 0 || this._selected === 2
-          ? html`<div>
+        this._selected === 0 || this._selected === 2 ?
+          html`<div>
               <pwi-textarea
                 droppable 
                 .ripple=${this.dragoverValid}
@@ -295,8 +293,8 @@ class PwiMdEditor extends LitElement {
                 placeholder=${this.placeholder}></pwi-textarea>
                 ${this.renderToolbar()}
              </div>
-              `
-          : html`<div id="markdown">${parse(this._selected === 1 ? this.md : this.mdtranslate)}</div>`
+              ` :
+          html`<div id="markdown">${parse(this._selected === 1 ? this.md : this.mdtranslate)}</div>`
           )}
       </div>
     `;

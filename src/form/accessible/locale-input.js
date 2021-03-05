@@ -2,7 +2,6 @@ const supportLocale = !!Number.prototype.toLocaleString;
 const reg = /[^\d]*/g;
 
 export const LocaleInput = (baseElement) => class extends baseElement {
-
   static get properties() {
     return {
       ...super.properties,
@@ -83,7 +82,6 @@ export const LocaleInput = (baseElement) => class extends baseElement {
     this.locale = 'us-US';
     this.currency = 'USD';
     this.formatingStyle = 'currency';
-
   }
   update(props) {
     if (supportLocale && props.has('value')) {
@@ -95,14 +93,14 @@ export const LocaleInput = (baseElement) => class extends baseElement {
   }
 
   updated(props) {
-    if (props.has('minimumIntegerDigits')
-      || props.has('maximumFractionDigits')
-      || props.has('minimumFractionDigits')
-      || props.has('preventUseGrouping')
-      || props.has('currencyDisplay')
-      || props.has('currency')
-      || props.has('locale')
-      || props.has('formatingStyle')
+    if (props.has('minimumIntegerDigits') ||
+      props.has('maximumFractionDigits') ||
+      props.has('minimumFractionDigits') ||
+      props.has('preventUseGrouping') ||
+      props.has('currencyDisplay') ||
+      props.has('currency') ||
+      props.has('locale') ||
+      props.has('formatingStyle')
       ) {
       this.handleInputChange(this.value);
     }

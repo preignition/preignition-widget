@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 
 class GridCellFlag extends LitElement {
-
   static get styles() {
     return css `
      :host {
@@ -9,7 +8,7 @@ class GridCellFlag extends LitElement {
         text-align: center;
         margin: 0 17px;
       }
-    `
+    `;
   }
   render() {
     return html `
@@ -25,7 +24,7 @@ class GridCellFlag extends LitElement {
       flags: {
         type: Array,
       },
-    }
+    };
   }
 }
 

@@ -3,7 +3,6 @@ import { PwiAccessibleTextfield } from '../accessible/pwi-accessible-textfield.j
 import { DoNotSetUndefinedValue } from '@preignition/preignition-mixin';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 class PwiFormUpload extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
-
   static get styles() {
     return [super.styles, css `
     :host {
@@ -100,14 +99,14 @@ class PwiFormUpload extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
       },
 
       /*
-       * `store` path to set at firestore level. if not set, will deduct from meta 
+       * `store` path to set at firestore level. if not set, will deduct from meta
        */
       store: {
         type: String,
       },
 
       /*
-       * `fileName` the name of the file to store at firestore level. If not set, 
+       * `fileName` the name of the file to store at firestore level. If not set,
        * will deduct it from original filename and add a timestamp
        */
       fileName: {
@@ -124,7 +123,7 @@ class PwiFormUpload extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
 
 
       /*
-       * `multi` 
+       * `multi`
        */
       multi: {
         type: Boolean,
@@ -143,17 +142,17 @@ class PwiFormUpload extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
       },
 
       /*
-       * `hideExisting` if true, will not display the list of files 
+       * `hideExisting` if true, will not display the list of files
        * already present in the db. This is usefull for instance when
-       * we refresh a page with an image gallery. 
+       * we refresh a page with an image gallery.
        */
       hideExisting: {
         type: Boolean,
       },
 
       /*
-       * `preventRead` if set to true, only push new files and avoid reading 
-       * metaDate. This is useful in situation where we do not cound the 
+       * `preventRead` if set to true, only push new files and avoid reading
+       * metaDate. This is useful in situation where we do not cound the
        * number of files (e.g. images in a blogpost.)
        */
       preventRead: {
@@ -184,7 +183,7 @@ class PwiFormUpload extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
       },
 
       /*
-       * `noFileExtension` set true to prevent filename extenstion to be used for 
+       * `noFileExtension` set true to prevent filename extenstion to be used for
        * storage path.
        */
       noFileExtension: {
@@ -195,7 +194,7 @@ class PwiFormUpload extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
     };
   }
 
-  /* 
+  /*
    * `formAttributes` is called when we construct the form. It returns binding attributes
    */
   static assignFormAttributes(domBind, name, item, config, attributes) {
@@ -276,8 +275,6 @@ class PwiFormUpload extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
            .noFileExtension="${this.noFileExtension}"
         ></firebase-document-upload></pwi-pseudo-input>`;
   }
-
-
 }
 
 customElements.define('pwi-form-upload', PwiFormUpload);

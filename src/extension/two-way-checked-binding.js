@@ -1,7 +1,7 @@
 /**
- * small mixin to allow Polymer two-way-binding with checked-type 
+ * small mixin to allow Polymer two-way-binding with checked-type
  * fields (switch, radio, checkbox)
- * 
+ *
  */
 
 export const TwoWayCheckedBinding = (baseElement) => class extends baseElement {

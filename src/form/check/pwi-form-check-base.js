@@ -12,7 +12,6 @@ import { DoNotSetUndefinedValue } from '@preignition/preignition-mixin';
  */
 
 class PwiFormCheckBase extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
-
   static get styles() {
     return [super.styles, css `
     :host {

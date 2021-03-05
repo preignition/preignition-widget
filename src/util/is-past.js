@@ -1,20 +1,19 @@
 import { LitElement } from 'lit-element';
 
-const timezoneOffset = new Date().getTimezoneOffset();  // Note(cg): in minutes -120 for GMT+2 
+const timezoneOffset = new Date().getTimezoneOffset(); // Note(cg): in minutes -120 for GMT+2
 
 /**
  * ## PwiIsPast
  *
  * `<pwi-is-past>` simple element that dispatch a `date-in-past` when date in in the past
- * 
+ *
  * @fires is-past-changed - event fired when date is in past
  */
 class PwiIsPast extends LitElement {
-
   static get properties() {
     return {
       /**
-       * date in GMT by default or locale 
+       * date in GMT by default or locale
        * if `isLocale` is true
        * @type String
        */
@@ -24,8 +23,8 @@ class PwiIsPast extends LitElement {
 
       /**
        * timezone offest between Date.now and this.date (in minutes)
-       * we assume that date is in GMT and we calculate 
-       * the difference. 
+       * we assume that date is in GMT and we calculate
+       * the difference.
        * set 0 to indicate same timezone
        * @type {Object}
        */
@@ -48,7 +47,6 @@ class PwiIsPast extends LitElement {
   get isPast() {
     console.info('isPast');
     return this._isPast || false;
-
   }
 
   constructor() {
@@ -69,7 +67,7 @@ class PwiIsPast extends LitElement {
 
     if (this.date) {
       this.timestamp = new Date(this.date).getTime();
-      this.intervalID = window.setInterval(() => {this._checkDateInThePast()}, this.interval);
+      this.intervalID = window.setInterval(() => {this._checkDateInThePast();}, this.interval);
     }
   }
 

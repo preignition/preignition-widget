@@ -3,12 +3,11 @@ import PwiTooltip from './pwi-tooltip.js';
 import { parse } from '@preignition/preignition-util';
 /*
   # tooltip loading its content from firebase
-  
+
 
  */
 
 class PwiFirebaseTooltip extends PwiTooltip {
-
   static get properties() {
     return {
       ...super.properties,
@@ -40,7 +39,6 @@ class PwiFirebaseTooltip extends PwiTooltip {
   constructor() {
     super();
     this.loadingMessage = 'loading remote tooltip ...';
-
   }
 
   render() {
@@ -56,7 +54,6 @@ class PwiFirebaseTooltip extends PwiTooltip {
     }
     super.firstUpdated(props);
   }
-
 }
 
 // Register the new element with the browser.

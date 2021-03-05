@@ -1,5 +1,5 @@
 import { html, css } from 'lit-element';
-import PwiCheckBase from './pwi-form-check-base.js'
+import PwiCheckBase from './pwi-form-check-base.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 /*
@@ -11,7 +11,6 @@ import { ifDefined } from 'lit-html/directives/if-defined.js';
  */
 
 class PwiFormCheckbox extends PwiCheckBase {
-
   renderInput() {
     const showValidationMessage = this.validationMessage && !this.isUiValid;
     return html `
@@ -32,8 +31,6 @@ class PwiFormCheckbox extends PwiCheckBase {
         </pwi-formfield>
         </pwi-pseudo-input>`;
   }
-
-
 }
 
 customElements.define('pwi-form-checkbox', PwiFormCheckbox);

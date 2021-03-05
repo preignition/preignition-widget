@@ -2,13 +2,11 @@ import PwiFirebaseTooltip from './pwi-firebase-tooltip.js';
 /*
   # tooltip loading its content from firebase
   path is calculated on the basis of term id
-  
+
 
  */
 
 class PwiFormTooltip extends PwiFirebaseTooltip {
-
-
   static get properties() {
     return {
       ...super.properties,
@@ -33,7 +31,7 @@ class PwiFormTooltip extends PwiFirebaseTooltip {
 
   firstUpdated(props) {
     // Note(cg): form and sectionlisten to the event and will set resource in turn.
-    this.dispatchEvent(new CustomEvent('form-tooltip-ready', {detail: {}, bubbles: true, composed: true})); 
+    this.dispatchEvent(new CustomEvent('form-tooltip-ready', {detail: {}, bubbles: true, composed: true}));
     super.firstUpdated(props);
   }
 
@@ -47,7 +45,7 @@ class PwiFormTooltip extends PwiFirebaseTooltip {
   setPath(resource, term) {
     if (resource && term) {
       if (resource.localName === 'form-container') {
-        this.path = `/resourceDataLocale/${resource.isTest ? 'draft' : 'published'}/${resource.resourceId}/${resource.language}/glossary/${term}/definition`
+        this.path = `/resourceDataLocale/${resource.isTest ? 'draft' : 'published'}/${resource.resourceId}/${resource.language}/glossary/${term}/definition`;
       }
       // TODO(cg): handle shared section.
       // if (resource.localeName === 'form-section') {
@@ -55,8 +53,6 @@ class PwiFormTooltip extends PwiFirebaseTooltip {
       // }
     }
   }
-  
-
 }
 
 // Register the new element with the browser.

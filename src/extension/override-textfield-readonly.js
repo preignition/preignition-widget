@@ -2,15 +2,14 @@ import { css } from 'lit-element';
 
 /**
  * mixin overriding how mdc-textfiel handle readonly
- * 
- * 
+ *
+ *
  * Related issue:
  * https://github.com/material-components/material-components-web-components/issues/1882
  *
  */
 
 export const OverrideTextfielReadonly = (baseElement) => class extends baseElement {
-
   static get styles() {
     return [super.styles, css`
     :host([readonly]) {
@@ -36,7 +35,6 @@ export const OverrideTextfielReadonly = (baseElement) => class extends baseEleme
     }
     super.updated(props);
   }
-
 };
 
 export default OverrideTextfielReadonly;

@@ -8,10 +8,9 @@ import '@material/mwc-icon-button';
  * @fires content-copy - fired before copy. preventDefault to cancel copy
  * @fires content-copied  - after successful copy
  * @fires content-copied-error  - there was a problem
- * 
+ *
  */
 class PwiCopy extends LitElement {
-
   static get styles() {
     return [tooltip, css `
     :host {
@@ -21,13 +20,13 @@ class PwiCopy extends LitElement {
 
   static get properties() {
     return {
-      
+
       _icon: {
         type: String
       },
 
       /*
-       * `content` content to be copied. 
+       * `content` content to be copied.
        * If empty, will take textContent of slot.
        */
       content: {

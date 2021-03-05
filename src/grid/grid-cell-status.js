@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'lit-element';
 
 class GridCellStatus extends LitElement {
-
   static get styles() {
     return css `
      :host {
@@ -16,7 +15,7 @@ class GridCellStatus extends LitElement {
      .idle {
       color: var(--cell-idle-color, var(--paper-orange-400));
     }
-    `
+    `;
   }
   render() {
     return html ` 
@@ -32,15 +31,15 @@ class GridCellStatus extends LitElement {
       value: {
         type: String
       }
-    }
+    };
   }
 
   computeValue(d) {
-    if (!d ||(Object(d) === d)) {
+    if (!d || (Object(d) === d)) {
       return '';
     }
-    var star = d === 'online' ? '★' : d === 'idle' ? '☆' : '';
-    var value = d === 'signedout' ? 'signed-out' : d;
+    const star = d === 'online' ? '★' : d === 'idle' ? '☆' : '';
+    const value = d === 'signedout' ? 'signed-out' : d;
     return star + ' ' + value;
   }
 }

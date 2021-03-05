@@ -1,7 +1,6 @@
 import { PwiAccessibleTextfield } from './pwi-accessible-textfield.js';
 
 class PwiAccessibleDate extends PwiAccessibleTextfield {
-
   constructor() {
     super();
     this.type = 'date';

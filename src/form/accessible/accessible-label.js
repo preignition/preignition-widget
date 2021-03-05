@@ -4,11 +4,10 @@ import '../pwi-label.js';
 
 /**
  * mixin overrideing som methods not playin well with Polymer
- * 
+ *
  */
 
 export const AccessibleLabel = (baseElement) => class extends baseElement {
-
   static get properties() {
     return {
       ...super.properties,

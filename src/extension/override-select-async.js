@@ -1,8 +1,8 @@
 /**
  * mixin overriding how pwi-select handle async list.async
- * We want to avoid situation where: 
+ * We want to avoid situation where:
  *   1. value is reset to '' when list item is not pupulated
- *   2. select element does not show any text value, when the 
+ *   2. select element does not show any text value, when the
  *   list is populated later on.
  *
  * Related issue:
@@ -10,19 +10,18 @@
  * https://github.com/material-components/material-components-web-components/issues/2183
  *
  * The problem with the current approach is that a value-change event is being listened to.
- * 
- * This override should not be necessary any more once 
+ *
+ * This override should not be necessary any more once
  * https://github.com/material-components/material-components-web-components/pull/2193 lands.
- * 
- * Eletenatively, as we do for selec-language: 
+ *
+ * Eletenatively, as we do for selec-language:
  * 1. mark selected item as .selectged = true/false
- * 2. call select.mdcFoundation.layoutOptions() once loaded. 
- * 
- * 
+ * 2. call select.mdcFoundation.layoutOptions() once loaded.
+ *
+ *
  */
 
 export const OverrideSelectAsync = (baseElement) => class extends baseElement {
-
   selectByValue(value) {
         let indexToSelect = -1;
         for (let i = 0; i < this.items.length; i++) {
@@ -33,8 +32,8 @@ export const OverrideSelectAsync = (baseElement) => class extends baseElement {
             }
         }
         this.valueSetDirectly = true;
-        // Note(cg): we prevent setting item on inner list 
-        // for items that do not exit. Otherwise, value is 
+        // Note(cg): we prevent setting item on inner list
+        // for items that do not exit. Otherwise, value is
         // reset = '' when list item is missing. This is a problem
         // with async lists
         if (indexToSelect === -1) {
@@ -60,20 +59,18 @@ export const OverrideSelectAsync = (baseElement) => class extends baseElement {
 
     connectedCallback() {
       super.connectedCallback();
-      this.addEventListener('async-value', this.onAsyncValue)
+      this.addEventListener('async-value', this.onAsyncValue);
     }
     disconnectedCallback() {
       super.disconnectedCallback();
-      this.removeEventListener('async-value', this.onAsyncValue)
+      this.removeEventListener('async-value', this.onAsyncValue);
     }
 
     onAsyncValue(e) {
       if (this.selected) {
-        this.selectedText = this.selected.text
+        this.selectedText = this.selected.text;
       }
     }
-
-
 
 
    // onNotifyAsync(e) {

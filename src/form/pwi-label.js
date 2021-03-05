@@ -2,7 +2,6 @@ import { LitElement, html, css } from 'lit-element';
 import { parseInline } from '@preignition/preignition-util';
 
 class PwiLabel extends LitElement {
-
   static get styles() {
     return css `
     
@@ -23,10 +22,10 @@ class PwiLabel extends LitElement {
   }
 
   /**
-   * render label with terminology 
+   * render label with terminology
    * @param  {String} label       [description]
    * @param  {Array} terminology  [{term: definition}]
-   * @return {HTMLTemplate || string}             
+   * @return {HTMLTemplate || string}
    */
   renderLabel(label, terminology) {
     if (this.parse) {
@@ -49,7 +48,7 @@ class PwiLabel extends LitElement {
     return {
 
       required: {
-        type: Boolean, 
+        type: Boolean,
         reflect: true
       },
       /*
@@ -60,7 +59,7 @@ class PwiLabel extends LitElement {
       },
 
       /*
-       * `label` 
+       * `label`
        */
       label: {
         type: String,

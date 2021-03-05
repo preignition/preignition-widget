@@ -6,7 +6,6 @@
  */
 
 export const PreventNavigationPropagation = (baseElement) => class extends baseElement {
-  
   constructor() {
     super();
     this.addEventListener('keydown', this._onKeyDownPropagation);

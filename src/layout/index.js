@@ -1,1 +1,1 @@
-import './semantic-layout.js'
+import './semantic-layout.js';

@@ -10,13 +10,11 @@ import '../pwi-pseudo-input.js';
 
 /**
  * a wrapper around form fields like checkbox and radio-buttons
- * It is also used for displayinga label and show other fields, 
+ * It is also used for displayinga label and show other fields,
  * e.g. in the context of recursive form section
  */
 
 class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
-
-
   static get styles() {
     return [super.styles, css `
     :host {
@@ -118,7 +116,6 @@ class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
       },
 
 
-
     };
   }
 
@@ -182,7 +179,7 @@ class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
     };
     return html `
       <label class="mdc-text-field ${classMap(classes)}">
-        ${this.isRecursive ? nothing : this.renderRipple() }
+        ${this.isRecursive ? nothing : this.renderRipple()}
         ${this.outlined ? this.renderOutline() : this.renderLabel()}
         ${this.renderInput()}
         ${this.renderLineRipple()}

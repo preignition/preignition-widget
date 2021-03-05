@@ -3,7 +3,6 @@ import AccessibleLabel from './accessible-label.js';
 import AccessibleLabelStyle from './accessible-label-style.js';
 
 class PwiAccessibleTextarea extends AccessibleLabel(PwiTextArea) {
-
   static get styles() {
     return [super.styles, AccessibleLabelStyle];
   }

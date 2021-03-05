@@ -11,7 +11,6 @@ import locale from './pwi-checkbox-group-locale.js';
 import { Translate } from '@preignition/preignition-util';
 
 class PwiCheckboxGroup extends Translate(PwiGenericGroup, locale) {
-
   static get properties() {
     return {
       ...super.properties,
@@ -132,7 +131,6 @@ class PwiCheckboxGroup extends Translate(PwiGenericGroup, locale) {
     this.specify = Object.assign({}, this.specify);
     this.dispatchEvent(new CustomEvent('specify-changed', { detail: { value: this.specify } }));
   }
-
 }
 
 customElements.define('pwi-checkbox-group', PwiCheckboxGroup);

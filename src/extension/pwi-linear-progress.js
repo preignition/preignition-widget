@@ -7,7 +7,6 @@ import { css } from 'lit-element';
  * - set height of the progress bar
  */
 class PwiLinearProgress extends LinearProgress {
-
   static get styles() {
     return [super.styles, css `
       :host {

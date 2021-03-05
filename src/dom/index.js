@@ -1,1 +1,1 @@
-export * from './pwi-content-observer.js'
+export * from './pwi-content-observer.js';

@@ -1,4 +1,4 @@
-import { __decorate } from "tslib";
+import { __decorate } from 'tslib';
 import { LitElement, html, css, customElement, property, query } from 'lit-element';
 import { styleMap } from 'lit-html/directives/style-map.js';
 /**
@@ -268,15 +268,15 @@ let ExpansionPanel = class ExpansionPanel extends LitElement {
 };
 __decorate([
     property({ type: Boolean, reflect: true })
-], ExpansionPanel.prototype, "opened", void 0);
+], ExpansionPanel.prototype, 'opened', void 0);
 __decorate([
     property({ type: Boolean, reflect: true })
-], ExpansionPanel.prototype, "disabled", void 0);
+], ExpansionPanel.prototype, 'disabled', void 0);
 __decorate([
     query('[part="header"]')
-], ExpansionPanel.prototype, "header", void 0);
+], ExpansionPanel.prototype, 'header', void 0);
 ExpansionPanel = __decorate([
     customElement('pwi-expansion-panel')
 ], ExpansionPanel);
 export { ExpansionPanel };
-//# sourceMappingURL=expansion-panel.js.map
+// # sourceMappingURL=expansion-panel.js.map

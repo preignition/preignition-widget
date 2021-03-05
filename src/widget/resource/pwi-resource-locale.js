@@ -2,7 +2,6 @@
 import PwiResource from './pwi-resource.js';
 
 class PwiResourceLocale extends PwiResource {
-
   setPath() {
     if (this.property && this.resourceId && this.resourceType && this.language) {
       this.path = `/locale/${this.state}/${this.resourceType}/${this.language}/${this.resourceId}/${this.property}`;
@@ -30,7 +29,7 @@ const config = {
       this.resourceType = name;
       this.defaultValue = `this ${name}`;
       if (config[name]) {
-        Object.assign(this, config[name])
+        Object.assign(this, config[name]);
       }
     }
   }
