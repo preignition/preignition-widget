@@ -37,7 +37,6 @@ devDependencies:
   '@open-wc/testing': 2.5.29
   '@open-wc/testing-karma': 3.4.8
   '@preignition/preignition-demo': 'link:../preignition-demo'
-  '@vaadin/router': 1.7.2
   es-dev-server: 1.48.1
   highlight-ts: 9.12.1-2
   marked: 2.0.0
@@ -3596,24 +3595,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-tonhlcbQ2eho09am6RHnHOgvtDfDYINd5rgxD+2YSkKENooVCFsWizJz139MQW/PV8FfClyKrNe9ZbdHrSCxGg==
-  /@vaadin/router/1.7.2:
-    dependencies:
-      '@vaadin/vaadin-usage-statistics': 2.1.0
-      path-to-regexp: 2.4.0
-    dev: true
-    resolution:
-      integrity: sha512-Jcfd85W46k/kq1/1DtQEz7J3poZ+5gArfOYUMbNvPTpiYSvI7egXTIolkU0dvkpxWuSSAIj1RTIbzIqyIfPepA==
-  /@vaadin/vaadin-development-mode-detector/2.0.4:
-    dev: true
-    resolution:
-      integrity: sha512-S+PaFrZpK8uBIOnIHxjntTrgumd5ztuCnZww96ydGKXgo9whXfZsbMwDuD/102a/IuPUMyF+dh/n3PbWzJ6igA==
-  /@vaadin/vaadin-usage-statistics/2.1.0:
-    dependencies:
-      '@vaadin/vaadin-development-mode-detector': 2.0.4
-    dev: true
-    requiresBuild: true
-    resolution:
-      integrity: sha512-e81nbqY5zsaYhLJuOVkJkB/Um1pGK5POIqIlTNhUfjeoyGaJ63tiX8+D5n6F+GgVxUTLUarsKa6SKRcQel0AzA==
   /@webcomponents/shadycss/1.10.1:
     dev: true
     resolution:
@@ -6988,10 +6969,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-GSmOT2EbHrINBf9SR7CDELwlJ8AENk3Qn7OikK4nFYAu3Ote2+JYNVvkpAEQm3/TLNEJFD/xZJjzyxg3KBWOzw==
-  /path-to-regexp/2.4.0:
-    dev: true
-    resolution:
-      integrity: sha512-G6zHoVqC6GGTQkZwF4lkuEyMbVOjoBKAEybQUypI1WTkqinCOrq2x6U2+phkJ1XsEMTy4LjtwPI7HW+NVrRR2w==
   /path-type/3.0.0:
     dependencies:
       pify: 3.0.0
@@ -8496,7 +8473,6 @@ specifiers:
   '@preignition/preignition-mixin': 'link:../preignition-mixin'
   '@preignition/preignition-styles': 'link:../preignition-styles'
   '@preignition/preignition-util': 'link:../preignition-util'
-  '@vaadin/router': ^1.7.2
   cronstrue: ^1.94.0
   d3-format: '*'
   d3-scale: '*'

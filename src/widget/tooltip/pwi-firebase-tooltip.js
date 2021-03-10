@@ -43,7 +43,7 @@ class PwiFirebaseTooltip extends PwiTooltip {
 
   render() {
     return html `
-      <lif-document path="${this.path}" .appName="${this.appName}" @data-changed="${e => this.message = parse(e.detail.value)}"></lif-document>
+      <lif-document path="${this.path || ''}" .appName="${this.appName}" @data-changed="${e => this.message = parse(e.detail.value)}"></lif-document>
       ${super.render()}
     `;
   }

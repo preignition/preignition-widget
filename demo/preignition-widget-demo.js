@@ -7,7 +7,6 @@ import '@material/mwc-formfield';
 import '@material/mwc-radio';
 import '@material/mwc-linear-progress';
 // import 'api-viewer-element';
-import { Router } from '@vaadin/router';
 
 
 import './form-demo.js';
@@ -20,6 +19,17 @@ import { github, preignition, DemoRoot } from '@preignition/preignition-demo';
  * This component combines all the examples to be displayed. See the basic/intermediate/advanced folders for the actual examples.
  */
 
+const ROUTES = [
+  { path: '/intro', component: () => import('./demo-readme)' },
+  { path: '/form', component: () => import('./form-demo)' },
+  { path: '/dom', component: () => import('./dom-demo)' },
+  { path: '/widget', component: () => import('./widget-demo)' },
+  {
+    path: '**',
+    redirectTo: 'intro'
+  }
+]
+
 class WidgetDemo extends DemoRoot {
 
   constructor() {
@@ -28,23 +38,14 @@ class WidgetDemo extends DemoRoot {
     this.tabs = ['intro', 'form'];
 
   }
+  get routerSlot() {
+    return this.shadowRoot.querySelector('router-slot')
+  }
 
-  firstUpdated() {
-    const router = new Router(this.shadowRoot.getElementById('outlet'));
-    router.setRoutes([
-      { path: '/', component: 'demo-readme' },
-      { path: '/intro', component: 'demo-readme' },
-      { path: '/form', component: 'form-demo' },
-      { path: '/dom', component: 'dom-demo' },
-      { path: '/widget', component: 'widget-demo' },
-      {
-        path: '(.*)',
-        redirect: '/',
-        action: () => {
-          this.activeTab = 'intro';
-        }
-      }
-    ]);
+  firstUpdated(props) {
+    this.routerSlot.add(ROUTES)
+    super.firstUpdated(props)
+
   }
 
   render() {

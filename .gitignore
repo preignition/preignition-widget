@@ -1,4 +1,6 @@
 node_modules
 **/__* 
+__
+bower_components/*
 ## secrets
 initializeFirebase.js
