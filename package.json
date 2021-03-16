@@ -5,7 +5,7 @@
   "description": "lit-element based widget for preignition",
   "main": "index.js",
   "module": "index.js",
-  "__type": "module",
+  "type": "module",
   "scripts": {
     "start": "es-dev-server",
     "snowpack": "pnpx snowpack i --clean",
@@ -38,6 +38,7 @@
     "@material/textfield": "^8.0.0",
     "@preignition/lit-firebase": "link:../lit-firebase",
     "@preignition/preignition-mixin": "link:../preignition-mixin",
+    "@preignition/preignition-state": "link:../preignition-state",
     "@preignition/preignition-styles": "link:../preignition-styles",
     "@preignition/preignition-util": "link:../preignition-util",
     "cronstrue": "^1.94.0",

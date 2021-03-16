@@ -2,6 +2,8 @@ import { html, css } from 'lit-element';
 import { PwiAccessibleTextfield } from '../accessible/pwi-accessible-textfield.js';
 import { DoNotSetUndefinedValue } from '@preignition/preignition-mixin';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
+import { appState, tokenState } from '@preignition/preignition-state';
+
 class PwiFormUpload extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
   static get styles() {
     return [super.styles, css `
@@ -198,9 +200,9 @@ class PwiFormUpload extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
    * `formAttributes` is called when we construct the form. It returns binding attributes
    */
   static assignFormAttributes(domBind, name, item, config, attributes) {
-    const state = app.getState();
+    // const state = state app.getState();
     // Note(cg): for organisation manager, organisation is the active organisation stored under `organisation_mgmt`.
-    const organisation = state.token && state.token.active || state.organisation;
+    const organisation = tokenState.active || appState.organisation;
 
     Object.assign(attributes, {
       // 'path': path,

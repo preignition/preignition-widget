@@ -20,6 +20,7 @@ dependencies:
   '@material/textfield': 8.0.0
   '@preignition/lit-firebase': 'link:../lit-firebase'
   '@preignition/preignition-mixin': 'link:../preignition-mixin'
+  '@preignition/preignition-state': 'link:../preignition-state'
   '@preignition/preignition-styles': 'link:../preignition-styles'
   '@preignition/preignition-util': 'link:../preignition-util'
   cronstrue: 1.100.0
@@ -8471,6 +8472,7 @@ specifiers:
   '@preignition/lit-firebase': 'link:../lit-firebase'
   '@preignition/preignition-demo': 'link:../preignition-demo'
   '@preignition/preignition-mixin': 'link:../preignition-mixin'
+  '@preignition/preignition-state': 'link:../preignition-state'
   '@preignition/preignition-styles': 'link:../preignition-styles'
   '@preignition/preignition-util': 'link:../preignition-util'
   cronstrue: ^1.94.0
