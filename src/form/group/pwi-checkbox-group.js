@@ -3,6 +3,7 @@ import { PwiGenericGroup } from './pwi-generic-group.js';
 import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 import '../pwi-pseudo-input.js';
+import '../../extension/pwi-formfield';
 import '@material/mwc-formfield';
 import '@material/mwc-checkbox';
 

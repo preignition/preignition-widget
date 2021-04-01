@@ -86,6 +86,9 @@ class PwiLogIn extends translate(LitElement, locale) {
         a {
           text-decoration: none;
         }
+        svg {
+          fill: var(--primary-color);
+        }
 
         .error-message, .info-message {
           text-align: center; 
@@ -271,12 +274,10 @@ class PwiLogIn extends translate(LitElement, locale) {
       </div>
       <div class="social  button-container">
         <mwc-button @click="${this.loginHandler}" class="accent-paint" data-provider="google" outlined label="google">
-          <iron-icon slot="icon" icon="social-post:gplus"></iron-icon>
+          <svg slot="icon" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" focusable="false"><g><path d="M11.2 8.87c0-1.02-.63-3.02-2.08-3.02-.64 0-1.32.44-1.32 1.67 0 1.18.63 2.93 1.97 2.93.06.01 1.43-.01 1.43-1.58zm-.63 4.94l-.31-.01h-.02c-.26 0-1.15.05-1.82.27-.65.24-1.42.72-1.42 1.7 0 1.08 1.04 2.23 2.96 2.23 1.52 0 2.44-1 2.44-1.97 0-.77-.46-1.24-1.83-2.22zm9.43-11.81h-16c-1.1 0-1.99.9-1.99 2l-.01 16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-16c0-1.1-.9-2-2-2zm-10.93 17.2c-2.8 0-4.07-1.56-4.07-3.01 0-.45.14-1.59 1.48-2.39.77-.47 1.85-.78 3.14-.91-.19-.25-.34-.55-.34-.99 0-.16.02-.31.05-.46h-.38c-1.97 0-3.15-1.55-3.15-3.04 0-1.73 1.29-3.6 4.11-3.6h4.21l-.34.34-.71.71-.06.06h-.71c.41.42.9 1.12.9 2.16 0 1.4-.74 2.09-1.56 2.73-.16.12-.42.38-.42.72 0 .3.24.5.39.62.13.11.3.22.47.34.81.57 1.92 1.34 1.92 2.88 0 1.77-1.29 3.84-4.93 3.84zm9.93-7.2h-2v2h-1v-2h-2v-1h2v-2h1v2h2v1z"></path></g></svg>
         </mwc-button>
         <span></span>
-        <mwc-button @click="${this.loginHandler}" class="accent-paint" data-provider="facebook" label="facebook" outlined>
-          <iron-icon slot="icon" icon="social-post:facebook"></iron-icon>
-        </mwc-button>
+        <mwc-button @click="${this.loginHandler}" class="accent-paint" icon="facebook" data-provider="facebook" label="facebook" outlined></mwc-button>
       </div>`;
 
     // <!--mwc-button @click="${this.loginHandler}" data-provider="twitter" label="twitter" outlined disabled>
@@ -459,8 +460,8 @@ class PwiLogIn extends translate(LitElement, locale) {
         provider: this.provider,
         email: this.email,
         password: this.password,
-        successCallback: this.onSuccessCallback.bind(this),
-        errorCallback: this.onErrorCallback.bind(this),
+        successCb: this.onSuccessCallback.bind(this),
+        errorCb: this.onErrorCallback.bind(this),
       },
       bubbles: true,
       composed: true
@@ -473,10 +474,10 @@ class PwiLogIn extends translate(LitElement, locale) {
         detail: {
           provider: this.provider,
           email: this.email,
-          successCallback: () => {
+          successCb: () => {
             this.successMsg = `reset password email sent to ${this.email}!`;
           },
-          errorCallback: this.onErrorCallback.bind(this),
+          errorCb: this.onErrorCallback.bind(this),
         },
         bubbles: true,
         composed: true
@@ -495,12 +496,12 @@ class PwiLogIn extends translate(LitElement, locale) {
           email: this.email,
           displayName: displayName,
           password: this.password,
-          successCallback: () => {
+          successCb: () => {
             this.successMsg = `Success: new user ${displayName} created!`;
             setTimeout(() => {this.selected = 0;}, 200);
             setTimeout(() => {this._checkRedirect();}, 500);
           },
-          errorCallback: this.onErrorCallback.bind(this),
+          errorCb: this.onErrorCallback.bind(this),
         },
         bubbles: true,
         composed: true

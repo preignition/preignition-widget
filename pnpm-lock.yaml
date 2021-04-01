@@ -10,6 +10,7 @@ dependencies:
   '@material/mwc-list': 0.20.0
   '@material/mwc-notched-outline': 0.20.0
   '@material/mwc-radio': 0.20.0
+  '@material/mwc-ripple': 0.20.0
   '@material/mwc-select': 0.20.0
   '@material/mwc-switch': 0.20.0
   '@material/mwc-tab': 0.20.0
@@ -17,7 +18,6 @@ dependencies:
   '@material/mwc-textarea': 0.20.0
   '@material/mwc-textfield': 0.20.0
   '@material/mwc-top-app-bar': 0.20.0
-  '@material/textfield': 8.0.0
   '@preignition/lit-firebase': 'link:../lit-firebase'
   '@preignition/preignition-mixin': 'link:../preignition-mixin'
   '@preignition/preignition-state': 'link:../preignition-state'
@@ -2209,49 +2209,26 @@ packages:
       node: '>= 8.0.0'
     resolution:
       integrity: sha512-7ulRC1da/rBa6kj6P4g2aJfnET3z8Uf3SWu60cjbtxTA5g8lxRdX/Bd2P92EagGwwAhANeNw8T8if99rJliR6Q==
-  /@material/animation/8.0.0:
-    dependencies:
-      tslib: 1.14.0
-    dev: false
-    resolution:
-      integrity: sha512-4+rCFDcfJap62a/8luuq1fmMA+EdVMASD4CBd9cN4LNOc/OPzBkLqv0PHFTnmHu9Y9biHD94uyDsbEcvtyGr+Q==
   /@material/animation/9.0.0-canary.1c156d69d.0:
     dependencies:
-      tslib: 1.14.1
+      tslib: 1.14.0
     dev: false
     resolution:
       integrity: sha512-m3eUpFRwxcP1tEWJlIH5q77YGSYEe5ITRw5OtyDvxU7ZzF0xKJbBeauQEdCmyig9UvK+J7jUUnCgkT/t/ldLtw==
-  /@material/base/8.0.0:
+  /@material/base/9.0.0-canary.1c156d69d.0:
     dependencies:
       tslib: 1.14.0
     dev: false
     resolution:
-      integrity: sha512-lLB3lv/A7TqqfqeVnoguv0NV+wpzM0KAVXj0jrtg2BtbxlOYjkfl4uySyOCLGxB0y4vTv1rSXB5i7Xn73+OQHg==
-  /@material/base/9.0.0-canary.1c156d69d.0:
-    dependencies:
-      tslib: 1.14.1
-    dev: false
-    resolution:
       integrity: sha512-r98qY6EsPx6BlzT0Pj+H+BTI7r76GEX/zZPgajxZjbPAJSeeK+uCh69Dmhf63meLKaFkKgvLwH5udKJLMqqjpQ==
-  /@material/density/8.0.0:
-    dev: false
-    resolution:
-      integrity: sha512-44g0S8kZfVw02JfMCLQeYxbt143xiQvouR1mNKqC6+W+XhdBNS1IxKtk+kONiEIXVhb9JKnEp5zag+aC589RTw==
   /@material/density/9.0.0-canary.1c156d69d.0:
     dev: false
     resolution:
       integrity: sha512-Y87bUpTsXNDOi1q5NVRBxIyTUAFda1PP1Z9HOvgpV19n7/F6YLrttLGcOFSRFfx9btUKf4EddctBzwzBrF71TQ==
-  /@material/dom/8.0.0:
-    dependencies:
-      '@material/feature-targeting': 8.0.0
-      tslib: 1.14.0
-    dev: false
-    resolution:
-      integrity: sha512-Y+sGqsyeFEu2whqdQ++LzXwmoRzhG3nEiPPwtX/Fgqrfdy7nyG1tvLXT+P+PLMDM6xO/H5+yjPV5OLFpKJjiIg==
   /@material/dom/9.0.0-canary.1c156d69d.0:
     dependencies:
       '@material/feature-targeting': 9.0.0-canary.1c156d69d.0
-      tslib: 1.14.1
+      tslib: 1.14.0
     dev: false
     resolution:
       integrity: sha512-AwiQDzquolB7rqy8k4+QMVQ8Njb6k0CT+otJ/UNJbj0qNVXZB4njVaWRWrWCt70hYp1rG0cRNkZ01ZJDqABUFw==
@@ -2264,27 +2241,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ojX0+nRNkfJssFA/EXhwglDwW48xll1OPCVy8jJrRfvIasRHiIJBeRdnlU5BL4qxDJHaEoOfEMmVQP/Aj504Qw==
-  /@material/feature-targeting/8.0.0:
-    dev: false
-    resolution:
-      integrity: sha512-xMJ9RmnOQCLPB6bD0xS0p6NF36vKNkjoPQt8aOoimtBlhSOba68+5jeX/qEQYZgOG4jf0SnWq833gAxx61Ni6g==
   /@material/feature-targeting/9.0.0-canary.1c156d69d.0:
     dev: false
     resolution:
       integrity: sha512-HWd0+GMnkVB3anmUc9+MeWCNoogAbb4U7ihzwq7lzLCQyC+i/kunppkUVV7DhL3ZVl1O6zIw1eAT+dgQpN8x4Q==
-  /@material/floating-label/8.0.0:
-    dependencies:
-      '@material/animation': 8.0.0
-      '@material/base': 8.0.0
-      '@material/dom': 8.0.0
-      '@material/feature-targeting': 8.0.0
-      '@material/rtl': 8.0.0
-      '@material/theme': 8.0.0
-      '@material/typography': 8.0.0
-      tslib: 1.14.0
-    dev: false
-    resolution:
-      integrity: sha512-k8owllI0eTS3jRGSSALytdX5rvUSbNzK5rxZkdx81hRJ95oEYBuKyTgSPhiLjjpY2igtjO2amzfENLsHO9ABuA==
   /@material/floating-label/9.0.0-canary.1c156d69d.0:
     dependencies:
       '@material/animation': 9.0.0-canary.1c156d69d.0
@@ -2310,16 +2270,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-v1KWGRj4Qf9SESLswtlrdm/B6TmNkQsh5CZSM2xL2ZXe/k/KNgbLgM4ofHJApwW3QWYVBfA8nT/MlIvJJivd9w==
-  /@material/line-ripple/8.0.0:
-    dependencies:
-      '@material/animation': 8.0.0
-      '@material/base': 8.0.0
-      '@material/feature-targeting': 8.0.0
-      '@material/theme': 8.0.0
-      tslib: 1.14.0
-    dev: false
-    resolution:
-      integrity: sha512-eShO/Xm7SWD9hpocIE+/+KWdYi4/dQEoTWyg7xZeLzbg70s+9cANLDE2+pkI8hsuMEhCTkC51XSOOBvTDSAZrQ==
   /@material/line-ripple/9.0.0-canary.1c156d69d.0:
     dependencies:
       '@material/animation': 9.0.0-canary.1c156d69d.0
@@ -2426,7 +2376,7 @@ packages:
     dependencies:
       '@material/floating-label': 9.0.0-canary.1c156d69d.0
       lit-html: 1.3.0
-      tslib: 2.0.3
+      tslib: 2.1.0
     dev: false
     resolution:
       integrity: sha512-WRl/oIkP6A5mqWu9ykWQZsIXxCGJ+JXr/Ooou8F8kJADWVGYf5DNFXKd6gXq+dxXfDbC6AZHPbp7/WH/vuQVrg==
@@ -2459,7 +2409,7 @@ packages:
     dependencies:
       '@material/line-ripple': 9.0.0-canary.1c156d69d.0
       lit-html: 1.3.0
-      tslib: 2.0.3
+      tslib: 2.1.0
     dev: false
     resolution:
       integrity: sha512-apA8dQ1wDbo+LOJa47dG/wMJS4iyG56bTTHMRDI4lLgd4czbEKllIgmkWBZeleqMjzzwXNfWKo/5354Ne+rbqQ==
@@ -2509,7 +2459,7 @@ packages:
       '@material/notched-outline': 9.0.0-canary.1c156d69d.0
       lit-element: 2.4.0
       lit-html: 1.3.0
-      tslib: 2.0.3
+      tslib: 2.1.0
     dev: false
     resolution:
       integrity: sha512-7gU0wEYSFNA8Cms5VU1rEEJ75rwSR0EJmlW6YC1f/0kIA/d3U4V5okntIwCquH6U6oi6WNbmfHusoS6wQ6I37w==
@@ -2530,7 +2480,7 @@ packages:
       '@material/ripple': 9.0.0-canary.1c156d69d.0
       lit-element: 2.4.0
       lit-html: 1.3.0
-      tslib: 2.0.3
+      tslib: 2.1.0
     dev: false
     resolution:
       integrity: sha512-4rlIu+Kk//NsW/u3CnU1kz3dsvwEozax0Zf2CUp+ao0ozclHfQ2+sTZVY0Mr8+GJLn7Oz51gT5OHoarZuWWljA==
@@ -2629,7 +2579,7 @@ packages:
       '@material/textfield': 9.0.0-canary.1c156d69d.0
       lit-element: 2.4.0
       lit-html: 1.3.0
-      tslib: 2.0.3
+      tslib: 2.1.0
     dev: false
     resolution:
       integrity: sha512-VFy53M6En0REG+jY+E0dpi9PKSF25KwMIXt0OoCdHPLtWhZkCarpwbdkywbvV9GjyAllweVRhtdpLmZgivOV9g==
@@ -2643,18 +2593,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-EHhiG2mjlQFMdVFeId/9nzOKqqaptnFycxdvojUsEbPQn4CU9h2Wly2THeeAT2DoF/UxV6DE4W/b3rzR3HzNHA==
-  /@material/notched-outline/8.0.0:
-    dependencies:
-      '@material/base': 8.0.0
-      '@material/feature-targeting': 8.0.0
-      '@material/floating-label': 8.0.0
-      '@material/rtl': 8.0.0
-      '@material/shape': 8.0.0
-      '@material/theme': 8.0.0
-      tslib: 1.14.0
-    dev: false
-    resolution:
-      integrity: sha512-5aNqLRoRfb5RJN7nOpUdo+xDZx6cTPzQwkXo9Fm6f2irWDPFd3qNQ1WGnKbY8r6KKo8wMarWkTRTAqmiWx/02g==
   /@material/notched-outline/9.0.0-canary.1c156d69d.0:
     dependencies:
       '@material/base': 9.0.0-canary.1c156d69d.0
@@ -2687,17 +2625,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-i2pDFRhvk8bWp8BBJ0dyuGCqP17FlKSHzGqYQNI80dRPVYyLiexqIRfn0KGcW/sJtVC/P4GlyhE98g4mNYA/iQ==
-  /@material/ripple/8.0.0:
-    dependencies:
-      '@material/animation': 8.0.0
-      '@material/base': 8.0.0
-      '@material/dom': 8.0.0
-      '@material/feature-targeting': 8.0.0
-      '@material/theme': 8.0.0
-      tslib: 1.14.0
-    dev: false
-    resolution:
-      integrity: sha512-r6Ejin8Qp9e91kHdhfStfXf5I18l5ZuraQIegBqj20OLe7SdrpMaGA3e1g923e/wfDCYEX1sBUVerwVUFJ+rTQ==
   /@material/ripple/9.0.0-canary.1c156d69d.0:
     dependencies:
       '@material/animation': 9.0.0-canary.1c156d69d.0
@@ -2705,16 +2632,10 @@ packages:
       '@material/dom': 9.0.0-canary.1c156d69d.0
       '@material/feature-targeting': 9.0.0-canary.1c156d69d.0
       '@material/theme': 9.0.0-canary.1c156d69d.0
-      tslib: 1.14.1
+      tslib: 1.14.0
     dev: false
     resolution:
       integrity: sha512-F1e/LQmYHQFORM/C3hchmANnRwJCXlc7Cp7W+VGpvJdtdzYlTd8DKKcShuOozxUQOjutbNf+Ql8gpZIdYRQaoQ==
-  /@material/rtl/8.0.0:
-    dependencies:
-      '@material/theme': 8.0.0
-    dev: false
-    resolution:
-      integrity: sha512-P7+22B+2r+ol5pnLvq7VUaZPJGBZeX2PpVwELE7J3IruN6SnOZyt1h2LZI/sEMuyQhKrNs8Cpq2PLnbgeQhBJQ==
   /@material/rtl/9.0.0-canary.1c156d69d.0:
     dependencies:
       '@material/theme': 9.0.0-canary.1c156d69d.0
@@ -2743,14 +2664,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-/RilWn+Za/CKRSAtFkhKVi+RD6MotnfdwR+Fdv1b23ItvXaDV2U+xk2b+Pn7dKb6l1NtR+995SKocXJHz5sVUQ==
-  /@material/shape/8.0.0:
-    dependencies:
-      '@material/feature-targeting': 8.0.0
-      '@material/rtl': 8.0.0
-      '@material/theme': 8.0.0
-    dev: false
-    resolution:
-      integrity: sha512-VX8QtZkzC6bViTw9krDRgXaMQ+TVdSJSRs2W24V6G7FbYyVQqBreTkp8knAWJPWj68MsGVp1kRRvR6U8tB4GDg==
   /@material/shape/9.0.0-canary.1c156d69d.0:
     dependencies:
       '@material/feature-targeting': 9.0.0-canary.1c156d69d.0
@@ -2820,25 +2733,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-gS93t8Yl+djgWA8bFU80amzj2auGg/H3muVIJ1Mncak0CUtX3u6dYyvdKbeecRT9F1Wr4J3L8E0/aQatBOGa1w==
-  /@material/textfield/8.0.0:
-    dependencies:
-      '@material/animation': 8.0.0
-      '@material/base': 8.0.0
-      '@material/density': 8.0.0
-      '@material/dom': 8.0.0
-      '@material/feature-targeting': 8.0.0
-      '@material/floating-label': 8.0.0
-      '@material/line-ripple': 8.0.0
-      '@material/notched-outline': 8.0.0
-      '@material/ripple': 8.0.0
-      '@material/rtl': 8.0.0
-      '@material/shape': 8.0.0
-      '@material/theme': 8.0.0
-      '@material/typography': 8.0.0
-      tslib: 1.14.0
-    dev: false
-    resolution:
-      integrity: sha512-Ec9T5gctPgy2mOnBr690aB2bYzfQblDRhfABNEMX41+Q9ywhzMrKGBCjyYiCzwOWTLOWxsXMXPfnTSkDq991yA==
   /@material/textfield/9.0.0-canary.1c156d69d.0:
     dependencies:
       '@material/animation': 9.0.0-canary.1c156d69d.0
@@ -2858,12 +2752,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-pE6qL6j8d+hLLLRl6S2dwWWrvNdj69XUn5BTkImgGcQw9r74TU+b/JVz+WcRG6Ys2s2wdbZalntJbTa20zfzFw==
-  /@material/theme/8.0.0:
-    dependencies:
-      '@material/feature-targeting': 8.0.0
-    dev: false
-    resolution:
-      integrity: sha512-YcU4oi1pd9K8KfPfhZHD7GGnn034SoaVld5534eEnTMgpUn2y7KHZJlPCjrdh1tIy+PBvnYAkxBtx+mKWRCKFQ==
   /@material/theme/9.0.0-canary.1c156d69d.0:
     dependencies:
       '@material/feature-targeting': 9.0.0-canary.1c156d69d.0
@@ -2891,13 +2779,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-AFymS9cb152a2hEwTc80dVKA0ccNCyMAQNpvB6fEopPMLjO4Hrsu4fIHVyZF5xnz3k/iG59Y6vreHQdHKFGyUw==
-  /@material/typography/8.0.0:
-    dependencies:
-      '@material/feature-targeting': 8.0.0
-      '@material/theme': 8.0.0
-    dev: false
-    resolution:
-      integrity: sha512-1CKckX1JStAh4JvOGwyc3vJ8ggGJXBZJTZJDJNmXSyJeL8SkLdppeTjr02zN09VNrVehS41ArhScPF0zl0rMzQ==
   /@material/typography/9.0.0-canary.1c156d69d.0:
     dependencies:
       '@material/feature-targeting': 9.0.0-canary.1c156d69d.0
@@ -8459,6 +8340,7 @@ specifiers:
   '@material/mwc-list': ^0.20.0
   '@material/mwc-notched-outline': ^0.20.0
   '@material/mwc-radio': ^0.20.0
+  '@material/mwc-ripple': ^0.20.0
   '@material/mwc-select': ^0.20.0
   '@material/mwc-switch': ^0.20.0
   '@material/mwc-tab': ^0.20.0
@@ -8466,7 +8348,6 @@ specifiers:
   '@material/mwc-textarea': ^0.20.0
   '@material/mwc-textfield': ^0.20.0
   '@material/mwc-top-app-bar': ^0.20.0
-  '@material/textfield': ^8.0.0
   '@open-wc/testing': ^2.5.16
   '@open-wc/testing-karma': ^3.3.19
   '@preignition/lit-firebase': 'link:../lit-firebase'
