@@ -78,6 +78,7 @@ class PwiFieldWrapper extends AccessibleLabel(PwiTextField) {
     /* RECURSIVE */
     :host([is-recursive]) .mdc-text-field {
       padding-right: 0;
+      overflow: visible; 
     }
     
     :host([is-recursive]) #label {
