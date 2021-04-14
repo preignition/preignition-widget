@@ -67,6 +67,12 @@ class PwiTooltip extends LitElement {
       position: relative;
       margin-right: 13px;
     }
+
+    #outline[noIcon] {
+      padding: 0;
+      margin-right: 0;
+      font-size: 0;
+    }
     
     #outline::after {
       content: "";
@@ -226,6 +232,7 @@ class PwiTooltip extends LitElement {
       },
       fireonclick: { type: Boolean },
       _opened: { type: Boolean },
+      noIcon: { type: Boolean },
     };
   }
 
@@ -234,6 +241,7 @@ class PwiTooltip extends LitElement {
       ${this.renderTooltip()}
         <span 
           id="outline"
+          ?noIcon=${this.noIcon}
           part="outline"
           aria-describedby="tooltip"
           tabindex="0"
@@ -242,7 +250,7 @@ class PwiTooltip extends LitElement {
           @mouseout="${() => {this.fireonclick ? '' : this.hideTooltip();}}"
           @click="${() => {this.fireonclick ? this.showTooltip() : '';}}">
           <slot></slot>
-          <mwc-icon>info</mwc-icon>
+          ${this.noIcon ? '' : html `<mwc-icon>info</mwc-icon>`}
         </span>
     `;
   }
@@ -269,6 +277,7 @@ class PwiTooltip extends LitElement {
     this.position = 'top';
     this.tipwidth = 200;
     this.opened = false;
+    this.noIcon = false;
   }
 
   hideTooltip() {

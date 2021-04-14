@@ -12,7 +12,7 @@ export const PreventNavigationPropagation = (baseElement) => class extends baseE
   }
 
   _onKeyDownPropagation(e) {
-    console.info('keydown');
+    // console.info('keydown');
     const {code} = e;
     const prevent = ['PageDown', 'PageUp', 'End', 'Home'];
     if (prevent.indexOf(code) > -1) {
