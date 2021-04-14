@@ -1,8 +1,10 @@
 import { html, css } from 'lit-element';
 import { PwiAccessibleTextfield } from '../accessible/pwi-accessible-textfield.js';
 import { DoNotSetUndefinedValue } from '@preignition/preignition-mixin';
+import {getInnerText, Translate as translate} from '@preignition/preignition-util';
+import locale from '../readaloud-locale';
 
-class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
+class PwiGenericGroup extends DoNotSetUndefinedValue(translate(PwiAccessibleTextfield, locale, 'readaloud')) {
   static get styles() {
     return [super.styles, css `
     :host {
@@ -219,19 +221,19 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
   }
   getReadAloud(readHelper) {
     return this._selectedItems.length ?
-      `${[...this._selectedItems].map(item => item.parentElement.renderRoot.textContent)} is the answer to the question ${this.label}` :
-      (this.label + (readHelper && this.helper ? ('hint: ' + this.helper) + '.' : '') + this.getReadAloudOptions(readHelper));
+      `${[...this._selectedItems].map(item => item.parentElement.renderRoot.textContent)} ${this.getTranslate('isTheAnswerTo')} ${getInnerText(this.label)}` :
+      (getInnerText(this.label) + (readHelper && this.helper ? (this.getTranslate('hint') + ': ' + this.helper) + '.' : '') + this.getReadAloudOptions(readHelper));
   }
 
   getReadAloudOptions(readHelper) {
     const items = this._queryItems('pwi-formfield');
     if (!readHelper && items.length > 5) {
-      return `There are ${items.length + 1} options to read. Click "read aloud" again to read them all.`;
+      return this.getTranslate('countOptions', {count: items.length + 1});
     }
-    const options = [...items].map((item, index) => `option ${index + 1}: ${item.label}.`);
+    const options = [...items].map((item, index) => `${this.getTranslate('option')} ${index + 1}: ${item.label}.`);
     return this.constructor.isMulti ?
-      (`Choose your answers from the following options: ${options}`) :
-      (`Choose one answer from the following options: ${options}`);
+      (`${this.getTranslate('chooseOptions')}: ${options}`) :
+      (`${this.getTranslate('chooseOption')}: ${options}`);
   }
 }
 

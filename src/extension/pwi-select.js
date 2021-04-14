@@ -3,7 +3,8 @@ import TwoWaySelectBinding from './two-way-select-binding.js';
 import OverrideTextfield from './override-textfield.js';
 import OverrideSelectAsync from './override-select-async.js';
 import OverrideTextfieldValidityMessage from './override-textfield-validity-message.js';
-
+import {getInnerText, Translate as translate} from '@preignition/preignition-util';
+import locale from '../form/readaloud-locale';
 
 /**
  * extension of mwc-textfield emiting a value-changed event when
@@ -14,19 +15,19 @@ TwoWaySelectBinding(
   OverrideTextfield(
     OverrideSelectAsync(
       OverrideTextfieldValidityMessage(
-        Select)))) {
+        translate(Select, locale, 'readaloud'))))) {
   getReadAloud(readHelper) {
     return this.value ?
-      `${this.selectedText} is the answer to the question ${this.label}` :
-      (this.label + (readHelper && this.helper ? ('hint: ' + this.helper) + '.' : '') + this.getReadAloudOptions(readHelper));
+      `${this.selectedText} ${this.getTranslate('isTheAnswerTo')} ${getInnerText(this.label)}` :
+      (getInnerText(this.label) + (readHelper && this.helper ? (this.getTranslate('hint') + ': ' + this.helper) + '.' : '') + this.getReadAloudOptions(readHelper));
   }
 
   getReadAloudOptions(readHelper) {
     if (!readHelper && this.items.length > 5) {
-      return `There are ${this.items.length + 1} options to read. Click "read aloud" again to read them all.`;
+      return this.getTranslate('countOptions', {count: this.items.length + 1});
     }
-    const options = [...this.items].map((item, index) => `option ${index + 1}: ${item.text}.`);
-    return `Choose your answers from the following options: ${options}`;
+    const options = [...this.items].map((item, index) => `${this.getTranslate('option')} ${index + 1}: ${item.text}.`);
+    return `${this.getTranslate('chooseOption')}: ${options}`;
   }
 }
 
