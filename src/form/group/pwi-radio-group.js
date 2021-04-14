@@ -7,11 +7,7 @@ import '../../extension/pwi-formfield';
 import '@material/mwc-formfield';
 import '@material/mwc-radio';
 
-import locale from './pwi-radio-group-locale.js';
-import { Translate } from '@preignition/preignition-util';
-// const options = [{ code: 1, label: 'first option', specify: true }, { code: 2, label: 'second option' }, { code: 3, label: 'last' }];
-
-class PwiRadioGroup extends Translate(PwiGenericGroup, locale) {
+class PwiRadioGroup extends PwiGenericGroup {
   static get isMulti() {
     return false;
   }

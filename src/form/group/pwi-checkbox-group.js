@@ -7,11 +7,7 @@ import '../../extension/pwi-formfield';
 import '@material/mwc-formfield';
 import '@material/mwc-checkbox';
 
-
-import locale from './pwi-checkbox-group-locale.js';
-import { Translate } from '@preignition/preignition-util';
-
-class PwiCheckboxGroup extends Translate(PwiGenericGroup, locale) {
+class PwiCheckboxGroup extends PwiGenericGroup {
   static get properties() {
     return {
       ...super.properties,

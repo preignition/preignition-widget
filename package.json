@@ -1,11 +1,11 @@
 {
+  "__type": "module",
   "name": "@preignition/preignition-widget",
   "version": "0.3.0",
   "license": "SEE LICENCE IN LICENCE.md",
   "description": "lit-element based widget for preignition",
   "main": "index.js",
   "module": "index.js",
-  "__type": "module",
   "scripts": {
     "start": "es-dev-server",
     "snowpack": "pnpx snowpack i --clean",

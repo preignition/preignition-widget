@@ -108,14 +108,14 @@ DoNotSetUndefinedValue(
     return html `need to be overriden`;
   }
 
-  set value(v) {
-    //Note(CG): do nothing, mostly for readalou stuff
-  }
-  get value() {
-    return this.checked ? this.getTranslate('checked') :
-     this.checked === false ? this.getTranslate('notChecked') :
-     this.getTranslate('undetermined')
-  }
+    set value(v) {
+      //Note(CG): do nothing, mostly for readalou stuff
+    }
+    get value() {
+      return this.checked ? this.getTranslate('checked') :
+       this.checked === false ? this.getTranslate('notChecked') :
+       this.getTranslate('undetermined')
+    }
 }
 
 export default PwiFormCheckBase;
