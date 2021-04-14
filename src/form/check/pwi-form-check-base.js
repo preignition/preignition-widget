@@ -1,6 +1,9 @@
 import { html, css } from 'lit-element';
 import { PwiAccessibleTextfield } from '../accessible/pwi-accessible-textfield.js';
 import { DoNotSetUndefinedValue } from '@preignition/preignition-mixin';
+import {Translate as translate} from '@preignition/preignition-util';
+import locale from '../readaloud-locale';
+
 // import { ifDefined } from 'lit-html/directives/if-defined.js';
 
 /*
@@ -11,7 +14,9 @@ import { DoNotSetUndefinedValue } from '@preignition/preignition-mixin';
    @fires checked-changed when status of chekbox changes
  */
 
-class PwiFormCheckBase extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
+class PwiFormCheckBase extends 
+DoNotSetUndefinedValue(
+  translate(PwiAccessibleTextfield, locale, 'readaloud')) {
   static get styles() {
     return [super.styles, css `
     :host {
@@ -101,6 +106,15 @@ class PwiFormCheckBase extends DoNotSetUndefinedValue(PwiAccessibleTextfield) {
 
   renderInput() {
     return html `need to be overriden`;
+  }
+
+  set value(v) {
+    //Note(CG): do nothing, mostly for readalou stuff
+  }
+  get value() {
+    return this.checked ? this.getTranslate('checked') :
+     this.checked === false ? this.getTranslate('notChecked') :
+     this.getTranslate('undetermined')
   }
 }
 

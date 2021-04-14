@@ -1,6 +1,9 @@
 export default {
-  yourAnwserTo: 'This was your answer to ',
+  yourAnswerTo: 'This is your answer to ',
   hint: 'hint', 
+  checked: 'checked',
+  notChecked: 'not checked',
+  undetermined: 'undetermined',
   option: 'option', 
   isTheAnswerTo: 'is the answer to the question',
   countOptions: 'There are {count} options to read. Click "read aloud" again to read them all.',

@@ -19,7 +19,7 @@ TwoWaySelectBinding(
   getReadAloud(readHelper) {
     return this.value ?
       `${this.selectedText} ${this.getTranslate('isTheAnswerTo')} ${getInnerText(this.label)}` :
-      (getInnerText(this.label) + (readHelper && this.helper ? (this.getTranslate('hint') + ': ' + this.helper) + '.' : '') + this.getReadAloudOptions(readHelper));
+      (getInnerText(this.label) + (readHelper && this.helper ? ('. ' + this.getTranslate('hint') + ': ' + this.helper) + '.' : '') + this.getReadAloudOptions(readHelper));
   }
 
   getReadAloudOptions(readHelper) {

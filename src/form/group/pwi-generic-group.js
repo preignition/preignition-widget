@@ -222,7 +222,7 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(translate(PwiAccessibleText
   getReadAloud(readHelper) {
     return this._selectedItems.length ?
       `${[...this._selectedItems].map(item => item.parentElement.renderRoot.textContent)} ${this.getTranslate('isTheAnswerTo')} ${getInnerText(this.label)}` :
-      (getInnerText(this.label) + (readHelper && this.helper ? (this.getTranslate('hint') + ': ' + this.helper) + '.' : '') + this.getReadAloudOptions(readHelper));
+      (getInnerText(this.label) + (readHelper && this.helper ? ('. ' + this.getTranslate('hint') + ': ' + this.helper) + '.' : '') + this.getReadAloudOptions(readHelper));
   }
 
   getReadAloudOptions(readHelper) {
