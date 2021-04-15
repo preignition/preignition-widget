@@ -231,6 +231,12 @@ class PwiTooltip extends LitElement {
         type: String
       },
       fireonclick: { type: Boolean },
+
+      /**
+       * @prop `skipFocus` tooltip is not actiabtable by tap if true. 
+       * To use for instance when sloted element is a button (which will receive focus)
+       */
+      skipFocus: { type: Boolean }, 
       _opened: { type: Boolean },
       noIcon: { type: Boolean },
     };
@@ -244,11 +250,15 @@ class PwiTooltip extends LitElement {
           ?noIcon=${this.noIcon}
           part="outline"
           aria-describedby="tooltip"
-          tabindex="0"
-          @keydown="${e => {e.code === 'Enter' || e.code === 'Space' ? this.toggleTooltip(e) : '';}}"
-          @mouseover="${() => {this.fireonclick ? '' : this.showTooltip();}}"
-          @mouseout="${() => {this.fireonclick ? '' : this.hideTooltip();}}"
-          @click="${() => {this.fireonclick ? this.showTooltip() : '';}}">
+          .tabindex=${this.skipFocus ? -1 : 0}
+          @keydown=${e => {
+            e.target === this && (e.code === 'Enter' || e.code === 'Space') ? this.toggleTooltip(e) : '';}
+            }
+          @focusin=${() => this.showTooltip()}
+          @focusout=${() => this.hideTooltip()}
+          @mouseover=${() => {this.fireonclick ? '' : this.showTooltip();}}
+          @mouseout=${() => {this.fireonclick ? '' : this.hideTooltip();}}
+          @click=${() => {this.fireonclick ? this.showTooltip() : '';}}>
           <slot></slot>
           ${this.noIcon ? '' : html `<mwc-icon>info</mwc-icon>`}
         </span>
