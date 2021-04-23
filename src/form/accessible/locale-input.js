@@ -122,6 +122,7 @@ export const LocaleInput = (baseElement) => class extends baseElement {
     if (Number(value) === value) {
       return value;
     }
+    if (!value) {return ''}
     value = value.replace(reg, '');
     return value.length ? value * Math.pow(10, -this.minimumFractionDigits) : '';
   }
