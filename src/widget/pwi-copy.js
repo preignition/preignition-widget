@@ -15,6 +15,9 @@ class PwiCopy extends LitElement {
     return [tooltip, css `
     :host {
     }
+    mwc-icon-button {
+      vertical-align: middle;
+    }
     `];
   }
 
@@ -38,7 +41,7 @@ class PwiCopy extends LitElement {
 
   render() {
     return html `
-      <slot id="copy"></slot><mwc-icon-button id="button" part="button" data-title="Copy to clipboard" @click="${this.copy}" icon="${this._icon}" label="copy to clipboard">
+      <slot id="copy"></slot><mwc-icon-button part="button" data-title="Copy to clipboard" @click="${this.copy}" icon="${this._icon}" label="copy to clipboard"></mwc-icon-button>
     `;
   }
 
