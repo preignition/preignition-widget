@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit-element';
-import tooltip from '../style/tooltip.js';
+import {tooltip} from '@preignition/preignition-styles';
 import '@material/mwc-icon-button';
 
 /**
