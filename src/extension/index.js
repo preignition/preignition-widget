@@ -8,3 +8,4 @@ import './pwi-textfield.js';
 import './pwi-linear-progress.js';
 import './pwi-top-app-bar.js';
 import './pwi-list-item-no-ripple.js';
+import './pwi-list-item-text.js';
