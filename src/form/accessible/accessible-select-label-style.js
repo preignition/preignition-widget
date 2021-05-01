@@ -82,34 +82,9 @@ export default css`
      /* PREFIX - NOT YET WORKING */
 
      /* RTL */
-     :host-context([dir=rtl]) .mdc-select--filled .mdc-floating-label {
-       right: 40px;
-       left: initial;
-     }
-
-     :host-context([dir=rtl]) .mdc-select__selected-text-container {
-       margin-right: 40px;
-     }
-
-     :host-context([dir=rtl]) .mdc-select__dropdown-icon {
-       position: absolute;
-       right: 0px;
-       bottom: 15px;
-     }
-
      .mdc-text-field--filled .mdc-floating-label:dir(rtl) {
        right: 40px;
        left: initial;
-     }
-
-     .mdc-select__selected-text-container:dir(rtl) {
-       margin-right: 40px;
-     }
-
-     .mdc-select__dropdown-icon:dir(rtl) {
-       position: absolute;
-       right: 0px;
-       bottom: 15px;
      }
 
 
