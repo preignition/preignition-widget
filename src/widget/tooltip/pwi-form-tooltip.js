@@ -45,7 +45,7 @@ class PwiFormTooltip extends PwiFirebaseTooltip {
   setPath(resource, term) {
     if (resource && term) {
       if (resource.localName === 'pfo-form') {
-        this.path = `/resourceDataLocale/${resource.isTest ? 'draft' : 'published'}/${resource.resourceId}/${resource.language}/glossary/${term}/definition`;
+        this.path = `/resourceDataLocale/${resource.isTest ? 'draft' : 'published'}/${resource.resourceId || resource.tooltipId}/${resource.language}/glossary/${term}/definition`;
       }
       // TODO(cg): handle shared section.
       // if (resource.localeName === 'form-section') {
