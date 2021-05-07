@@ -18,6 +18,11 @@ class PwiTopAppBar extends TopAppBar {
          padding-top: 0;
        }
 
+       .mdc-top-app-bar__title {
+         display: block;
+         width: 100%;
+       }
+
       `
       ];
   }
