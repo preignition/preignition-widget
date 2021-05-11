@@ -1,5 +1,5 @@
 {
-  "type": "module",
+  "__type": "module",
   "name": "@preignition/preignition-widget",
   "version": "0.3.0",
   "license": "SEE LICENCE IN LICENCE.md",

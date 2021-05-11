@@ -10,7 +10,13 @@ class PwiForm extends Formfield {
   static get styles() {
     return [
       super.styles,
-      css `::slotted(pwi-switch){margin-right:10px}[dir=rtl] ::slotted(pwi-switch),::slotted(pwi-switch)[dir=rtl]{margin-left:10px}`
+      css `
+        ::slotted(pwi-switch){margin-right:10px}[dir=rtl] ::slotted(pwi-switch),::slotted(pwi-switch)[dir=rtl]{margin-left:10px}
+        .mdc-form-field > label {
+          padding-top: 5px;
+          padding-bottom: 5px;
+        }
+        `
       ];
   }
 }
