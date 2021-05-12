@@ -166,7 +166,7 @@ class PwiTooltip extends LitElement {
     }
 
     #tooltip.visible.left {
-        transform: translateX(calc(-100% - 0.6rem), 50%) scale(1);
+        transform: translate(calc(-100% - 0.6rem), 50%) scale(1);
     }
 
     #tooltip::before {
@@ -230,6 +230,10 @@ class PwiTooltip extends LitElement {
       position: {
         type: String
       },
+      /**
+       *  the `container` used to decide how to position tooltip before opening. 
+       */
+      container: {type: Object},
       fireonclick: { type: Boolean },
 
       /**
@@ -269,7 +273,7 @@ class PwiTooltip extends LitElement {
     return html `
       <div part="tooltip" 
         id="tooltip" 
-        class="${this.position} ${this._opened ? 'visible' : ''}"  
+        class="${this.position || this._position} ${this._opened ? 'visible' : ''}"  
         aria-hidden="${ifDefined(this._opened ? undefined : 'true')}"
         role="tooltip"  
         style="${`min-width: ${this.tipwidth}px;`}">
@@ -284,10 +288,40 @@ class PwiTooltip extends LitElement {
     super();
 
     // property defaults
-    this.position = 'top';
+    this._position = 'top';
     this.tipwidth = 200;
     this.opened = false;
     this.noIcon = false;
+  }
+
+  update(props)  {
+    if (props.has('_opened') && this._opened && this.container) {
+      this.calcPosition();
+    }
+    super.update(props);
+  }
+
+  calcPosition() {
+    const ctRect = this.container.getBoundingClientRect();
+    const rect = this.getBoundingClientRect();
+    const positions = ['top', 'left', 'bottom', 'right'];
+    const delta = positions.map((p, index) => (index < 2) ? rect[p] - ctRect[p]: ctRect[p] - rect[p]);
+    const maxIndex = delta.indexOf(Math.max.apply(null, delta));
+    let position = positions[maxIndex];
+    if (delta[2] > 500) {
+      position = 'bottom';
+    }
+    if (delta[0] > 300) {
+      position = 'top';
+    }
+    if (delta[1] < 100) {
+      position = 'right';
+    }
+    if (delta[3] < 100) {
+      position = 'left';
+    }
+
+    this._position = position;
   }
 
   hideTooltip() {
