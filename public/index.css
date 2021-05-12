@@ -1,0 +1,53 @@
+body {
+  background: #fafafa;
+  margin: 0;
+}
+
+body, html {
+font-family: 'Roboto', 'Noto', sans-serif;
+}
+
+:root {
+--primary-color: #0277bd;
+--light-primary-color: #58a5f0;
+--dark-primary-color: #004c8c;
+--primary-color-tr: #0277bd22;
+--secondary-color: #00acc1;
+--light-secondary-color: #5ddef4;
+--dark-secondary-color: #007c91;
+--secondary-color-tr: #00acc122;
+--accent-color: #00b8d4;
+--color-accent: #00b8d4;
+--accent-color-tr: #00b8d422;
+--primary-background-color: #ffffff;
+--secondary-background-color: #b2bfcb;
+--primary-text-color: #212121;
+--secondary-text-color: #727272;
+--color-secondary-text: #727272;
+--disabled-text-color: #646464;
+--color-disabled-text: #646464;
+--divider-color: #b6b6b6;
+
+--mdc-theme-primary: var(--primary-color);
+--mdc-theme-secondary: var(--secondary-color);
+--color-danger: #b00020;
+--font-weight-semi-bold: 500;
+
+--color-primary-rgb: 2, 119, 189;
+--mdc-theme-primary: var(--color-primary);
+--mdc-theme-secondary: var(--color-secondary);
+--mdc-theme-error: var(--color-error);
+--mdc-theme-surface: var(--color-surface);
+--mdc-theme-background: var(--primary-background-color); 
+
+--alpha-base-rgb: 0,0,0; /* this is to have a base color for dark and light theme */
+--mdc-theme-on-primary: #ffffff;	/*Text and icons on top of a theme primary color background.	*/
+--mdc-theme-on-primary-rgb: 255, 255, 255;	/*Text and icons on top of a theme primary color background.	*/
+--mdc-theme-on-secondary: #ffffff;	/*Text and icons on top of a theme secondary color background.	*/
+--mdc-theme-on-secondary-rgb: 255, 255, 255;	/*Text and icons on top of a theme primary color background.	*/
+--mdc-theme-on-surface: #000000;	/*Text and icons on top of a theme surface color background.	*/
+--mdc-theme-on-surface-rgb: 0, 0, 0;	/*Text and icons on top of a theme surface color background.	*/
+
+
+--font-family-code: 'Mono', monospace;
+}
