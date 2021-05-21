@@ -59,7 +59,7 @@ class PwiProcess extends LitElement {
 
   renderProcess() {
     return html`
-    <mwc-linear-progress .progress=${(this._status.percent || 0) / 100} ariaLabel="progress status"></mwc-linear-progress>
+    <mwc-linear-progress .progress=${(this._status?.percent || 0) / 100} ariaLabel="progress status"></mwc-linear-progress>
     ${this._status ? this.renderStatus() : ''}`;
   }
 
