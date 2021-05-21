@@ -9,5 +9,6 @@ export default {
   countOptions: 'There are {count} options to read. Click "read aloud" again to read them all.',
   chooseOption: 'Choose your answers from the following options',
   chooseOptions: 'Choose one answer from the following options',
-  pleaseSpecify: 'please specify'
+  pleaseSpecify: 'please specify',
+  readAloud: 'read aloud'
  }
