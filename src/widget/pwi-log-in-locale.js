@@ -12,7 +12,7 @@ export default {
   createAnAccount: 'Create an account',
   continueAsGuest: 'continue as guest',
   signInInProcess: 'signing in progress',
-  switchYourAccount: 'Switch to a real account',
+  switchYourAccount: 'Create a real account',
   orLinkWith: 'Or link your account with',
   converting: 'Converting your account',
   or: 'or',

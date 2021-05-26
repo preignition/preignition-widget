@@ -8,6 +8,7 @@ import TwoWayBinding from './two-way-binding.js';
 import OverrideTextfield from './override-textfield.js';
 import OverrideTextfieldValidityMessage from './override-textfield-validity-message.js';
 import OverrideTextfieldReadonly from './override-textfield-readonly.js';
+import OverrideTextfieldIcon from './override-textfield-icon.js';
 
 /**
  * extension of mwc-textfield emiting a value-changed event when
@@ -18,7 +19,8 @@ TwoWayBinding(
   OverrideTextfield(
     OverrideTextfieldValidityMessage(
       OverrideTextfieldReadonly(
-        TextField)))) {
+        OverrideTextfieldIcon(
+          TextField))))) {
   // Note(cg): improved aria support on text field:
   // aria-invalie is set to invalid;
   // aria-errormessage replaces aria-errortext
