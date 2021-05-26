@@ -5,7 +5,7 @@ import OverrideTextfield from './override-textfield.js';
 import OverrideSelectAsync from './override-select-async.js';
 import OverrideTextfieldValidityMessage from './override-textfield-validity-message.js';
 import {getInnerText, Translate as translate} from '@preignition/preignition-util';
-import locale from '../form/readaloud-locale';
+import locale from '../form/readaloud-locale.js';
 
 const selectRtlStyles = css`
   /* RTL */

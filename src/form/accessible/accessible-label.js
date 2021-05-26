@@ -1,7 +1,5 @@
 import { html } from 'lit-element';
-import { nothing } from 'lit-html';
 import '../pwi-label.js';
-
 /**
  * mixin overrideing som methods not playin well with Polymer
  *
