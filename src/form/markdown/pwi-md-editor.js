@@ -17,7 +17,7 @@ import '@material/mwc-textarea';
  * @fires md-changes - eventfired when `md` changes
  * @fires md-paste - event fired when user paste on textarea. Used to listed for image copy.
  */
-class PwiMdEditor extends LitElement {
+export default class PwiMdEditor extends LitElement {
   static get styles() {
     return [
     liteYoutube,
@@ -376,5 +376,3 @@ class PwiMdEditor extends LitElement {
 
 // Register the new element with the browser.
 customElements.define('pwi-md-editor', PwiMdEditor);
-
-export default PwiMdEditor;
