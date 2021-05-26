@@ -1,7 +1,9 @@
 import { LitElement, html } from 'lit-element';
 import { parse } from '@preignition/preignition-util';
+import { classMap } from 'lit-html/directives/class-map.js';
+import {accessibilityState, observeState} from '@preignition/preignition-state';
 
-class PwiMd extends LitElement {
+class PwiMd extends observeState(LitElement) {
   static get properties() {
     return {
 
@@ -19,7 +21,12 @@ class PwiMd extends LitElement {
   }
 
   render() {
-    return html `<div class="markdown">${parse(this.md, this.mdConfig)}</div>`;
+    const classes = {
+      issignlanguage: accessibilityState.signlanguage,
+      isreadaloud: accessibilityState.readaloud,
+      iseasyread: accessibilityState.easyread
+    };
+    return html `<div class="markdown ${classMap(classes)}">${parse(this.md, this.mdConfig)}</div>`;
   }
 
   // Used by readaloud to read text

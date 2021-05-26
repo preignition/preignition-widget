@@ -11,4 +11,5 @@ export default {
   chooseOptions: 'Choose one answer from the following options',
   pleaseSpecify: 'please specify',
   readAloud: 'read aloud'
- }
+ };
+ 
