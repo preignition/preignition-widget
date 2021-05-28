@@ -254,7 +254,7 @@ class PwiTooltip extends LitElement {
           ?noIcon=${this.noIcon}
           part="outline"
           aria-describedby="tooltip"
-          .tabindex=${this.skipFocus ? -1 : 0}
+          tabindex=${this.skipFocus ? -1 : 0}
           @keydown=${e => {
             e.target === this && (e.code === 'Enter' || e.code === 'Space') ? this.toggleTooltip(e) : '';}
             }
