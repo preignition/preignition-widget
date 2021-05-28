@@ -6,7 +6,7 @@ export default {
   undetermined: 'undetermined',
   option: 'option', 
   isTheAnswerTo: 'is the answer to the question',
-  countOptions: 'There are {count} options to read. Click "read aloud" again to read them all.',
+  countOptions: 'There are {{ count }} options to read. Click "read aloud" again to read them all.',
   chooseOption: 'Choose your answers from the following options',
   chooseOptions: 'Choose one answer from the following options',
   pleaseSpecify: 'please specify',
