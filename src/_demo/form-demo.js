@@ -250,7 +250,7 @@ export default  class FormDemo extends DemoBase {
             </mwc-tab-bar >
             ${this.activeTab === 'intro' ? html `
               <h2>Example</h2>
-              <pwi-radio-group label="text" required useShadow helper="this is a radio group">
+              <pwi-radio-group label="text" required  helper="this is a radio group">
                 <mwc-formfield label="first">
                   <mwc-radio name="test" value="first"></mwc-radio>
                 </mwc-formfield>
@@ -262,15 +262,20 @@ export default  class FormDemo extends DemoBase {
                 </mwc-formfield>
                 
               </pwi-radio-group>
-              <!--pwi-radio-group label="initial value" selected="1" precise = 'i will precise' useShadow helper="this is a radio group"></pwi-radio-group>
-              <pwi-checkbox-group label="checkbox" @precise-changed=${e => console.info('pp:',e.detail.value)} @selected-changed="${e => this.cv = e.detail.value}" useShadow helper="this is a checkbox group"></pwi-checkbox-group>
-              <div> value: ${(this.cv || []).map(v => v)}</div>
-              <pwi-radio-group label="initial value aligned column" @selected-changed="${e => this.rv = e.detail.value}"  class="column" selected="2" useShadow helper="this is a radio group"></pwi-radio-group>
-              <div> value: ${this.rv || ''}</div>
-              <pwi-checkbox-group label="checkbox aligned column"  class="column"    useShadow helper="this is a checkbox group"></pwi-checkbox-group-->
+              <pwi-radio-group label="initial value" selected="1" precise = 'i will precise'  helper="this is a radio group"></pwi-radio-group>
+              <pwi-checkbox-group 
+                label="checkbox" 
+                .options=${[{label: 'first', code: 'first'}, {label: 'second', code: 'second'}, {label: 'third', code: 'third'}, {label: 'exclusive option', code: 'exclusive', exclusive: true}]}
+                @precise-changed=${e => console.info('pp:',e.detail.value)} 
+                @selected-changed="${e => this.cv = e.detail.value}"  
+                helper="this is a checkbox group"></pwi-checkbox-group>
+              <div> value: ${(this.cv || []).map(v => v).join(', ')}</div>
+              
               <h2>API</h2>
               <demo-api-viewer selected="pwi-radio-group"  src="/docs/pwi-cron-builder.json">` : ''}
           </expansion-panel>
+
+          
 
           <expansion-panel >
               <div slot="header">pwi-cron-builder</div>

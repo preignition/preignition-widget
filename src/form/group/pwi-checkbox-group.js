@@ -6,6 +6,7 @@ import '../pwi-pseudo-input.js';
 import '../../extension/pwi-formfield';
 import '@material/mwc-formfield';
 import '@material/mwc-checkbox';
+import { options } from 'marked';
 
 class PwiCheckboxGroup extends PwiGenericGroup {
   static get properties() {
@@ -51,7 +52,19 @@ class PwiCheckboxGroup extends PwiGenericGroup {
   }
 
   get selected() {
+    const values = this._selectedValues;
+    const exclusive = this.exclusiveCode;
+    if (exclusive && values.indexOf(exclusive) > -1)  {
+      return [exclusive];
+    }
     return this._selectedValues;
+  }
+
+  /**
+  * return exclusiveCode if exists
+   */
+  get exclusiveCode() {
+    return this?.options?.find(o => o.exclusive)?.code;
   }
 
   isCodeSelected(value, code) {
@@ -83,6 +96,8 @@ class PwiCheckboxGroup extends PwiGenericGroup {
 
   renderInput() {
     const showValidationMessage = this.validationMessage && !this.isUiValid;
+    const exclusiveCode = this.exclusiveCode;
+    const isExclusive = exclusiveCode && this.selected[0] === exclusiveCode;
     return html `
       <pwi-pseudo-input
         part="pwi-group-container"
@@ -99,9 +114,9 @@ class PwiCheckboxGroup extends PwiGenericGroup {
           (this.options || []).map((option, index) => html`
             <div><pwi-formfield label="${option.label}">
               <pwi-checkbox 
-                value="${option.code}" 
+                value="${option.code}"
                 ?checked="${this.isCodeSelected(this._value, option.code)}"
-                ?disabled="${this.disabled || this.readonly || option.disabled}"
+                ?disabled="${this.disabled || this.readonly || option.disabled || (isExclusive && option.code !== exclusiveCode)}"
                 aria-controls=${ifDefined(option.specify ? `specify${index}` : undefined)} 
                 ></pwi-checkbox>
             </pwi-formfield>${this.renderSpecify(option, index)}</div>`)
