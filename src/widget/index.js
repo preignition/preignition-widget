@@ -6,8 +6,4 @@ import './pwi-process.js';
 import './pwi-date-format.js';
 import './pwi-md.js';
 import './pwi-lif-md.js';
-import './pwi-log-in.js';
 import './resource/index.js';
-import './tooltip/index.js';
-import './pwi-expansion-panel/expansion-panel.js';
-import './pwi-accordion/fancy-accordion.js';

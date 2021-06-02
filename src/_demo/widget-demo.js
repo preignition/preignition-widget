@@ -46,30 +46,7 @@ export default class WidgetDemo extends DemoBase {
               <h2>API</h2>
               <demo-api-viewer selected="pwi-log-in"  src="/docs/pwi-log-in.json">` : ''}
           </expansion-panel>  
-
-          <expansion-panel opened>
-              <div slot="header">pwi-tooltip</div>
-              <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
-                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
-                <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'api'} label="api"></mwc-tab>
-            </mwc-tab-bar >
-            ${this.activeTab === 'intro' ? html `
-              <h2>Example</h2>
-              <h3>top</h3>
-              <div>This is an tooltip example. Just <pwi-tooltip opened message="hey I am a tooltip">hover me</pwi-tooltip></div>
-              <h3>Bottom</h3>
-              <div>This is an tooltip example. Just <pwi-tooltip opened position="bottom" message="hey I am a tooltip">hover me</pwi-tooltip></div>
-              <h3>right</h3>
-              <div>This is an tooltip example. Just <pwi-tooltip opened position="right" fireonclick .message="${html`<div>this is a longer</div><div>this is a longer tooltip</div>`}">hover me</pwi-tooltip></div>
-              <h3>remote top</h3>
-              <div>This is an tooltip example. Just <pwi-firebase-tooltip path="/test/upload/md" opened >hover me</pwi-firebase-tooltip>to see a remote tooltip</div>
-             
-              ` : ''}
-
-            ${this.activeTab === 'api' ? html `
-              <h2>API</h2>
-              <demo-api-viewer selected="pwi-tooltip"  src="/docs/pwi-tooltip.json">` : ''}
-          </expansion-panel>                            
+                        
 
           <expansion-panel >
               <div slot="header">pwi-error-panel</div>

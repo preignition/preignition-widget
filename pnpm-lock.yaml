@@ -25,7 +25,6 @@ dependencies:
   '@preignition/preignition-state': 'link:../preignition-state'
   '@preignition/preignition-styles': 'link:../preignition-styles'
   '@preignition/preignition-util': 'link:../preignition-util'
-  cronstrue: 1.113.0
   d3-format: 3.0.0
   d3-scale: 3.3.0
   d3-selection: 2.0.0
@@ -41,6 +40,8 @@ devDependencies:
   '@open-wc/testing': 2.5.29
   '@open-wc/testing-karma': 3.4.8
   '@preignition/preignition-demo': 'link:../preignition-demo'
+  '@preignition/pwi-accordion': 'link:../pwi-accordion'
+  '@preignition/pwi-expansion-panel': 'link:../pwi-expansion-panel'
   '@snowpack/plugin-babel': 2.1.7
   '@snowpack/plugin-dotenv': 2.1.0
   api-viewer-element: 0.4.4
@@ -4352,10 +4353,6 @@ packages:
     dev: true
     resolution:
       integrity: sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
-  /cronstrue/1.113.0:
-    dev: false
-    resolution:
-      integrity: sha512-j0+CQsQx0g0Iv6nQs0bHkLcpeCzYShWUdQ3QwSHV+dUyTLqI/3NPrHceeDfTXmC3Re4osMli5+wAYpffNO+e9w==
   /custom-event/1.0.1:
     dev: true
     resolution:
@@ -7959,10 +7956,11 @@ specifiers:
   '@preignition/preignition-state': 'link:../preignition-state'
   '@preignition/preignition-styles': 'link:../preignition-styles'
   '@preignition/preignition-util': 'link:../preignition-util'
+  '@preignition/pwi-accordion': 'link:../pwi-accordion'
+  '@preignition/pwi-expansion-panel': 'link:../pwi-expansion-panel'
   '@snowpack/plugin-babel': ^2.1.7
   '@snowpack/plugin-dotenv': ^2.1.0
   api-viewer-element: ^0.4.4
-  cronstrue: ^1.113.0
   d3-array: ^2.12.1
   d3-fetch: ^2.0.0
   d3-format: '*'
