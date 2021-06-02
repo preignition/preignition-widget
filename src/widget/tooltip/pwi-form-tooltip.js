@@ -29,11 +29,11 @@ class PwiFormTooltip extends PwiFirebaseTooltip {
     };
   }
 
-  firstUpdated(props) {
-    // Note(cg): form and sectionlisten to the event and will set resource in turn.
-    this.dispatchEvent(new CustomEvent('form-tooltip-ready', {detail: {}, bubbles: true, composed: true}));
-    super.firstUpdated(props);
-  }
+  // firstUpdated(props) {
+  //   // Note(cg): form and sectionlisten to the event and will set resource in turn.
+  //   this.dispatchEvent(new CustomEvent('form-tooltip-ready', {detail: {}, bubbles: true, composed: true}));
+  //   super.firstUpdated(props);
+  // }
 
   updated(props) {
     if (props.has('resource')) {

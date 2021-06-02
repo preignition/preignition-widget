@@ -284,6 +284,13 @@ class PwiTooltip extends LitElement {
     `;
   }
 
+  firstUpdated(props) {
+    // Note(cg): form and sectionlisten to the event and will set resource in turn.
+    this.dispatchEvent(new CustomEvent('tooltip-ready', {detail: {}, bubbles: true, composed: true}));
+    super.firstUpdated(props);
+  }
+
+
   constructor() {
     super();
 
