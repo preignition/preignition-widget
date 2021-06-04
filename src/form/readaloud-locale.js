@@ -10,6 +10,13 @@ export default {
   chooseOption: 'Choose your answers from the following options',
   chooseOptions: 'Choose one answer from the following options',
   pleaseSpecify: 'please specify',
-  readAloud: 'read aloud'
+  readAloud: 'read aloud', 
+  error: {
+    synth: {
+      noVoice: 'Problem with read aloud: voice for current language {{lan}} is not supported by your device.',
+      notSupported: 'Problem with read aloud: speech synthesis is not supported by your device.',
+      emptyVoices: 'Problem with read aloud: no voices are available in your device.'
+    }
+  }
  };
  
