@@ -2,7 +2,7 @@ import { LitElement, html, css } from 'lit-element';
 import { nothing } from 'lit-html';
 import { cache } from 'lit-html/directives/cache.js';
 import { parse } from '@preignition/preignition-util';
-import { styleTypography, liteYoutube } from '@preignition/preignition-styles';
+import { md } from '@preignition/preignition-styles';
 
 import '@material/mwc-tab';
 import '@material/mwc-tab-bar';
@@ -20,8 +20,7 @@ import '@material/mwc-textarea';
 export default class PwiMdEditor extends LitElement {
   static get styles() {
     return [
-    liteYoutube,
-    styleTypography,
+    md,
     css `
     :host {
       display: block;
