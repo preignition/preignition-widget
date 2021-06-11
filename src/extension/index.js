@@ -1,4 +1,5 @@
 import './pwi-formfield.js';
+import './pwi-formfieldslot.js';
 import './pwi-checkbox.js';
 import './pwi-select.js';
 import './pwi-switch.js';
