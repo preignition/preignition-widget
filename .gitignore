@@ -4,4 +4,4 @@ __
 bower_components/*
 ## secrets
 initializeFirebase.js
-src/_demo/firebase.dev.js
+**/firebase.dev.js
