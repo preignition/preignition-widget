@@ -31,9 +31,9 @@ export default class WidgetDemo extends DemoBase {
       <div slot="header">
         <demo-readme src="${this.readme}"></demo-readme>
       </div>
-      <fancy-accordion >
+      <pwi-accordion >
 
-        <expansion-panel >
+        <pwi-expansion-panel >
               <div slot="header">pwi-log-in</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -45,10 +45,10 @@ export default class WidgetDemo extends DemoBase {
             ${this.activeTab === 'api' ? html `
               <h2>API</h2>
               <demo-api-viewer selected="pwi-log-in"  src="/docs/pwi-log-in.json">` : ''}
-          </expansion-panel>  
+          </pwi-expansion-panel>  
                         
 
-          <expansion-panel >
+          <pwi-expansion-panel >
               <div slot="header">pwi-error-panel</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -60,9 +60,9 @@ export default class WidgetDemo extends DemoBase {
             ${this.activeTab === 'api' ? html `
               <h2>API</h2>
               <demo-api-viewer selected="pwi-error-panel"  src="/docs/pwi-cron-builder.json">` : ''}
-          </expansion-panel>
+          </pwi-expansion-panel>
 
-         <expansion-panel >
+         <pwi-expansion-panel >
               <div slot="header">pwi-user-img</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -74,10 +74,10 @@ export default class WidgetDemo extends DemoBase {
             ${this.activeTab === 'api' ? html `
               <h2>API</h2>
               <demo-api-viewer selected="pwi-user-img"  src="/docs/pwi-cron-builder.json">` : ''}
-          </expansion-panel>
+          </pwi-expansion-panel>
 
 
-         <expansion-panel opened>
+         <pwi-expansion-panel opened>
               <div slot="header">pwi-copy</div>
               <mwc-tab-bar class="tab-bar" .activeIndex="${this.tabs.indexOf(this.activeTab)}" theme="centered">
                 <mwc-tab isMinWidthIndicator @click=${() => this.activeTab = 'intro'} label="intro"></mwc-tab>
@@ -89,11 +89,11 @@ export default class WidgetDemo extends DemoBase {
             ${this.activeTab === 'api' ? html `
               <h2>API</h2>
               <demo-api-viewer selected="pwi-user-img"  src="/docs/pwi-cron-builder.json">` : ''}
-          </expansion-panel>
+          </pwi-expansion-panel>
 
 
           
-      </fancy-accordion>
+      </pwi-accordion>
 
   
     </demos-container>

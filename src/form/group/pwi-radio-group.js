@@ -7,7 +7,7 @@ import '../../extension/pwi-formfield';
 import '@material/mwc-formfield';
 import '@material/mwc-radio';
 
-class PwiRadioGroup extends PwiGenericGroup {
+export default class PwiRadioGroup extends PwiGenericGroup {
   static get isMulti() {
     return false;
   }
@@ -92,19 +92,23 @@ class PwiRadioGroup extends PwiGenericGroup {
                 'helper-text' :
                 undefined)}"
         >${
-          (this.options || []).map((option, index) => html`
-            <div><pwi-formfield label="${option.label}">
-              <pwi-radio 
-                name="${option.name || this.name}" 
-                value="${option.code}" 
-                ?checked="${option.code + '' === this._value}"
-                ?disabled="${this.disabled || this.readonly || option.disabled}"
-                aria-controls=${ifDefined(option.specify ? `specify${index}` : undefined)} 
-                ></pwi-radio>
-            </pwi-formfield>${this.renderSpecify(option, index)}</div>`)
+          (this.options || []).map(this.renderOption, this)
         }<slot></slot></pwi-pseudo-input>
       `;
   }
+
+  renderOption(option, index) {
+    return html`
+    <div><pwi-formfield label="${option.label}">
+      <pwi-radio 
+        name="${option.name || this.name}" 
+        value="${option.code}" 
+        ?checked="${option.code + '' === this._value}"
+        ?disabled="${this.disabled || this.readonly || option.disabled}"
+        aria-controls=${ifDefined(option.specify ? `specify${index}` : undefined)} 
+        ></pwi-radio>
+    </pwi-formfield>${this.renderSpecify(option, index)}</div>`;
+  }  
 
   renderSpecify(option, index) {
     const code = option.code || index;

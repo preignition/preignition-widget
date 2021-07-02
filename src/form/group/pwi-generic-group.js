@@ -223,7 +223,7 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(translate(PwiAccessibleText
     const getOptionText = (item) => {
       const parent = item.parentElement;
       // Note(CG): read 'please specify answer'
-      return parent.renderRoot.textContent + (parent.nextElementSibling ?( parent.nextElementSibling.value || '') : '');
+      return parent.renderRoot.textContent + (parent.nextElementSibling ? (parent.nextElementSibling.value || '') : '');
     }
 
     return this._selectedItems.length ?

@@ -12,7 +12,8 @@ import 'router-slot';
 // import './dom-demo.js';
 
 import { github, preignition, DemoRoot } from '@preignition/preignition-demo';
-
+import '@preignition/pwi-expansion-panel'
+import '@preignition/pwi-accordion'
 
 import {importHref} from '@preignition/preignition-util';
 
