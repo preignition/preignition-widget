@@ -33,7 +33,7 @@ export default css`
     }
 
     :host([label-above]:hover):not([focused]) .mdc-text-field:not(.mdc-text-field--focused):not(.mdc-text-field--disabled):not(.mdc-text-field--invalid) .label-above {
-     color: var(--mdc-theme-text-primary-on-background);
+     color: var(--mdc-text-field-ink-color);
     }
 
     :host([label-above]) .mdc-text-field--focused .label-above,

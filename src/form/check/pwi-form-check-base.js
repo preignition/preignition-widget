@@ -24,7 +24,7 @@ DoNotSetUndefinedValue(
     }
 
     :host(:hover:not([focused]):not([disabled]):not([invalid])) .mdc-text-field .label-above {
-     color: var(--mdc-theme-text-primary-on-background);
+     color: var(--mdc-text-field-ink-color);
     }
 
     /* Option container layout  */

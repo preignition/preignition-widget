@@ -45,7 +45,7 @@ font-family: 'Roboto', 'Noto', sans-serif;
 --mdc-theme-on-secondary-rgb: 255, 255, 255;	/*Text and icons on top of a theme primary color background.	*/
 --mdc-theme-on-surface: #000000;	/*Text and icons on top of a theme surface color background.	*/
 --mdc-theme-on-surface-rgb: 0, 0, 0;	/*Text and icons on top of a theme surface color background.	*/
-
+--mdc-text-field-ink-color: rgba(0,0,0,0.87);
 
 --font-family-code: 'Mono', monospace;
 }

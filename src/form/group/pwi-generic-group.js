@@ -23,7 +23,7 @@ class PwiGenericGroup extends DoNotSetUndefinedValue(translate(PwiAccessibleText
     }
 
     :host(:hover:not([focused]):not([disabled]):not([invalid])) .mdc-text-field .label-above {
-     color: var(--mdc-theme-text-primary-on-background);
+     color: var(--mdc-text-field-ink-color);
     }
 
     :host([focused]) .mdc-text-field .label-above  {

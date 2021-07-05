@@ -43,7 +43,7 @@ export default css`
      }
 
      :host([label-above]:hover) .mdc-select:not(.mdc-select--focused):not(.mdc-select--disabled):not(.mdc-select--invalid) .label-above {
-       color: var(--mdc-theme-text-primary-on-background);
+       color: var(--mdc-text-field-ink-color);
      }
 
      :host([label-above]) .mdc-select--focused .label-above {

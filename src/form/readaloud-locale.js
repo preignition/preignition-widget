@@ -9,8 +9,12 @@ export default {
   countOptions: 'There are {{ count }} options to read. Click "read aloud" again to read them all.',
   chooseOption: 'Choose your answers from the following options',
   chooseOptions: 'Choose one answer from the following options',
+  givenRate: 'You have given a rate of {{ count }} out of {{ max }} stars to ',
+  giveRate: 'Give a rate between {{ min }} and {{ max }} stars',
   pleaseSpecify: 'please specify',
   readAloud: 'read aloud', 
+  star: 'Star',
+  stars: 'Stars',
   error: {
     synth: {
       noVoice: 'Problem with read aloud: voice for current language {{lan}} is not supported by your device.',
