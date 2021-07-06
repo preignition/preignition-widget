@@ -5,6 +5,7 @@ import { accessibility } from '@preignition/preignition-styles'
 import {getInnerText} from '@preignition/preignition-util';
 // import { render } from 'lit-html';
 
+let counter = 0;
 class PwiStarRating extends RadioGroup {
   static get styles() {
     return [
@@ -22,24 +23,24 @@ class PwiStarRating extends RadioGroup {
         }
         
         svg {
-          width: 1em;
-          height: 1em;
+          width: 0.85em;
+          height: 0.8em;
           fill: currentColor;
           stroke: currentColor;
+          margin-bottom: 3px;
         }
         
         output {
-          font-size: var(--pwi-star-rating-font-size, 1em);
+          font-size: var(--pwi-star-rating-font-size, 1.5rem);
           padding: 0px 1em;
           align-self: center;
-          line-height: 2em;
           color: var(--mdc-theme-primary, #6200ee);
         }
 
         label {
           display: block;
           font-size: 1.6em;
-          line-height: 0.5em;
+          line-height: 0.6em;
           color: var(--mdc-text-field-disabled-ink-color, rgba(0, 0, 0, 0.38));
           cursor: pointer;
           /* Transparent border-bottom avoids jumping
@@ -94,6 +95,9 @@ class PwiStarRating extends RadioGroup {
       // @prop true to allow 0 star
       allowNoStar: {
         type: Boolean
+      },
+      name: {
+        type: String
       }
     };
   }
@@ -101,6 +105,7 @@ class PwiStarRating extends RadioGroup {
   constructor() {
     super()
     this.starNumber = 5;
+    this.name = `rating${++counter}`;
   }
 
   // Note(CG): we need to override this as radio input do not
@@ -125,6 +130,15 @@ class PwiStarRating extends RadioGroup {
     const showValidationMessage = this.validationMessage && !this.isUiValid;
     return html `
       <pwi-pseudo-input
+        @click=${e => {
+          // console.info('cc',e)
+          const target = e.composedPath()[0].localName;
+          if (target === 'pwi-pseudo-input') {
+            this.selected = this.starNumber}
+            // e.stopPropagation()
+            e.preventDefault()
+          }
+        }
         ?hasValue=${this._value}
         part="pwi-group-container"
         role="radiogroup"
@@ -147,10 +161,14 @@ class PwiStarRating extends RadioGroup {
     const st = index + 1
     return html`
       <input value="${st}" id="star${st}"
+          tabindex="0"
+          @click=${e => e.stopPropagation()}
           ?highlight=${st < this._value * 1}
           ?checked=${st + '' === this._value}
-          type="radio" name="rating" class="sr-only"></input>
-      <label for="star${st}">
+          type="radio" name="${this.name}" class="sr-only"></input>
+      <label for="star${st}"
+      @click=${e => e.stopPropagation()}
+      >
         <span class="sr-only">${st} ${st === 1 ? this.translate('star') : this.translate('stars')}</span>
         ${this.renderStar()}
       </label>
