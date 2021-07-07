@@ -37,7 +37,7 @@ class PwiStarRating extends RadioGroup {
           color: var(--mdc-theme-primary, #6200ee);
         }
 
-        label {
+        pwi-pseudo-input label {
           display: block;
           font-size: 1.6em;
           line-height: 0.6em;
@@ -136,7 +136,8 @@ class PwiStarRating extends RadioGroup {
           if (target === 'pwi-pseudo-input') {
             this.selected = this.starNumber}
             // e.stopPropagation()
-            e.preventDefault()
+            e.preventDefault();
+            this.onChange(e);
           }
         }
         ?hasValue=${this._value}
