@@ -4,4 +4,4 @@ import './dom/index.js';
 import './extension/index.js';
 import './widget/index.js';
 
-export * from './util/index.js';
+// export * from './util/index.js';
