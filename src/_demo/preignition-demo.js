@@ -34,6 +34,9 @@ const ROUTES = [{
   }, {
     path: 'widget',
     component: () => import('./widget-demo')
+  }, {
+    path: 'test',
+    component: () => import('./test-demo')
   },{
     path: '**',
     redirectTo: 'widget'
@@ -90,6 +93,7 @@ class PreignitiontDemo extends DemoRoot {
         <mwc-tab @click=${() => history.pushState(null, null, '/dom')} label="dom"></mwc-tab>
         <mwc-tab @click=${() => history.pushState(null, null, '/widget')} label="widget"></mwc-tab>
         <mwc-tab @click=${() => history.pushState(null, null, '/form')} label="form"></mwc-tab>
+        <mwc-tab @click=${() => history.pushState(null, null, '/test')} label="test"></mwc-tab>
       </mwc-tab-bar>
       <router-slot></router-slot>
       
