@@ -256,6 +256,10 @@ export default class PwiMdEditor extends LitElement {
         type: Boolean,
       },
 
+      translateIcon: {
+        type: String
+      }
+
 
     };
   }
@@ -267,7 +271,7 @@ export default class PwiMdEditor extends LitElement {
           <mwc-tab isMinWidthIndicator .label="${this.writeLabel}"></mwc-tab>
           <mwc-tab isMinWidthIndicator .label="${this.previewLabel}"></mwc-tab>
           ${this.translate ? html `
-            <mwc-tab isMinWidthIndicator icon="translate" .label="${this.translateLabel}"></mwc-tab>
+            <mwc-tab isMinWidthIndicator .icon=${this.translateIcon} .label="${this.translateLabel}"></mwc-tab>
             <mwc-tab isMinWidthIndicator .label="${this.translatePreviewLabel}"></mwc-tab>
           ` : nothing}
       </mwc-tab-bar>
@@ -301,7 +305,7 @@ export default class PwiMdEditor extends LitElement {
 
   renderToolbar() {
     return html `
-     <small class="toolbar"><span class="flex" style="display: inline-flex;">${this._selected === 3 ? this.helpertranslate : this.helper} <span class="flex"></span><span><a tabindex="-1" rel="noopener" href="https://en.wikipedia.org/wiki/Markdown" target="_blank">Markdown</a> is supported. </span></span><slot name="bottomToolbar">${this.renderSlotToolbar()}</slot></small>
+     <small class="toolbar"><span class="flex" style="display: inline-flex;">${this._selected === 2 ? this.helpertranslate : this.helper} <span class="flex"></span><span><a tabindex="-1" rel="noopener" href="https://en.wikipedia.org/wiki/Markdown" target="_blank">Markdown</a> is supported. </span></span><slot name="bottomToolbar">${this.renderSlotToolbar()}</slot></small>
     `;
   }
 
@@ -330,6 +334,7 @@ export default class PwiMdEditor extends LitElement {
     this.previewLabel = 'Preview';
     this.translateLabel = 'Translate';
     this.translatePreviewLabel = 'Translation Preview';
+    this.translateIcon = 'translate'
   }
 
   get pwitextarea() {
